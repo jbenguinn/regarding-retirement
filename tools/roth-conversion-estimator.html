@@ -286,6 +286,7 @@ input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:20px;heigh
 </footer>
 
 <script>
+let _ready=false;
 const $=id=>document.getElementById(id);
 
 // 2026 Tax Brackets
@@ -296,7 +297,6 @@ const BRACKETS={
 };
 const STD_DEDUCTION={single:15000,mfj:30000,mfs:15000}; // 2026 estimated
 
-const $=id=>document.getElementById(id);
 const fmtD=n=>{const a=Math.abs(n);if(a>=1e6)return'$'+(a/1e6).toFixed(2).replace(/\.?0+$/,'')+'M';if(a>=1e3)return'$'+Math.round(a/1e3).toLocaleString()+'K';return'$'+Math.round(a).toLocaleString();};
 
 function calcTax(income,status){
@@ -450,7 +450,7 @@ function calculate(){
   const makes_sense=marginalRate<=futureMarginalRate;
   $('insightText').innerHTML=`Converting <strong>${fmtD(convAmt)}/year</strong> for <strong>${yearsRemaining} years</strong> has a total tax cost of approximately <strong>${fmtD(totalConversionTax)}</strong> — converting your current effective rate of <strong>${(effectiveRate*100).toFixed(1)}%</strong>. Without conversions, your projected first-year RMD at 73 is approximately <strong>${fmtD(futureRMDAnnual)}</strong>, taxed at a marginal rate of <strong>${(futureMarginalRate*100).toFixed(0)}%</strong>. ${makes_sense?'Based on these numbers, converting now appears financially advantageous. The lower your income in the pre-RMD window, the more valuable this strategy becomes.':'The rate difference between now and your projected RMD rate is small. Conversions still provide tax diversification and eliminate RMD uncertainty — but the financial argument is stronger when income is lower during the conversion years.'} This analysis is an estimate — work with a fee-only tax advisor to model your specific bracket path.`;
 
-  setTimeout(()=>resultsEl.scrollIntoView({behavior:'smooth',block:'start'}),100);
+  if(_ready)setTimeout(()=>resultsEl.scrollIntoView({behavior:'smooth',block:'start'}),100);
 }
 
 function addC(el,cls,icon,title,body){
@@ -459,7 +459,7 @@ function addC(el,cls,icon,title,body){
   el.appendChild(d);
 }
 
-window.addEventListener('load',()=>{updateSlider();live();});
+window.addEventListener('load',()=>{updateSlider();live();;_ready=true;});
 </script>
 </body>
 </html>
