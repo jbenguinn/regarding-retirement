@@ -309,6 +309,7 @@ body{font-family:var(--font-body);background:var(--ivory);color:var(--ink);min-h
 </footer>
 
 <script>
+let _ready=false;
 const $=id=>document.getElementById(id);
 const fmtD=n=>{const a=Math.abs(n);if(a>=1e6)return'$'+(a/1e6).toFixed(2).replace(/\.?0+$/,'')+'M';if(a>=1e3)return'$'+Math.round(a/1e3).toLocaleString()+'K';return'$'+Math.round(a).toLocaleString();};
 const fmt=n=>'$'+Math.round(Math.abs(n)).toLocaleString();
@@ -398,7 +399,8 @@ function calculate(){
   const s2=calcHouseholdLifetime(fra1,67,age1,health1,fra2,67,age2,health2,cola,discount);// Both FRA
   const s3=calcHouseholdLifetime(fra1,70,age1,health1,fra2,claim2,age2,health2,cola,discount);// Higher waits
 
-  const winner=[s1,s2,s3].indexOf(Math.max(s1.total,s2.total,s3.total));
+  let winner=[s1.total,s2.total,s3.total].indexOf(Math.max(s1.total,s2.total,s3.total));
+  if(winner<0||winner>2) winner=2; // defensive fallback against NaN totals
   const strategies=[
     {label:'Both Claim at 62',s:s1,col:'--burg-light'},
     {label:'Both Claim at 67',s:s2,col:'--gold-dark'},
@@ -473,7 +475,7 @@ function calculate(){
   const lifeExp2=getLifeExp(age2,health2);
   $('insightText').innerHTML=`Based on your inputs, <strong>${bestStrategy}</strong> produces the highest estimated lifetime household income of <strong>${fmtD(strategies[winner].s.total)}</strong>. However, the most important variable in your specific situation is the survivor benefit: if the higher earner claims at 62 instead of 70, the surviving spouse's permanent monthly income is <strong>${fmt(survDiff)}</strong> lower — every month — for life. Over a 15-year widowhood, that gap is <strong>${fmtD(survDiff*12*15)}</strong>. For couples with a significant age or earnings gap, maximizing the higher earner's benefit almost always protects the lower-earning spouse most effectively — regardless of which strategy wins on total lifetime income. This decision deserves a conversation with a fee-only Social Security specialist.`;
 
-  setTimeout(()=>resultsEl.scrollIntoView({behavior:'smooth',block:'start'}),100);
+  if(_ready)setTimeout(()=>resultsEl.scrollIntoView({behavior:'smooth',block:'start'}),100);
 }
 
 function buildChart(fra1,claim1,age1,health1,fra2,claim2,age2,health2,cola){
@@ -574,7 +576,7 @@ function buildChart(fra1,claim1,age1,health1,fra2,claim2,age2,health2,cola){
   canvas.onmouseleave=()=>buildChart(fra1,claim1,age1,health1,fra2,claim2,age2,health2,cola);
 }
 
-window.addEventListener('load',()=>calculate());
+window.addEventListener('load',()=>{calculate();_ready=true;});
 window.addEventListener('resize',()=>{if($('results').classList.contains('show'))calculate();});
 </script>
 </body>
