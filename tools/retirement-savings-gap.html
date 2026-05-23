@@ -12,17 +12,17 @@
 html{scroll-behavior:smooth}
 
 :root{
-  --paper:#F8F4EE;
-  --paper-dark:#EEE8DC;
-  --paper-mid:#E6DDCC;
-  --ink:#18140F;
-  --ink-med:#2E2720;
-  --ink-soft:#6B5F52;
-  --ink-faint:#A09080;
-  --ink-ghost:#C8BCAC;
-  --accent:#9B3A1A;
-  --accent-warm:#C04E22;
-  --accent-pale:#F5E0D6;
+  --paper:#F6F7F9;
+  --paper-dark:#EDEEF2;
+  --paper-mid:#DDE0E8;
+  --ink:#1B2B4B;
+  --ink-med:#243660;
+  --ink-soft:#6B7390;
+  --ink-faint:#9AA0B4;
+  --ink-ghost:#C4C9D6;
+  --accent:#4A72B8;
+  --accent-warm:#5A82C8;
+  --accent-pale:#EBF0FA;
   --good:#1F5C35;
   --good-pale:#D4EBDC;
   --warn:#8B6800;
@@ -118,7 +118,7 @@ body{
 }
 .hero-body{
   font-size:1rem;
-  color:#A09080;
+  color:#9AA0B4;
   max-width:480px;
   margin:0 auto;
   font-style:italic;
@@ -1073,7 +1073,7 @@ function drawGauge(ratio){
 
   // Zones
   const zones = [
-    {end: 0.4, color: '#C04E22'},
+    {end: 0.4, color: '#5A82C8'},
     {end: 0.7, color: '#C4860A'},
     {end: 1.0, color: '#4A8C60'},
     {end: 1.5, color: '#1F5C35'},
@@ -1099,19 +1099,19 @@ function drawGauge(ratio){
   ctx.beginPath();
   ctx.moveTo(cx, cy);
   ctx.lineTo(nx, ny);
-  ctx.strokeStyle = '#18140F';
+  ctx.strokeStyle = '#1B2B4B';
   ctx.lineWidth = 3;
   ctx.lineCap = 'round';
   ctx.stroke();
 
   ctx.beginPath();
   ctx.arc(cx, cy, 6, 0, Math.PI * 2);
-  ctx.fillStyle = '#18140F';
+  ctx.fillStyle = '#1B2B4B';
   ctx.fill();
 
   // Labels
   ctx.font = `bold ${10 * dpr / dpr}px sans-serif`;
-  ctx.fillStyle = '#A09080';
+  ctx.fillStyle = '#9AA0B4';
   ctx.textAlign = 'center';
   ctx.fillText('0%', cx - r + 4, cy + 18);
   ctx.fillText('100%', cx + r - 4, cy + 18);
@@ -1154,7 +1154,7 @@ function buildWaterfall(need, ss, other, fromSavings, savingsProvides, inflR, ye
 
   // Colors
   const colors = {
-    need: '#C04E22',
+    need: '#5A82C8',
     ss: '#1E4A6E',
     other: '#2D5A3D',
     savings: '#8B6800',
@@ -1267,7 +1267,7 @@ function buildBenchmark(curAge, income, savings){
       fillW = Math.min(100, (savings / target) * 100);
       if(fillW >= 90) barColor = '#4A8C60';
       else if(fillW >= 60) barColor = '#C4860A';
-      else barColor = '#C04E22';
+      else barColor = '#5A82C8';
     } else {
       fillW = 50; // placeholder
       barColor = '#D8CEBC';
