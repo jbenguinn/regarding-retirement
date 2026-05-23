@@ -774,6 +774,7 @@ tbody td:not(:first-child){text-align:right}
 </footer>
 
 <script>
+let _ready=false;
 // ─────────────────────────────────────────────
 // IRS UNIFORM LIFETIME TABLE (Publication 590-B, 2022+)
 // ─────────────────────────────────────────────
@@ -933,9 +934,7 @@ function calculate(){
   // ── INSIGHT ──
   buildInsight(curAge, totalBalance, rows, returnR, isSubject);
 
-  setTimeout(() => {
-    resultsEl.scrollIntoView({behavior:'smooth', block:'start'});
-  }, 100);
+  if(_ready)setTimeout(() => { resultsEl.scrollIntoView({behavior:'smooth', block:'start'}); }, 100);
 }
 
 function fmt(n){
@@ -1129,6 +1128,7 @@ function buildInsight(curAge, totalBalance, rows, returnR, isSubject){
 window.addEventListener('load', ()=>{
   renderAccountRows();
   calculate();
+  _ready=true;
 });
 
 window.addEventListener('resize', ()=>{
