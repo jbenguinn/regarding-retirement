@@ -829,6 +829,7 @@ body{
 </footer>
 
 <script>
+let _ready=false;
 // ── 2026 IRMAA THRESHOLDS ──
 // Part B standard: $202.90/mo
 // Part D — average base: ~$36/mo (used for IRMAA surcharge calculation)
@@ -1102,9 +1103,7 @@ function calculate(){
   // ── INSIGHT ──
   buildInsight(hasPenalty, totalPenaltyMonthly, lifetimePenalty, partBDelayYears, partDDelayMonths, age, irmaa, coverageAnswer);
 
-  setTimeout(() => {
-    resultsEl.scrollIntoView({behavior:'smooth', block:'start'});
-  }, 100);
+  if(_ready)setTimeout(() => { resultsEl.scrollIntoView({behavior:'smooth', block:'start'}); }, 100);
 }
 
 function fmt(n){ return '$' + Math.abs(n).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g,','); }
@@ -1211,6 +1210,8 @@ window.addEventListener('load', () => {
   d.setFullYear(d.getFullYear() - 67);
   $('dob').value = d.toISOString().split('T')[0];
   calculate();
+
+  _ready=true;
 });
 </script>
 </body>
