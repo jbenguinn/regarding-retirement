@@ -1,0 +1,1585 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Am I On Track? — RetirementClarity Score | RegardingRetirement.com</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Source+Serif+4:ital,wght@0,300;0,400;0,600;1,300;1,400&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --cream: #F5F0E8;
+    --cream-dark: #EDE6D6;
+    --ink: #1A1612;
+    --ink-light: #3D342A;
+    --ink-muted: #7A6E62;
+    --rust: #B85C2C;
+    --rust-light: #D4763E;
+    --rust-pale: #F2E4D8;
+    --green: #2D5A3D;
+    --green-light: #4A8C60;
+    --green-pale: #D8EBE0;
+    --amber: #C4860A;
+    --amber-pale: #FBF0D4;
+    --red: #8B2A1A;
+    --red-pale: #F5DDD8;
+    --border: #D4C8B8;
+    --shadow: rgba(26, 22, 18, 0.08);
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Source Serif 4', Georgia, serif;
+    background: var(--cream);
+    color: var(--ink);
+    min-height: 100vh;
+    line-height: 1.6;
+  }
+
+  /* ── HEADER ── */
+  .site-header {
+    background: var(--ink);
+    padding: 1rem 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .logo {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--cream);
+    letter-spacing: 0.02em;
+    text-decoration: none;
+  }
+
+  .logo span {
+    color: var(--rust-light);
+  }
+
+  .header-tag {
+    font-size: 11px;
+    color: var(--ink-muted);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  /* ── HERO ── */
+  .hero {
+    background: var(--ink);
+    padding: 4rem 2rem 3rem;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse at 60% 0%, rgba(184, 92, 44, 0.15) 0%, transparent 60%),
+                radial-gradient(ellipse at 10% 100%, rgba(45, 90, 61, 0.1) 0%, transparent 50%);
+    pointer-events: none;
+  }
+
+  .hero-eyebrow {
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--rust-light);
+    margin-bottom: 1rem;
+    font-family: 'Source Serif 4', serif;
+    font-weight: 300;
+  }
+
+  .hero h1 {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: clamp(2.2rem, 5vw, 3.5rem);
+    font-weight: 700;
+    color: var(--cream);
+    line-height: 1.15;
+    margin-bottom: 1.25rem;
+    position: relative;
+  }
+
+  .hero h1 em {
+    font-style: italic;
+    color: var(--rust-light);
+  }
+
+  .hero-sub {
+    font-size: 1.05rem;
+    color: #B8A898;
+    max-width: 520px;
+    margin: 0 auto 2rem;
+    font-weight: 300;
+    font-style: italic;
+    line-height: 1.7;
+  }
+
+  .hero-meta {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 2rem;
+    flex-wrap: wrap;
+  }
+
+  .hero-meta-item {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    font-size: 13px;
+    color: #8A7A6C;
+    font-weight: 300;
+  }
+
+  .hero-meta-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--rust-light);
+    flex-shrink: 0;
+  }
+
+  /* ── PROGRESS BAR ── */
+  .progress-shell {
+    background: var(--cream-dark);
+    border-bottom: 1px solid var(--border);
+    padding: 1rem 2rem;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+
+  .progress-inner {
+    max-width: 680px;
+    margin: 0 auto;
+  }
+
+  .progress-label {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+  }
+
+  .progress-text {
+    font-size: 12px;
+    color: var(--ink-muted);
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+  }
+
+  .progress-step {
+    font-family: 'Playfair Display', serif;
+    font-size: 13px;
+    color: var(--ink-light);
+  }
+
+  .progress-track {
+    height: 3px;
+    background: var(--border);
+    border-radius: 2px;
+    overflow: hidden;
+  }
+
+  .progress-fill {
+    height: 3px;
+    background: var(--rust);
+    border-radius: 2px;
+    transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    width: 0%;
+  }
+
+  /* ── MAIN CONTENT ── */
+  .main {
+    max-width: 680px;
+    margin: 0 auto;
+    padding: 3rem 2rem 4rem;
+  }
+
+  /* ── QUESTION CARDS ── */
+  .question-card {
+    display: none;
+    animation: fadeSlideUp 0.4s ease forwards;
+  }
+
+  .question-card.active {
+    display: block;
+  }
+
+  @keyframes fadeSlideUp {
+    from { opacity: 0; transform: translateY(16px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .q-number {
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--rust);
+    margin-bottom: 0.75rem;
+    font-weight: 300;
+  }
+
+  .q-text {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1.25rem, 3vw, 1.6rem);
+    font-weight: 600;
+    line-height: 1.35;
+    color: var(--ink);
+    margin-bottom: 0.5rem;
+  }
+
+  .q-sub {
+    font-size: 0.95rem;
+    color: var(--ink-muted);
+    font-style: italic;
+    margin-bottom: 2rem;
+    line-height: 1.6;
+  }
+
+  .options {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    margin-bottom: 2.5rem;
+  }
+
+  .option {
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+    padding: 1rem 1.25rem;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    cursor: pointer;
+    background: white;
+    transition: all 0.2s ease;
+    text-align: left;
+    font-family: 'Source Serif 4', serif;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .option::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 0; bottom: 0;
+    width: 3px;
+    background: var(--rust);
+    transform: scaleY(0);
+    transition: transform 0.2s ease;
+    transform-origin: bottom;
+  }
+
+  .option:hover {
+    border-color: var(--rust-light);
+    background: var(--rust-pale);
+    transform: translateX(3px);
+  }
+
+  .option:hover::before {
+    transform: scaleY(1);
+  }
+
+  .option.selected {
+    border-color: var(--rust);
+    background: var(--rust-pale);
+  }
+
+  .option.selected::before {
+    transform: scaleY(1);
+  }
+
+  .option-radio {
+    width: 18px;
+    height: 18px;
+    border: 1.5px solid var(--border);
+    border-radius: 50%;
+    flex-shrink: 0;
+    margin-top: 2px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+  }
+
+  .option.selected .option-radio {
+    border-color: var(--rust);
+    background: var(--rust);
+  }
+
+  .option.selected .option-radio::after {
+    content: '';
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: white;
+  }
+
+  .option-content {}
+
+  .option-label {
+    font-size: 0.95rem;
+    font-weight: 400;
+    color: var(--ink);
+    line-height: 1.4;
+    display: block;
+    margin-bottom: 2px;
+  }
+
+  .option-hint {
+    font-size: 0.82rem;
+    color: var(--ink-muted);
+    font-style: italic;
+    line-height: 1.4;
+  }
+
+  /* ── NAV BUTTONS ── */
+  .q-nav {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+  }
+
+  .btn-next {
+    padding: 12px 32px;
+    background: var(--ink);
+    color: var(--cream);
+    border: none;
+    border-radius: 4px;
+    font-family: 'Source Serif 4', serif;
+    font-size: 0.95rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    letter-spacing: 0.02em;
+  }
+
+  .btn-next:hover {
+    background: var(--rust);
+    transform: translateY(-1px);
+  }
+
+  .btn-next:disabled {
+    background: var(--border);
+    color: var(--ink-muted);
+    cursor: not-allowed;
+    transform: none;
+  }
+
+  .btn-back {
+    padding: 12px 20px;
+    background: transparent;
+    color: var(--ink-muted);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    font-family: 'Source Serif 4', serif;
+    font-size: 0.95rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+
+  .btn-back:hover {
+    border-color: var(--ink-muted);
+    color: var(--ink);
+  }
+
+  .btn-skip {
+    margin-left: auto;
+    background: none;
+    border: none;
+    font-family: 'Source Serif 4', serif;
+    font-size: 0.85rem;
+    color: var(--ink-muted);
+    cursor: pointer;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+
+  /* ── EMAIL GATE ── */
+  .email-gate {
+    display: none;
+    animation: fadeSlideUp 0.4s ease forwards;
+  }
+
+  .email-gate.active {
+    display: block;
+  }
+
+  .gate-card {
+    background: var(--ink);
+    border-radius: 8px;
+    padding: 2.5rem;
+    text-align: center;
+    color: var(--cream);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .gate-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse at 80% 0%, rgba(184, 92, 44, 0.2) 0%, transparent 60%);
+    pointer-events: none;
+  }
+
+  .gate-icon {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+    display: block;
+  }
+
+  .gate-card h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.75rem;
+    font-weight: 700;
+    margin-bottom: 0.75rem;
+    line-height: 1.2;
+  }
+
+  .gate-card p {
+    font-size: 0.95rem;
+    color: #B8A898;
+    margin-bottom: 2rem;
+    font-weight: 300;
+    font-style: italic;
+    line-height: 1.7;
+    max-width: 420px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .gate-form {
+    display: flex;
+    gap: 0.75rem;
+    max-width: 440px;
+    margin: 0 auto 1rem;
+    flex-wrap: wrap;
+  }
+
+  .gate-input {
+    flex: 1;
+    min-width: 200px;
+    padding: 12px 16px;
+    border: 1px solid rgba(255,255,255,0.15);
+    border-radius: 4px;
+    background: rgba(255,255,255,0.08);
+    color: white;
+    font-family: 'Source Serif 4', serif;
+    font-size: 0.95rem;
+  }
+
+  .gate-input::placeholder { color: rgba(255,255,255,0.35); }
+  .gate-input:focus { outline: none; border-color: var(--rust-light); }
+
+  .btn-reveal {
+    padding: 12px 24px;
+    background: var(--rust);
+    color: white;
+    border: none;
+    border-radius: 4px;
+    font-family: 'Source Serif 4', serif;
+    font-size: 0.95rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    white-space: nowrap;
+  }
+
+  .btn-reveal:hover { background: var(--rust-light); }
+
+  .gate-skip {
+    background: none;
+    border: none;
+    color: rgba(255,255,255,0.35);
+    font-family: 'Source Serif 4', serif;
+    font-size: 0.82rem;
+    cursor: pointer;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    display: block;
+    margin: 0 auto;
+  }
+
+  .gate-promise {
+    font-size: 11px;
+    color: rgba(255,255,255,0.3);
+    margin-top: 1rem;
+    letter-spacing: 0.03em;
+  }
+
+  /* ── RESULTS ── */
+  .results {
+    display: none;
+    animation: fadeSlideUp 0.5s ease forwards;
+  }
+
+  .results.active { display: block; }
+
+  .score-hero {
+    text-align: center;
+    padding: 2.5rem 2rem;
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    margin-bottom: 2rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .score-hero::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 4px;
+    background: var(--score-color, var(--rust));
+  }
+
+  .score-label {
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--ink-muted);
+    margin-bottom: 1rem;
+  }
+
+  .score-circle {
+    width: 140px;
+    height: 140px;
+    border-radius: 50%;
+    border: 6px solid var(--score-color, var(--rust));
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 1.5rem;
+    position: relative;
+    background: white;
+    box-shadow: 0 0 0 12px var(--score-bg, var(--rust-pale));
+  }
+
+  .score-number {
+    font-family: 'Playfair Display', serif;
+    font-size: 3rem;
+    font-weight: 700;
+    line-height: 1;
+    color: var(--score-color, var(--rust));
+  }
+
+  .score-denom {
+    font-size: 12px;
+    color: var(--ink-muted);
+    letter-spacing: 0.05em;
+  }
+
+  .score-grade {
+    display: inline-block;
+    padding: 4px 16px;
+    border-radius: 20px;
+    background: var(--score-bg, var(--rust-pale));
+    color: var(--score-color, var(--rust));
+    font-family: 'Playfair Display', serif;
+    font-size: 1rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    letter-spacing: 0.02em;
+  }
+
+  .score-headline {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: var(--ink);
+    margin-bottom: 0.5rem;
+    line-height: 1.3;
+  }
+
+  .score-summary {
+    font-size: 0.95rem;
+    color: var(--ink-muted);
+    font-style: italic;
+    max-width: 440px;
+    margin: 0 auto;
+    line-height: 1.7;
+  }
+
+  /* Category breakdown */
+  .breakdown-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: var(--ink);
+    margin-bottom: 1.25rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .category-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin-bottom: 2.5rem;
+  }
+
+  .category-item {
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 1.1rem 1.25rem;
+  }
+
+  .category-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 8px;
+    gap: 1rem;
+  }
+
+  .category-name {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--ink);
+    letter-spacing: 0.01em;
+  }
+
+  .category-score-badge {
+    font-family: 'Playfair Display', serif;
+    font-size: 0.85rem;
+    font-weight: 600;
+    padding: 2px 10px;
+    border-radius: 12px;
+    flex-shrink: 0;
+  }
+
+  .badge-green { background: var(--green-pale); color: var(--green); }
+  .badge-amber { background: var(--amber-pale); color: var(--amber); }
+  .badge-red { background: var(--red-pale); color: var(--red); }
+
+  .category-bar-bg {
+    height: 5px;
+    background: var(--cream-dark);
+    border-radius: 3px;
+    overflow: hidden;
+    margin-bottom: 6px;
+  }
+
+  .category-bar-fill {
+    height: 5px;
+    border-radius: 3px;
+    transition: width 1s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .bar-green { background: var(--green-light); }
+  .bar-amber { background: var(--amber); }
+  .bar-red { background: var(--red); }
+
+  .category-note {
+    font-size: 0.82rem;
+    color: var(--ink-muted);
+    font-style: italic;
+    line-height: 1.5;
+  }
+
+  /* Video recommendations */
+  .rec-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: var(--ink);
+    margin-bottom: 1.25rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .rec-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    margin-bottom: 2.5rem;
+  }
+
+  .rec-item {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem 1.25rem;
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    text-decoration: none;
+    color: var(--ink);
+    transition: all 0.2s ease;
+  }
+
+  .rec-item:hover {
+    border-color: var(--rust-light);
+    transform: translateX(4px);
+    background: var(--rust-pale);
+  }
+
+  .rec-icon {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: var(--rust-pale);
+    color: var(--rust);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1rem;
+    flex-shrink: 0;
+  }
+
+  .rec-content {}
+
+  .rec-priority {
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--rust);
+    font-weight: 300;
+    margin-bottom: 2px;
+  }
+
+  .rec-video-title {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--ink);
+    line-height: 1.3;
+  }
+
+  /* CTA */
+  .results-cta {
+    background: var(--ink);
+    border-radius: 8px;
+    padding: 2rem;
+    text-align: center;
+    color: var(--cream);
+  }
+
+  .results-cta h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.4rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+  }
+
+  .results-cta p {
+    font-size: 0.9rem;
+    color: #B8A898;
+    font-style: italic;
+    margin-bottom: 1.5rem;
+  }
+
+  .btn-youtube {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 28px;
+    background: var(--rust);
+    color: white;
+    border: none;
+    border-radius: 4px;
+    font-family: 'Source Serif 4', serif;
+    font-size: 0.95rem;
+    font-weight: 600;
+    cursor: pointer;
+    text-decoration: none;
+    transition: all 0.2s ease;
+  }
+
+  .btn-youtube:hover { background: var(--rust-light); }
+
+  .btn-retake {
+    display: block;
+    margin: 1rem auto 0;
+    background: none;
+    border: none;
+    color: rgba(255,255,255,0.4);
+    font-family: 'Source Serif 4', serif;
+    font-size: 0.82rem;
+    cursor: pointer;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+
+  /* ── FOOTER ── */
+  .site-footer {
+    background: var(--ink-light);
+    padding: 2rem;
+    text-align: center;
+  }
+
+  .footer-logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 1rem;
+    color: var(--cream);
+    margin-bottom: 0.5rem;
+  }
+
+  .footer-logo span { color: var(--rust-light); }
+
+  .footer-text {
+    font-size: 12px;
+    color: var(--ink-muted);
+    line-height: 1.6;
+    max-width: 400px;
+    margin: 0 auto;
+  }
+
+  .divider {
+    width: 40px;
+    height: 1px;
+    background: var(--border);
+    margin: 1.25rem auto;
+  }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 520px) {
+    .hero { padding: 3rem 1.25rem 2.5rem; }
+    .main { padding: 2rem 1.25rem 3rem; }
+    .gate-form { flex-direction: column; }
+    .gate-input { min-width: unset; }
+    .score-circle { width: 120px; height: 120px; }
+    .score-number { font-size: 2.5rem; }
+    .hero-meta { gap: 1rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header class="site-header">
+  <a href="/" class="logo">Regarding<span>Retirement</span>.com</a>
+  <span class="header-tag">Free Assessment</span>
+</header>
+
+<!-- HERO -->
+<section class="hero">
+  <p class="hero-eyebrow">RetirementClarity Score</p>
+  <h1>Am I <em>actually</em> on track<br>for retirement?</h1>
+  <p class="hero-sub">8 questions. 90 seconds. An honest answer — with a personalized plan for what to do next.</p>
+  <div class="hero-meta">
+    <div class="hero-meta-item"><div class="hero-meta-dot"></div>Free — no obligation</div>
+    <div class="hero-meta-item"><div class="hero-meta-dot"></div>8 questions</div>
+    <div class="hero-meta-item"><div class="hero-meta-dot"></div>Instant score</div>
+  </div>
+</section>
+
+<!-- PROGRESS -->
+<div class="progress-shell" id="progressShell" style="display:none">
+  <div class="progress-inner">
+    <div class="progress-label">
+      <span class="progress-text">Your Progress</span>
+      <span class="progress-step" id="progressStep">Question 1 of 8</span>
+    </div>
+    <div class="progress-track">
+      <div class="progress-fill" id="progressFill"></div>
+    </div>
+  </div>
+</div>
+
+<!-- MAIN -->
+<main class="main" id="mainContent">
+
+  <!-- START SCREEN -->
+  <div id="startScreen">
+    <div style="text-align:center; padding: 1rem 0 2.5rem;">
+      <p style="font-size:1.05rem; color:var(--ink-muted); font-style:italic; max-width:520px; margin:0 auto 2rem; line-height:1.8;">
+        Most people heading into retirement have a feeling about whether they're prepared — but not an actual picture. This assessment gives you that picture, clearly and honestly, in about 90 seconds.
+      </p>
+      <div style="display:flex; flex-direction:column; gap:0.75rem; max-width:400px; margin:0 auto 2rem; text-align:left;">
+        <div style="display:flex;gap:12px;align-items:flex-start;padding:1rem;background:white;border:1px solid var(--border);border-radius:6px;">
+          <span style="font-size:1.25rem;flex-shrink:0;">📊</span>
+          <div><strong style="font-size:0.9rem;display:block;margin-bottom:3px;">Your RetirementClarity Score</strong><span style="font-size:0.82rem;color:var(--ink-muted);font-style:italic;">A score out of 100 across 6 key retirement categories</span></div>
+        </div>
+        <div style="display:flex;gap:12px;align-items:flex-start;padding:1rem;background:white;border:1px solid var(--border);border-radius:6px;">
+          <span style="font-size:1.25rem;flex-shrink:0;">🎯</span>
+          <div><strong style="font-size:0.9rem;display:block;margin-bottom:3px;">Your Specific Gaps</strong><span style="font-size:0.82rem;color:var(--ink-muted);font-style:italic;">Exactly which areas need attention before you retire</span></div>
+        </div>
+        <div style="display:flex;gap:12px;align-items:flex-start;padding:1rem;background:white;border:1px solid var(--border);border-radius:6px;">
+          <span style="font-size:1.25rem;flex-shrink:0;">▶️</span>
+          <div><strong style="font-size:0.9rem;display:block;margin-bottom:3px;">Your Personalized Video Plan</strong><span style="font-size:0.82rem;color:var(--ink-muted);font-style:italic;">The exact videos that address your specific situation</span></div>
+        </div>
+      </div>
+      <button class="btn-next" onclick="startAssessment()" style="padding:14px 48px;font-size:1rem;">Begin the Assessment</button>
+      <p style="font-size:12px;color:var(--ink-muted);margin-top:1rem;font-style:italic;">No account required. Takes about 90 seconds.</p>
+    </div>
+  </div>
+
+  <!-- QUESTIONS -->
+  <div id="questionsContainer" style="display:none">
+
+    <!-- Q1 -->
+    <div class="question-card" id="q1">
+      <p class="q-number">Question 1 of 8</p>
+      <h2 class="q-text">How old are you, and when do you plan to retire?</h2>
+      <p class="q-sub">This helps us understand your timeline and how much runway you have to make adjustments.</p>
+      <div class="options">
+        <button class="option" onclick="selectOption(this, 'q1', 3)">
+          <div class="option-radio"></div>
+          <div class="option-content">
+            <span class="option-label">I'm 55 or younger — retirement is 10+ years away</span>
+            <span class="option-hint">Plenty of time to course-correct</span>
+          </div>
+        </button>
+        <button class="option" onclick="selectOption(this, 'q1', 2)">
+          <div class="option-radio"></div>
+          <div class="option-content">
+            <span class="option-label">I'm 56–62 — retirement is 5–10 years away</span>
+            <span class="option-hint">The critical planning window is open</span>
+          </div>
+        </button>
+        <button class="option" onclick="selectOption(this, 'q1', 1)">
+          <div class="option-radio"></div>
+          <div class="option-content">
+            <span class="option-label">I'm 63–67 — retirement is within 5 years</span>
+            <span class="option-hint">Decisions made now have permanent consequences</span>
+          </div>
+        </button>
+        <button class="option" onclick="selectOption(this, 'q1', 0)">
+          <div class="option-radio"></div>
+          <div class="option-content">
+            <span class="option-label">I'm 68 or older — I'm already retired or very close</span>
+            <span class="option-hint">Focus shifts to income optimization</span>
+          </div>
+        </button>
+      </div>
+      <div class="q-nav">
+        <button class="btn-next" id="next1" onclick="nextQuestion(2)" disabled>Next Question →</button>
+      </div>
+    </div>
+
+    <!-- Q2 -->
+    <div class="question-card" id="q2">
+      <p class="q-number">Question 2 of 8</p>
+      <h2 class="q-text">Do you know your full Social Security retirement age — and have you looked up your estimated benefit?</h2>
+      <p class="q-sub">According to the Nationwide Retirement Institute, only 1 in 5 Americans can correctly answer this.</p>
+      <div class="options">
+        <button class="option" onclick="selectOption(this, 'q2', 3)">
+          <div class="option-radio"></div>
+          <div class="option-content">
+            <span class="option-label">Yes — I know my full retirement age and have checked my estimated benefit on SSA.gov</span>
+            <span class="option-hint">You're ahead of 80% of Americans</span>
+          </div>
+        </button>
+        <button class="option" onclick="selectOption(this, 'q2', 2)">
+          <div class="option-radio"></div>
+          <div class="option-content">
+            <span class="option-label">I know my full retirement age but haven't checked my estimated benefit</span>
+            <span class="option-hint">Halfway there — the benefit estimate matters a lot</span>
+          </div>
+        </button>
+        <button class="option" onclick="selectOption(this, 'q2', 1)">
+          <div class="option-radio"></div>
+          <div class="option-content">
+            <span class="option-label">I have a rough sense but haven't looked it up officially</span>
+            <span class="option-hint">Worth spending 10 minutes on SSA.gov</span>
+          </div>
+        </button>
+        <button class="option" onclick="selectOption(this, 'q2', 0)">
+          <div class="option-radio"></div>
+          <div class="option-content">
+            <span class="option-label">Honestly, I'm not sure what my full retirement age is</span>
+            <span class="option-hint">Very common — this is fixable quickly</span>
+          </div>
+        </button>
+      </div>
+      <div class="q-nav">
+        <button class="btn-back" onclick="prevQuestion(1)">← Back</button>
+        <button class="btn-next" id="next2" onclick="nextQuestion(3)" disabled>Next Question →</button>
+      </div>
+    </div>
+
+    <!-- Q3 -->
+    <div class="question-card" id="q3">
+      <p class="q-number">Question 3 of 8</p>
+      <h2 class="q-text">How would you describe your current retirement savings relative to your income?</h2>
+      <p class="q-sub">Fidelity suggests 8x your salary by age 60, and 10x by age 67. This is a general benchmark, not a guarantee.</p>
+      <div class="options">
+        <button class="option" onclick="selectOption(this, 'q3', 3)">
+          <div class="option-radio"></div>
+          <div class="option-content">
+            <span class="option-label">I'm at or ahead of the benchmarks for my age</span>
+            <span class="option-hint">Strong position — focus is on optimization</span>
+          </div>
+        </button>
+        <button class="option" onclick="selectOption(this, 'q3', 2)">
+          <div class="option-radio"></div>
+          <div class="option-content">
+            <span class="option-label">I'm somewhat behind but actively contributing</span>
+            <span class="option-hint">A plan to close the gap is very achievable</span>
+          </div>
+        </button>
+        <button class="option" onclick="selectOption(this, 'q3', 1)">
+          <div class="option-radio"></div>
+          <div class="option-content">
+            <span class="option-label">I'm significantly behind and not sure how to catch up</span>
+            <span class="option-hint">More common than you'd think — options exist</span>
+          </div>
+        </button>
+        <button class="option" onclick="selectOption(this, 'q3', 0)">
+          <div class="option-radio"></div>
+          <div class="option-content">
+            <span class="option-label">I'm not sure where I stand relative to any benchmark</span>
+            <span class="option-hint">Not knowing is the first problem to solve</span>
+          </div>
+        </button>
+      </div>
+      <div class="q-nav">
+        <button class="btn-back" onclick="prevQuestion(2)">← Back</button>
+        <button class="btn-next" id="next3" onclick="nextQuestion(4)" disabled>Next Question →</button>
+      </div>
+    </div>
+
+    <!-- Q4 -->
+    <div class="question-card" id="q4">
+      <p class="q-number">Question 4 of 8</p>
+      <h2 class="q-text">Do you have a clear plan for how Medicare will work for you — and when to enroll?</h2>
+      <p class="q-sub">Millions of Americans are paying permanent Medicare penalties because they missed an enrollment window they didn't know existed.</p>
+      <div class="options">
+        <button class="option" onclick="selectOption(this, 'q4', 3)">
+          <div class="option-radio"></div>
+          <div class="option-content">
+            <span class="option-label">Yes — I understand Parts A, B, C, and D and know my enrollment dates</span>
+            <span class="option-hint">Well prepared on a topic most people ignore</span>
+          </div>
+        </button>
+        <button class="option" onclick="selectOption(this, 'q4', 2)">
+          <div class="option-radio"></div>
+          <div class="option-content">
+            <span class="option-label">I understand the basics but haven't nailed down my specific plan</span>
+            <span class="option-hint">Good start — the details matter here</span>
+          </div>
+        </button>
+        <button class="option" onclick="selectOption(this, 'q4', 1)">
+          <div class="option-radio"></div>
+          <div class="option-content">
+            <span class="option-label">Medicare confuses me — I know I need to figure it out</span>
+            <span class="option-hint">Very honest answer. The confusion is understandable.</span>
+          </div>
+        </button>
+        <button class="option" onclick="selectOption(this, 'q4', 0)">
+          <div class="option-radio"></div>
+          <div class="option-content">
+            <span class="option-label">I haven't really looked into Medicare yet</span>
+            <span class="option-hint">This needs attention before you reach 64½</span>
+          </div>
+        </button>
+      </div>
+      <div class="q-nav">
+        <button class="btn-back" onclick="prevQuestion(3)">← Back</button>
+        <button class="btn-next" id="next4" onclick="nextQuestion(5)" disabled>Next Question →</button>
+      </div>
+    </div>
+
+    <!-- Q5 -->
+    <div class="question-card" id="q5">
+      <p class="q-number">Question 5 of 8</p>
+      <h2 class="q-text">Have you factored healthcare costs into your retirement plan?</h2>
+      <p class="q-sub">Fidelity estimates the average 65-year-old needs $172,000 in after-tax savings for healthcare in retirement — not counting long-term care.</p>
+      <div class="options">
+        <button class="option" onclick="selectOption(this, 'q5', 3)">
+          <div class="option-radio"></div>
+          <div class="option-content">
+            <span class="option-label">Yes — I have a specific dollar estimate and savings earmarked for healthcare</span>
+            <span class="option-hint">Most people never get this specific</span>
+          </div>
+        </button>
+        <button class="option" onclick="selectOption(this, 'q5', 2)">
+          <div class="option-radio"></div>
+          <div class="option-content">
+            <span class="option-label">I know healthcare will be a big cost and I've tried to account for it generally</span>
+            <span class="option-hint">Good awareness — worth making it more specific</span>
+          </div>
+        </button>
+        <button class="option" onclick="selectOption(this, 'q5', 1)">
+          <div class="option-radio"></div>
+          <div class="option-content">
+            <span class="option-label">I've thought about it but I'm honestly not sure how much to plan for</span>
+            <span class="option-hint">Very common — this is a confusing area</span>
+          </div>
+        </button>
+        <button class="option" onclick="selectOption(this, 'q5', 0)">
+          <div class="option-radio"></div>
+          <div class="option-content">
+            <span class="option-label">I've mostly assumed Medicare will cover what I need</span>
+            <span class="option-hint">This is the most common — and most costly — assumption</span>
+          </div>
+        </button>
+      </div>
+      <div class="q-nav">
+        <button class="btn-back" onclick="prevQuestion(4)">← Back</button>
+        <button class="btn-next" id="next5" onclick="nextQuestion(6)" disabled>Next Question →</button>
+      </div>
+    </div>
+
+    <!-- Q6 -->
+    <div class="question-card" id="q6">
+      <p class="q-number">Question 6 of 8</p>
+      <h2 class="q-text">Do you have a plan for turning your savings into monthly income in retirement?</h2>
+      <p class="q-sub">JPMorgan Chase found that 84% of retirees only withdraw the minimum required — often leaving money on the table or running short.</p>
+      <div class="options">
+        <button class="option" onclick="selectOption(this, 'q6', 3)">
+          <div class="option-radio"></div>
+          <div class="option-content">
+            <span class="option-label">Yes — I have a written withdrawal strategy that covers sequence of returns, tax brackets, and RMDs</span>
+            <span class="option-hint">Genuinely well-prepared</span>
+          </div>
+        </button>
+        <button class="option" onclick="selectOption(this, 'q6', 2)">
+          <div class="option-radio"></div>
+          <div class="option-content">
+            <span class="option-label">I have a general plan — I know roughly what I'll draw from and when</span>
+            <span class="option-hint">A solid start that needs formalizing</span>
+          </div>
+        </button>
+        <button class="option" onclick="selectOption(this, 'q6', 1)">
+          <div class="option-radio"></div>
+          <div class="option-content">
+            <span class="option-label">I haven't worked out the details yet — it's on the list</span>
+            <span class="option-hint">This is the most common answer</span>
+          </div>
+        </button>
+        <button class="option" onclick="selectOption(this, 'q6', 0)">
+          <div class="option-radio"></div>
+          <div class="option-content">
+            <span class="option-label">Honestly, I'm not sure how to turn savings into a paycheck — I'll figure it out when I get there</span>
+            <span class="option-hint">Most people feel this way — it's more complex than it looks</span>
+          </div>
+        </button>
+      </div>
+      <div class="q-nav">
+        <button class="btn-back" onclick="prevQuestion(5)">← Back</button>
+        <button class="btn-next" id="next6" onclick="nextQuestion(7)" disabled>Next Question →</button>
+      </div>
+    </div>
+
+    <!-- Q7 -->
+    <div class="question-card" id="q7">
+      <p class="q-number">Question 7 of 8</p>
+      <h2 class="q-text">Have you thought about how inflation will affect your retirement income over 20–30 years?</h2>
+      <p class="q-sub">Social Security benefits have lost roughly 20% of their buying power since 2010, according to the Senior Citizens League.</p>
+      <div class="options">
+        <button class="option" onclick="selectOption(this, 'q7', 3)">
+          <div class="option-radio"></div>
+          <div class="option-content">
+            <span class="option-label">Yes — I have inflation-hedged investments and my plan accounts for rising costs</span>
+            <span class="option-hint">Most people skip this step entirely</span>
+          </div>
+        </button>
+        <button class="option" onclick="selectOption(this, 'q7', 2)">
+          <div class="option-radio"></div>
+          <div class="option-content">
+            <span class="option-label">I'm aware of inflation risk and try to stay invested in growth assets</span>
+            <span class="option-hint">Good instinct — worth making it more explicit in your plan</span>
+          </div>
+        </button>
+        <button class="option" onclick="selectOption(this, 'q7', 1)">
+          <div class="option-radio"></div>
+          <div class="option-content">
+            <span class="option-label">I know it's an issue but I'm not sure what to do about it</span>
+            <span class="option-hint">Very common — and very addressable</span>
+          </div>
+        </button>
+        <button class="option" onclick="selectOption(this, 'q7', 0)">
+          <div class="option-radio"></div>
+          <div class="option-content">
+            <span class="option-label">I haven't really factored inflation into my plan</span>
+            <span class="option-hint">This is the silent risk most plans miss</span>
+          </div>
+        </button>
+      </div>
+      <div class="q-nav">
+        <button class="btn-back" onclick="prevQuestion(6)">← Back</button>
+        <button class="btn-next" id="next7" onclick="nextQuestion(8)" disabled>Next Question →</button>
+      </div>
+    </div>
+
+    <!-- Q8 -->
+    <div class="question-card" id="q8">
+      <p class="q-number">Question 8 of 8</p>
+      <h2 class="q-text">How would you describe your overall feeling about retirement readiness?</h2>
+      <p class="q-sub">There's no wrong answer here — this helps us calibrate your personalized plan.</p>
+      <div class="options">
+        <button class="option" onclick="selectOption(this, 'q8', 3)">
+          <div class="option-radio"></div>
+          <div class="option-content">
+            <span class="option-label">I feel genuinely confident — I have a clear plan and I'm following it</span>
+            <span class="option-hint">That confidence should be validated or refined</span>
+          </div>
+        </button>
+        <button class="option" onclick="selectOption(this, 'q8', 2)">
+          <div class="option-radio"></div>
+          <div class="option-content">
+            <span class="option-label">I think I'm okay, but I have lingering doubts I'd like to resolve</span>
+            <span class="option-hint">The most productive place to be</span>
+          </div>
+        </button>
+        <button class="option" onclick="selectOption(this, 'q8', 1)">
+          <div class="option-radio"></div>
+          <div class="option-content">
+            <span class="option-label">I'm honestly worried — there are gaps I know I haven't addressed</span>
+            <span class="option-hint">Naming it is the first step to fixing it</span>
+          </div>
+        </button>
+        <button class="option" onclick="selectOption(this, 'q8', 0)">
+          <div class="option-radio"></div>
+          <div class="option-content">
+            <span class="option-label">I try not to think about it — it feels overwhelming</span>
+            <span class="option-hint">You're not alone. Clarity is less scary than the unknown.</span>
+          </div>
+        </button>
+      </div>
+      <div class="q-nav">
+        <button class="btn-back" onclick="prevQuestion(7)">← Back</button>
+        <button class="btn-next" id="next8" onclick="showEmailGate()" disabled>See My Score →</button>
+      </div>
+    </div>
+
+  </div><!-- /questionsContainer -->
+
+  <!-- EMAIL GATE -->
+  <div class="email-gate" id="emailGate">
+    <div class="gate-card">
+      <span class="gate-icon">📬</span>
+      <h2>Your score is ready.</h2>
+      <p>Enter your email to see your RetirementClarity Score, your category breakdown, and your personalized video plan. We send one email per week — no spam, no sales pitch, ever.</p>
+      <div class="gate-form">
+        <input type="email" class="gate-input" id="emailInput" placeholder="your@email.com" />
+        <button class="btn-reveal" onclick="revealResults()">Show My Score</button>
+      </div>
+      <button class="gate-skip" onclick="revealResults()">Skip — show my score without saving it</button>
+      <p class="gate-promise">🔒 We respect your privacy. Unsubscribe anytime.</p>
+    </div>
+  </div>
+
+  <!-- RESULTS -->
+  <div class="results" id="resultsPanel">
+
+    <div class="score-hero" id="scoreHero">
+      <p class="score-label">Your RetirementClarity Score</p>
+      <div class="score-circle" id="scoreCircle">
+        <span class="score-number" id="scoreNumber">--</span>
+        <span class="score-denom">out of 100</span>
+      </div>
+      <span class="score-grade" id="scoreGrade">Calculating...</span>
+      <h2 class="score-headline" id="scoreHeadline">Loading your results...</h2>
+      <p class="score-summary" id="scoreSummary"></p>
+    </div>
+
+    <p class="breakdown-title">Your Score by Category</p>
+    <div class="category-list" id="categoryList"></div>
+
+    <p class="rec-title">Videos Recommended for Your Situation</p>
+    <div class="rec-list" id="recList"></div>
+
+    <div class="results-cta">
+      <h3>Ready to close the gaps?</h3>
+      <p>Every video is free, sourced, and built specifically for people in your situation.</p>
+      <a href="https://youtube.com/@RetirementClarity" class="btn-youtube">
+        ▶ Watch on RetirementClarity
+      </a>
+      <button class="btn-retake" onclick="retake()">Retake the assessment</button>
+    </div>
+
+  </div>
+
+</main>
+
+<!-- FOOTER -->
+<footer class="site-footer">
+  <p class="footer-logo">Regarding<span>Retirement</span>.com</p>
+  <div class="divider"></div>
+  <p class="footer-text">Free retirement education for Americans 55+. No financial advice. No sales pitch. Just clarity.<br><br>This site is for educational purposes only. Please consult a qualified, fee-only fiduciary advisor before making retirement decisions.</p>
+</footer>
+
+<script>
+// ── STATE ──
+const answers = {};
+let currentQ = 0;
+
+// ── SCORING CONFIG ──
+const categories = [
+  { id: 'timeline',    label: 'Retirement Timeline',       qs: [1],    icon: '📅' },
+  { id: 'ss',          label: 'Social Security Knowledge', qs: [2],    icon: '💰' },
+  { id: 'savings',     label: 'Savings & Benchmarks',      qs: [3],    icon: '🏦' },
+  { id: 'medicare',    label: 'Medicare Preparedness',     qs: [4, 5], icon: '🏥' },
+  { id: 'income',      label: 'Retirement Income Plan',    qs: [6],    icon: '📊' },
+  { id: 'inflation',   label: 'Inflation Awareness',       qs: [7, 8], icon: '📈' },
+];
+
+const videoRecs = [
+  { title: 'When to Take Social Security: 62, 67, or 70',      category: 'ss',       url: '#' },
+  { title: 'Social Security and Medicare — Why Timing Matters', category: 'medicare', url: '#' },
+  { title: 'What Medicare Actually Covers (And the Gaps)',       category: 'medicare', url: '#' },
+  { title: 'What Happens to Your 401k When You Retire',          category: 'income',   url: '#' },
+  { title: 'How Much Money Do You Actually Need to Retire?',     category: 'savings',  url: '#' },
+  { title: 'How to Create a Retirement Paycheck',                category: 'income',   url: '#' },
+  { title: 'How Inflation Is Quietly Destroying Retirement Savings', category: 'inflation', url: '#' },
+  { title: 'The Biggest Retirement Mistakes at 60',              category: 'savings',  url: '#' },
+  { title: 'Roth Conversion — Should You Do It Before You Retire?', category: 'income', url: '#' },
+  { title: 'Medicare Explained: Parts A, B, C, and D',           category: 'medicare', url: '#' },
+];
+
+// ── FUNCTIONS ──
+function startAssessment() {
+  document.getElementById('startScreen').style.display = 'none';
+  document.getElementById('questionsContainer').style.display = 'block';
+  document.getElementById('progressShell').style.display = 'block';
+  showQuestion(1);
+}
+
+function showQuestion(n) {
+  document.querySelectorAll('.question-card').forEach(c => c.classList.remove('active'));
+  const card = document.getElementById('q' + n);
+  if (card) {
+    card.classList.add('active');
+    currentQ = n;
+    updateProgress(n);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+}
+
+function updateProgress(n) {
+  const pct = ((n - 1) / 8) * 100;
+  document.getElementById('progressFill').style.width = pct + '%';
+  document.getElementById('progressStep').textContent = 'Question ' + n + ' of 8';
+}
+
+function selectOption(el, qId, score) {
+  const card = document.getElementById(qId);
+  card.querySelectorAll('.option').forEach(o => o.classList.remove('selected'));
+  el.classList.add('selected');
+  answers[qId] = score;
+  const qNum = parseInt(qId.replace('q', ''));
+  const btn = document.getElementById('next' + qNum);
+  if (btn) btn.disabled = false;
+}
+
+function nextQuestion(n) {
+  showQuestion(n);
+}
+
+function prevQuestion(n) {
+  showQuestion(n);
+}
+
+function showEmailGate() {
+  document.getElementById('questionsContainer').style.display = 'none';
+  document.getElementById('progressShell').style.display = 'none';
+  const gate = document.getElementById('emailGate');
+  gate.classList.add('active');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function revealResults() {
+  document.getElementById('emailGate').classList.remove('active');
+  document.getElementById('emailGate').style.display = 'none';
+  buildResults();
+  const results = document.getElementById('resultsPanel');
+  results.classList.add('active');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+  animateScore();
+}
+
+function buildResults() {
+  const rawScore = calculateScore();
+  const { color, bgColor, grade, headline, summary } = getScoreMeta(rawScore);
+
+  // Style the score circle
+  const hero = document.getElementById('scoreHero');
+  hero.style.setProperty('--score-color', color);
+  hero.style.setProperty('--score-bg', bgColor);
+
+  document.getElementById('scoreNumber').textContent = rawScore;
+  document.getElementById('scoreNumber').style.color = color;
+  document.getElementById('scoreCircle').style.borderColor = color;
+  document.getElementById('scoreCircle').style.boxShadow = '0 0 0 12px ' + bgColor;
+
+  const gradeEl = document.getElementById('scoreGrade');
+  gradeEl.textContent = grade;
+  gradeEl.style.background = bgColor;
+  gradeEl.style.color = color;
+
+  document.getElementById('scoreHeadline').textContent = headline;
+  document.getElementById('scoreSummary').textContent = summary;
+
+  // Category breakdown
+  const catList = document.getElementById('categoryList');
+  catList.innerHTML = '';
+  categories.forEach(cat => {
+    const scores = cat.qs.map(q => answers['q' + q] !== undefined ? answers['q' + q] : 1);
+    const maxPossible = cat.qs.length * 3;
+    const total = scores.reduce((a, b) => a + b, 0);
+    const pct = Math.round((total / maxPossible) * 100);
+    const { barClass, badgeClass, label: catLabel } = getCatMeta(pct);
+
+    const item = document.createElement('div');
+    item.className = 'category-item';
+    item.innerHTML = `
+      <div class="category-top">
+        <span class="category-name">${cat.icon} ${cat.label}</span>
+        <span class="category-score-badge ${badgeClass}">${catLabel}</span>
+      </div>
+      <div class="category-bar-bg">
+        <div class="category-bar-fill ${barClass}" style="width:0%" data-width="${pct}%"></div>
+      </div>
+      <p class="category-note">${getCatNote(cat.id, pct)}</p>
+    `;
+    catList.appendChild(item);
+  });
+
+  // Animate bars after slight delay
+  setTimeout(() => {
+    document.querySelectorAll('.category-bar-fill').forEach(bar => {
+      bar.style.width = bar.dataset.width;
+    });
+  }, 300);
+
+  // Video recommendations — find weakest categories
+  const weakCats = categories
+    .map(cat => {
+      const scores = cat.qs.map(q => answers['q' + q] !== undefined ? answers['q' + q] : 1);
+      const maxPossible = cat.qs.length * 3;
+      const total = scores.reduce((a, b) => a + b, 0);
+      return { id: cat.id, pct: Math.round((total / maxPossible) * 100) };
+    })
+    .sort((a, b) => a.pct - b.pct)
+    .slice(0, 3)
+    .map(c => c.id);
+
+  const recs = videoRecs
+    .filter(v => weakCats.includes(v.category))
+    .slice(0, 4);
+
+  const recList = document.getElementById('recList');
+  recList.innerHTML = '';
+  recs.forEach((rec, i) => {
+    const item = document.createElement('a');
+    item.href = rec.url;
+    item.className = 'rec-item';
+    item.innerHTML = `
+      <div class="rec-icon">▶</div>
+      <div class="rec-content">
+        <p class="rec-priority">${i === 0 ? 'Watch First' : 'Recommended'}</p>
+        <p class="rec-video-title">${rec.title}</p>
+      </div>
+    `;
+    recList.appendChild(item);
+  });
+}
+
+function calculateScore() {
+  const qKeys = Object.keys(answers);
+  if (qKeys.length === 0) return 50;
+  const total = qKeys.reduce((sum, k) => sum + answers[k], 0);
+  const maxPossible = qKeys.length * 3;
+  return Math.round((total / maxPossible) * 100);
+}
+
+function animateScore() {
+  const target = calculateScore();
+  const el = document.getElementById('scoreNumber');
+  let current = 0;
+  const step = target / 40;
+  const timer = setInterval(() => {
+    current = Math.min(current + step, target);
+    el.textContent = Math.round(current);
+    if (current >= target) clearInterval(timer);
+  }, 30);
+}
+
+function getScoreMeta(score) {
+  if (score >= 75) return {
+    color: 'var(--green)',
+    bgColor: 'var(--green-pale)',
+    grade: 'Well Prepared',
+    headline: 'You\'re in a strong position.',
+    summary: 'Your answers suggest solid retirement awareness across most categories. The videos below will help you optimize and close any remaining gaps.'
+  };
+  if (score >= 45) return {
+    color: 'var(--amber)',
+    bgColor: 'var(--amber-pale)',
+    grade: 'Needs Attention',
+    headline: 'You\'re on the right track — but there are gaps worth addressing.',
+    summary: 'You\'re more prepared than most Americans, but there are specific areas where a little clarity now could save significant money later. Your personalized video plan is below.'
+  };
+  return {
+    color: 'var(--red)',
+    bgColor: 'var(--red-pale)',
+    grade: 'Action Needed',
+    headline: 'There are some important gaps to address — and the good news is, you\'re here.',
+    summary: 'The most dangerous retirement situation isn\'t having gaps — it\'s not knowing where they are. You now know. The videos below address your specific situation directly.'
+  };
+}
+
+function getCatMeta(pct) {
+  if (pct >= 70) return { barClass: 'bar-green', badgeClass: 'badge-green', label: 'Strong' };
+  if (pct >= 40) return { barClass: 'bar-amber', badgeClass: 'badge-amber', label: 'Review Needed' };
+  return { barClass: 'bar-red', badgeClass: 'badge-red', label: 'Action Needed' };
+}
+
+function getCatNote(id, pct) {
+  const notes = {
+    timeline: {
+      high: 'Your timeline gives you good planning runway.',
+      mid: 'You\'re in the critical 5–10 year planning window — decisions made now matter most.',
+      low: 'You\'re close to or already in retirement — focus is on income optimization and protection.'
+    },
+    ss: {
+      high: 'You know the foundation of one of your most valuable retirement assets.',
+      mid: 'Knowing your estimated benefit is worth 30 minutes on SSA.gov.',
+      low: 'This is the most impactful knowledge gap to close first — visit SSA.gov.'
+    },
+    savings: {
+      high: 'Strong savings position — focus on withdrawal strategy and tax optimization.',
+      mid: 'Catch-up contributions over 50 are substantial — worth maximizing.',
+      low: 'Knowing your specific gap is the first step — our Savings Gap Calculator can help.'
+    },
+    medicare: {
+      high: 'Medicare preparedness is rare — you\'re ahead of most people your age.',
+      mid: 'The details matter here — enrollment timing can affect lifetime premiums.',
+      low: 'Medicare has permanent penalties for missed deadlines — this needs attention soon.'
+    },
+    income: {
+      high: 'A written income plan is genuinely rare and genuinely valuable.',
+      mid: 'The bucket strategy and 4% rule are worth understanding in detail.',
+      low: 'Turning savings into income is a learnable skill — our videos cover this clearly.'
+    },
+    inflation: {
+      high: 'Inflation-aware planning is the difference between a 20-year and a 30-year retirement.',
+      mid: 'Staying invested in growth assets is the right instinct — worth formalizing.',
+      low: 'Social Security benefits lost 20% of buying power since 2010 — inflation is real.'
+    }
+  };
+  const n = notes[id];
+  if (!n) return '';
+  if (pct >= 70) return n.high;
+  if (pct >= 40) return n.mid;
+  return n.low;
+}
+
+function retake() {
+  Object.keys(answers).forEach(k => delete answers[k]);
+  document.getElementById('resultsPanel').classList.remove('active');
+  document.getElementById('emailGate').style.display = '';
+  document.getElementById('emailGate').classList.remove('active');
+  document.getElementById('questionsContainer').style.display = 'block';
+  document.querySelectorAll('.option').forEach(o => o.classList.remove('selected'));
+  document.querySelectorAll('.btn-next').forEach(b => b.disabled = true);
+  document.getElementById('progressShell').style.display = 'block';
+  showQuestion(1);
+}
+</script>
+</body>
+</html>
