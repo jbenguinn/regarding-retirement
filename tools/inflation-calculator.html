@@ -277,6 +277,7 @@ canvas{width:100%!important;}
 </footer>
 
 <script>
+let _ready=false;
 const $=id=>document.getElementById(id);
 let currentRate=3;
 
@@ -358,7 +359,7 @@ function calculate(){
   const ssReal20=pv(ss*(1+0.025*20),rate,20); // SS gets COLA
   $('insightText').innerHTML=`At <strong>${rate}%</strong> inflation, your savings of <strong>${fmtD(savings)}</strong> will have the purchasing power of <strong>${fmtD(real20)}</strong> in 20 years — a real loss of <strong>${fmtD(savings-real20)}</strong>. Your planned monthly income of <strong>${fmtD(monthly)}</strong> today will buy what <strong>${fmtD(monthlyReal20)}</strong> buys today. The good news: Social Security with COLA adjustments helps partially offset this — your benefit of <strong>${fmtD(ss)}/mo</strong> grows to an estimated <strong>${fmtD(ss*Math.pow(1.025,20))}/mo</strong> nominally in 20 years. The gap between nominal and real is the risk your investment strategy needs to close.`;
 
-  setTimeout(()=>$('results').scrollIntoView({behavior:'smooth',block:'start'}),100);
+  if(_ready)setTimeout(()=>$("results").scrollIntoView({behavior:"smooth",block:"start"}),100);
 }
 
 function buildChart(savings,rate,yearsIn){
@@ -439,7 +440,7 @@ function buildChart(savings,rate,yearsIn){
   canvas.onmouseleave=()=>buildChart(savings,rate,yearsIn);
 }
 
-window.addEventListener('load',()=>calculate());
+window.addEventListener('load',()=>{calculate();_ready=true;});
 window.addEventListener('resize',()=>{if($('results').classList.contains('show'))calculate();});
 </script>
 </body>
