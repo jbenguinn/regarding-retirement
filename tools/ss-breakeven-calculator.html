@@ -703,6 +703,7 @@ canvas{width:100%!important}
 </footer>
 
 <script>
+let _ready=false;
 // ── CHART INSTANCE ──
 let chartInstance = null;
 
@@ -827,9 +828,7 @@ function calculate(){
   buildChart(b62, b67, b70, curAge, lifeExp);
 
   // Scroll to results
-  setTimeout(() => {
-    panel.scrollIntoView({behavior:'smooth', block:'start'});
-  }, 100);
+  if(_ready)setTimeout(() => { panel.scrollIntoView({behavior:'smooth', block:'start'}); }, 100);
 }
 
 function buildChart(b62, b67, b70, curAge, lifeExp){
@@ -1051,6 +1050,8 @@ function buildChart(b62, b67, b70, curAge, lifeExp){
 window.addEventListener('load', () => {
   // Auto-calculate on load with defaults so Carol sees something immediately
   calculate();
+
+  _ready=true;
 });
 
 window.addEventListener('resize', () => {
