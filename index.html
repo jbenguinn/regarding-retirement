@@ -1,0 +1,1007 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<meta name="description" content="Free retirement tools and honest guidance for Americans 55+. Social Security, Medicare, RMDs, inflation — explained clearly, without the sales pitch."/>
+<title>RegardingRetirement.com — Retirement Clarity for Americans 55+</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+
+:root{
+  --gray-50:#F6F7F9;
+  --gray-100:#EDEEF2;
+  --gray-200:#DDE0E8;
+  --gray-300:#C4C9D6;
+  --gray-400:#9AA0B4;
+  --gray-500:#6B7390;
+  --gray-600:#4A5270;
+  --navy:#1B2B4B;
+  --navy-mid:#243660;
+  --navy-light:#2E437A;
+  --navy-muted:#4A5A80;
+  --sky:#4A72B8;
+  --sky-pale:#EBF0FA;
+  --white:#FFFFFF;
+  --ink:#111827;
+  --border:#E2E5EE;
+  --ease:cubic-bezier(.25,.46,.45,.94);
+  --font-display:'Cormorant Garamond',Georgia,serif;
+  --font-ui:'DM Sans',system-ui,sans-serif;
+  --max:1080px;
+}
+
+body{
+  font-family:var(--font-ui);
+  background:var(--gray-50);
+  color:var(--ink);
+  line-height:1.6;
+  overflow-x:hidden;
+}
+
+/* ── HEADER ── */
+.site-header{
+  position:sticky;top:0;z-index:100;
+  background:rgba(246,247,249,0.94);
+  backdrop-filter:blur(14px);
+  border-bottom:1px solid var(--border);
+}
+.header-inner{
+  max-width:var(--max);margin:0 auto;padding:0 1.5rem;
+  display:flex;align-items:center;justify-content:space-between;
+  height:60px;
+}
+.logo{
+  font-family:var(--font-display);
+  font-size:1.25rem;font-weight:400;
+  color:var(--navy);text-decoration:none;
+  letter-spacing:.01em;
+}
+.logo em{font-style:normal;color:var(--sky)}
+.nav{display:flex;align-items:center;gap:1.75rem}
+.nav-link{
+  font-size:.78rem;font-weight:500;letter-spacing:.08em;text-transform:uppercase;
+  color:var(--gray-500);text-decoration:none;transition:color .2s;
+}
+.nav-link:hover{color:var(--navy)}
+.nav-cta{
+  padding:.45rem 1rem;background:var(--navy);color:var(--white);
+  font-size:.72rem;font-weight:500;letter-spacing:.08em;text-transform:uppercase;
+  text-decoration:none;border-radius:3px;transition:background .2s;
+}
+.nav-cta:hover{background:var(--sky)}
+.hamburger{
+  display:none;background:none;border:none;cursor:pointer;
+  flex-direction:column;gap:5px;padding:4px;
+}
+.hamburger span{width:20px;height:1.5px;background:var(--navy);display:block}
+
+/* ── HERO ── */
+.hero{
+  padding:5.5rem 1.5rem 5rem;
+  max-width:var(--max);margin:0 auto;
+  display:grid;grid-template-columns:1fr 1fr;
+  gap:4rem;align-items:center;
+  min-height:80vh;
+}
+.hero-copy{}
+.hero-kicker{
+  font-size:.68rem;font-weight:500;letter-spacing:.18em;text-transform:uppercase;
+  color:var(--sky);margin-bottom:1.25rem;
+  display:flex;align-items:center;gap:.6rem;
+  opacity:0;animation:up .7s .05s var(--ease) forwards;
+}
+.hero-kicker::before{content:'';width:20px;height:1px;background:var(--sky)}
+.hero h1{
+  font-family:var(--font-display);
+  font-size:clamp(2.8rem,4.5vw,4.4rem);
+  font-weight:300;line-height:1.1;
+  color:var(--navy);letter-spacing:-.01em;
+  margin-bottom:1.5rem;
+  opacity:0;animation:up .8s .15s var(--ease) forwards;
+}
+.hero h1 em{font-style:italic;font-weight:300}
+.hero-sub{
+  font-size:1rem;color:var(--gray-500);line-height:1.75;
+  font-weight:300;max-width:480px;margin-bottom:2.25rem;
+  opacity:0;animation:up .8s .25s var(--ease) forwards;
+}
+.hero-actions{
+  display:flex;gap:.75rem;flex-wrap:wrap;
+  opacity:0;animation:up .8s .35s var(--ease) forwards;
+}
+.btn-primary{
+  padding:.75rem 1.75rem;background:var(--navy);color:var(--white);
+  font-size:.78rem;font-weight:500;letter-spacing:.06em;text-transform:uppercase;
+  text-decoration:none;border-radius:3px;transition:all .2s;
+}
+.btn-primary:hover{background:var(--sky);transform:translateY(-1px)}
+.btn-ghost{
+  padding:.75rem 1.75rem;color:var(--gray-500);
+  font-size:.78rem;font-weight:500;letter-spacing:.06em;text-transform:uppercase;
+  text-decoration:none;border-radius:3px;border:1px solid var(--border);
+  transition:all .2s;background:transparent;
+}
+.btn-ghost:hover{border-color:var(--gray-400);color:var(--navy)}
+
+/* ── STAT ROTATOR ── */
+.stat-rotator{
+  opacity:0;animation:up .8s .3s var(--ease) forwards;
+  position:relative;
+}
+.sr-card{
+  background:var(--white);
+  border:1px solid var(--border);
+  border-radius:6px;
+  padding:2.5rem;
+  min-height:280px;
+  display:flex;flex-direction:column;justify-content:space-between;
+  box-shadow:0 2px 20px rgba(27,43,75,.06);
+  position:relative;overflow:hidden;
+}
+.sr-card::before{
+  content:'';
+  position:absolute;top:0;left:0;right:0;height:2px;
+  background:linear-gradient(to right,var(--navy),var(--sky));
+}
+.sr-slides{position:relative;flex:1;display:flex;flex-direction:column;justify-content:center}
+.sr-slide{
+  position:absolute;inset:0;
+  display:flex;flex-direction:column;justify-content:center;
+  opacity:0;transform:translateY(12px);
+  transition:opacity .5s var(--ease),transform .5s var(--ease);
+  pointer-events:none;
+}
+.sr-slide.active{
+  opacity:1;transform:translateY(0);
+  position:relative;pointer-events:auto;
+}
+.sr-num{
+  font-family:var(--font-display);
+  font-size:clamp(3.5rem,5vw,5rem);
+  font-weight:300;font-style:italic;
+  color:var(--navy);line-height:1;
+  margin-bottom:.6rem;
+}
+.sr-label{
+  font-size:.92rem;color:var(--gray-500);
+  line-height:1.6;font-weight:300;
+}
+.sr-label strong{font-weight:500;color:var(--gray-600)}
+.sr-source{
+  font-size:.68rem;color:var(--gray-300);
+  margin-top:.75rem;font-style:italic;
+}
+
+/* Progress dots */
+.sr-dots{
+  display:flex;gap:.5rem;align-items:center;margin-top:1.75rem;
+}
+.sr-dot{
+  height:2px;background:var(--gray-200);border-radius:1px;
+  cursor:pointer;transition:all .3s;flex:1;
+  position:relative;overflow:hidden;
+}
+.sr-dot.active{background:var(--gray-300)}
+.sr-dot-fill{
+  position:absolute;left:0;top:0;bottom:0;width:0;
+  background:var(--navy);border-radius:1px;
+  transition:none;
+}
+.sr-dot.active .sr-dot-fill{
+  animation:progress var(--dur,4s) linear forwards;
+}
+@keyframes progress{from{width:0}to{width:100%}}
+
+/* ── SECTIONS ── */
+.section{padding:5rem 1.5rem}
+.section-inner{max-width:var(--max);margin:0 auto}
+.section-header{margin-bottom:2.5rem}
+.eyebrow{
+  font-size:.68rem;font-weight:500;letter-spacing:.16em;text-transform:uppercase;
+  color:var(--sky);margin-bottom:.6rem;
+  display:flex;align-items:center;gap:.5rem;
+}
+.eyebrow::before{content:'';width:16px;height:1px;background:var(--sky)}
+.section-title{
+  font-family:var(--font-display);
+  font-size:clamp(1.9rem,3vw,2.8rem);
+  font-weight:300;color:var(--navy);line-height:1.15;
+}
+.section-title em{font-style:italic}
+
+/* ── TOOLS ── */
+.tools-section{background:var(--white);border-top:1px solid var(--border)}
+.tools-feature{
+  display:grid;grid-template-columns:1fr 1fr;
+  gap:3rem;align-items:center;
+  margin-bottom:2.5rem;
+}
+.tf-copy{}
+.tf-copy p{
+  font-size:.95rem;color:var(--gray-500);line-height:1.75;
+  font-weight:300;margin-bottom:1.75rem;max-width:440px;
+}
+.tool-preview{
+  background:var(--gray-50);border:1px solid var(--border);
+  border-radius:6px;padding:2rem;
+  position:relative;overflow:hidden;
+}
+.tp-badge{
+  display:inline-flex;align-items:center;gap:.35rem;
+  background:var(--sky-pale);border:1px solid rgba(74,114,184,.15);
+  border-radius:2px;
+  padding:.3rem .75rem;
+  font-size:.65rem;font-weight:500;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--sky);margin-bottom:1rem;
+}
+.tool-preview h3{
+  font-family:var(--font-display);
+  font-size:1.4rem;font-weight:400;color:var(--navy);
+  margin-bottom:.5rem;line-height:1.25;
+}
+.tool-preview p{
+  font-size:.85rem;color:var(--gray-500);line-height:1.65;font-weight:300;
+  margin-bottom:1.5rem;
+}
+.tool-preview-meta{
+  display:flex;gap:1rem;flex-wrap:wrap;margin-bottom:1.5rem;
+}
+.tpm-pill{
+  display:flex;align-items:center;gap:.35rem;
+  font-size:.72rem;color:var(--gray-400);font-weight:400;
+}
+.tpm-dot{width:6px;height:6px;border-radius:50%;background:var(--gray-200);flex-shrink:0}
+
+
+.see-all-link{
+  display:inline-flex;align-items:center;gap:.4rem;
+  font-size:.78rem;font-weight:500;letter-spacing:.06em;text-transform:uppercase;
+  color:var(--sky);text-decoration:none;transition:gap .2s;
+}
+.see-all-link:hover{gap:.65rem}
+.see-all-link::after{content:'→'}
+
+/* ── EMAIL ── */
+.email-section{
+  background:var(--navy);
+  padding:4.5rem 1.5rem;
+  text-align:center;
+}
+.email-inner{max-width:520px;margin:0 auto}
+.email-section h2{
+  font-family:var(--font-display);
+  font-size:clamp(1.8rem,3vw,2.6rem);
+  font-weight:300;font-style:italic;
+  color:var(--white);line-height:1.2;margin-bottom:.75rem;
+}
+.email-section p{
+  font-size:.9rem;color:rgba(255,255,255,.45);
+  font-weight:300;line-height:1.75;margin-bottom:1.75rem;
+}
+.email-form{display:flex;gap:.5rem;max-width:400px;margin:0 auto .75rem}
+.email-input{
+  flex:1;padding:.75rem 1rem;border:1px solid rgba(255,255,255,.12);
+  border-radius:3px;background:rgba(255,255,255,.07);
+  font-family:var(--font-ui);font-size:.88rem;color:var(--white);outline:none;
+  transition:border-color .2s;
+}
+.email-input::placeholder{color:rgba(255,255,255,.25)}
+.email-input:focus{border-color:rgba(255,255,255,.3)}
+.email-btn{
+  padding:.75rem 1.25rem;background:var(--sky);color:var(--white);
+  border:none;border-radius:3px;font-family:var(--font-ui);
+  font-size:.75rem;font-weight:500;letter-spacing:.06em;text-transform:uppercase;
+  cursor:pointer;white-space:nowrap;transition:background .2s;
+}
+.email-btn:hover{background:rgba(74,114,184,.8)}
+.email-fine{font-size:.7rem;color:rgba(255,255,255,.2)}
+
+/* ── VIDEO ── */
+.video-section{background:var(--gray-50);border-top:1px solid var(--border)}
+.video-feature{
+  display:grid;grid-template-columns:1fr 1fr;
+  gap:3rem;align-items:center;
+}
+.vf-thumb{
+  background:var(--navy);
+  aspect-ratio:16/9;border-radius:6px;
+  display:flex;align-items:center;justify-content:center;
+  position:relative;overflow:hidden;
+  cursor:pointer;
+}
+.vf-thumb-bg{
+  position:absolute;inset:0;
+  background:linear-gradient(135deg,var(--navy-mid) 0%,var(--navy) 60%,#0D1929 100%);
+}
+.vf-thumb-topic{
+  position:absolute;bottom:1rem;left:1rem;
+  font-size:.62rem;font-weight:500;letter-spacing:.1em;text-transform:uppercase;
+  color:rgba(255,255,255,.35);
+  padding:.25rem .6rem;background:rgba(255,255,255,.06);border-radius:2px;
+}
+.vf-play{
+  width:52px;height:52px;border-radius:50%;
+  background:rgba(255,255,255,.1);
+  border:1px solid rgba(255,255,255,.2);
+  display:flex;align-items:center;justify-content:center;
+  font-size:1.1rem;position:relative;z-index:1;color:white;
+  transition:all .25s;
+}
+.vf-thumb:hover .vf-play{background:var(--sky);border-color:var(--sky);transform:scale(1.08)}
+.vf-copy{}
+.vf-copy p{
+  font-size:.95rem;color:var(--gray-500);line-height:1.75;
+  font-weight:300;margin-bottom:1.75rem;max-width:440px;
+}
+.vf-ep{
+  font-size:.68rem;font-weight:500;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--sky);margin-bottom:.5rem;
+}
+.vf-title{
+  font-family:var(--font-display);
+  font-size:1.5rem;font-weight:400;color:var(--navy);
+  line-height:1.25;margin-bottom:.75rem;
+}
+.vf-desc{
+  font-size:.88rem;color:var(--gray-500);line-height:1.65;
+  font-weight:300;margin-bottom:1.5rem;
+}
+
+/* ── FOOTER ── */
+.site-footer{
+  background:var(--navy-mid);
+  border-top:1px solid rgba(255,255,255,.05);
+  padding:3.5rem 1.5rem 2rem;
+}
+.footer-inner{
+  max-width:var(--max);margin:0 auto;
+  display:grid;grid-template-columns:1.2fr 1fr 1fr;
+  gap:3rem;padding-bottom:2.5rem;
+  border-bottom:1px solid rgba(255,255,255,.06);
+  margin-bottom:1.5rem;
+}
+.footer-logo{
+  font-family:var(--font-display);
+  font-size:1.15rem;font-weight:400;
+  color:var(--white);text-decoration:none;display:block;margin-bottom:.6rem;
+}
+.footer-logo em{font-style:normal;color:var(--sky)}
+.footer-tagline{font-size:.8rem;color:rgba(255,255,255,.25);font-weight:300;line-height:1.65;max-width:240px}
+.footer-col h4{
+  font-size:.62rem;font-weight:500;letter-spacing:.14em;text-transform:uppercase;
+  color:rgba(255,255,255,.2);margin-bottom:1rem;
+}
+.footer-links{display:flex;flex-direction:column;gap:.55rem}
+.footer-link{
+  font-size:.8rem;color:rgba(255,255,255,.38);text-decoration:none;
+  font-weight:300;transition:color .2s;
+}
+.footer-link:hover{color:rgba(255,255,255,.7)}
+.footer-bottom{
+  max-width:var(--max);margin:0 auto;
+  display:flex;align-items:flex-start;justify-content:space-between;
+  gap:1.5rem;flex-wrap:wrap;
+}
+.footer-copy{font-size:.7rem;color:rgba(255,255,255,.15);font-weight:300}
+.footer-disclaimer{
+  font-size:.7rem;color:rgba(255,255,255,.12);font-weight:300;
+  line-height:1.65;max-width:440px;text-align:right;
+}
+
+/* ── LIFECYCLE ── */
+.lifecycle-section{
+  background:var(--white);
+  border-top:1px solid var(--border);
+  padding:5rem 1.5rem;
+}
+.lifecycle-inner{max-width:var(--max);margin:0 auto}
+
+.lc-header{margin-bottom:3.5rem}
+.lc-header .section-title{margin-bottom:.5rem}
+.lc-header p{
+  font-size:.95rem;color:var(--gray-500);font-weight:300;
+  line-height:1.7;max-width:500px;margin-top:.5rem;
+}
+
+/* Timeline track */
+.lc-track{
+  position:relative;
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:0;
+}
+
+/* Connecting line behind all cards */
+.lc-track::before{
+  content:'';
+  position:absolute;
+  top:28px; /* center of the circle */
+  left:calc(12.5%); /* start from center of first card */
+  right:calc(12.5%); /* end at center of last card */
+  height:1px;
+  background:var(--border);
+  z-index:0;
+}
+
+.lc-stage{
+  position:relative;
+  padding:0 1rem 0;
+  cursor:pointer;
+  text-align:center;
+}
+
+/* Node circle */
+.lc-node{
+  width:56px;height:56px;
+  border-radius:50%;
+  border:2px solid var(--border);
+  background:var(--white);
+  margin:0 auto 1.25rem;
+  display:flex;align-items:center;justify-content:center;
+  font-size:1.1rem;
+  position:relative;z-index:1;
+  transition:all .3s var(--ease);
+  box-shadow:0 0 0 6px var(--white); /* hide line behind it */
+}
+.lc-stage:hover .lc-node,
+.lc-stage.active .lc-node{
+  border-color:var(--navy);
+  background:var(--navy);
+  transform:scale(1.1);
+  box-shadow:0 0 0 6px var(--white),0 4px 16px rgba(27,43,75,.18);
+}
+
+/* Age badge */
+.lc-age{
+  display:inline-block;
+  font-size:.62rem;font-weight:500;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--sky);margin-bottom:.5rem;
+  background:var(--sky-pale);border-radius:10px;padding:.2rem .65rem;
+  transition:all .3s;
+}
+.lc-stage.active .lc-age{
+  background:var(--navy);color:var(--white);
+}
+
+/* Stage name */
+.lc-name{
+  font-family:var(--font-display);
+  font-size:1.2rem;font-weight:400;
+  color:var(--navy);line-height:1.2;
+  margin-bottom:.4rem;
+  transition:color .2s;
+}
+
+/* Stage question */
+.lc-question{
+  font-size:.78rem;color:var(--gray-400);
+  font-weight:300;font-style:italic;
+  line-height:1.5;
+}
+.lc-stage.active .lc-question{color:var(--gray-500)}
+
+/* Detail panel */
+.lc-detail{
+  margin-top:2.5rem;
+  background:var(--gray-50);
+  border:1px solid var(--border);
+  border-radius:6px;
+  padding:2rem 2.5rem;
+  display:none;
+  animation:fadeIn .35s var(--ease);
+}
+.lc-detail.active{display:grid;grid-template-columns:1fr 1fr 1fr;gap:2rem}
+@keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+
+.lc-detail-col{}
+.ldc-label{
+  font-size:.62rem;font-weight:500;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--sky);margin-bottom:.75rem;display:flex;align-items:center;gap:.4rem;
+}
+.ldc-label::before{content:'';width:12px;height:1px;background:var(--sky)}
+.ldc-body{
+  font-size:.85rem;color:var(--gray-500);
+  line-height:1.7;font-weight:300;margin-bottom:1rem;
+}
+.ldc-links{display:flex;flex-direction:column;gap:.4rem}
+.ldc-link{
+  font-size:.8rem;color:var(--navy);text-decoration:none;
+  font-weight:400;display:flex;align-items:center;gap:.4rem;
+  padding:.35rem 0;border-bottom:1px solid var(--border);
+  transition:color .15s;
+}
+.ldc-link:last-child{border-bottom:none}
+.ldc-link:hover{color:var(--sky)}
+.ldc-link::before{content:'→';color:var(--gray-300);font-size:.7rem;flex-shrink:0;transition:color .15s}
+.ldc-link:hover::before{color:var(--sky)}
+
+/* Mobile lifecycle */
+@media(max-width:700px){
+  .lc-track{grid-template-columns:1fr 1fr;gap:1.5rem 0}
+  .lc-track::before{display:none}
+  .lc-detail.active{grid-template-columns:1fr}
+  .lc-stage{padding:0 .5rem}
+}
+@media(max-width:420px){
+  .lc-track{grid-template-columns:1fr}
+}
+
+/* ── REVEAL ── */
+.reveal{
+  opacity:0;transform:translateY(14px);
+  transition:opacity .65s var(--ease),transform .65s var(--ease);
+}
+.reveal.in{opacity:1;transform:translateY(0)}
+
+/* ── ANIMATIONS ── */
+@keyframes up{
+  from{opacity:0;transform:translateY(18px)}
+  to{opacity:1;transform:translateY(0)}
+}
+
+/* ── MOBILE ── */
+@media(max-width:860px){
+  .hero{grid-template-columns:1fr;gap:2.5rem;min-height:auto;padding:3.5rem 1.5rem 4rem}
+  .stat-rotator{order:-1}
+  .sr-card{min-height:220px;padding:1.75rem}
+  .tools-feature{grid-template-columns:1fr}
+  .tools-grid-mini{grid-template-columns:1fr 1fr}
+  .video-feature{grid-template-columns:1fr}
+  .footer-inner{grid-template-columns:1fr 1fr;gap:2rem}
+}
+@media(max-width:580px){
+  .nav{display:none}
+  .hamburger{display:flex}
+  .email-form{flex-direction:column}
+  .footer-inner{grid-template-columns:1fr}
+  .footer-disclaimer{text-align:left;max-width:100%}
+  .hero h1{font-size:2.6rem}
+}
+
+/* ── MOBILE NAV ── */
+.mob-nav{
+  display:none;position:fixed;inset:0;z-index:200;
+  background:var(--navy);padding:2rem 1.5rem;
+  flex-direction:column;
+}
+.mob-nav.open{display:flex}
+.mob-close{
+  align-self:flex-end;background:none;border:none;
+  color:rgba(255,255,255,.4);font-size:1.4rem;cursor:pointer;
+  margin-bottom:2rem;
+}
+.mob-links{display:flex;flex-direction:column;gap:0}
+.mob-link{
+  font-family:var(--font-display);
+  font-size:2.2rem;font-weight:300;font-style:italic;
+  color:rgba(255,255,255,.7);text-decoration:none;
+  padding:1rem 0;border-bottom:1px solid rgba(255,255,255,.06);
+  transition:color .2s;
+}
+.mob-link:hover{color:var(--white)}
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header class="site-header">
+  <div class="header-inner">
+    <a href="/" class="logo">Regarding<em>Retirement</em>.com</a>
+    <nav class="nav" aria-label="Main">
+      <a href="/tools/" class="nav-link">Tools</a>
+      <a href="/videos/" class="nav-link">Videos</a>
+      <a href="/about/" class="nav-link">About</a>
+      <a href="https://youtube.com/@RetirementClarity" class="nav-cta" target="_blank" rel="noopener">▶ Watch Free</a>
+    </nav>
+    <button class="hamburger" id="ham" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+
+<!-- MOBILE NAV -->
+<div class="mob-nav" id="mobNav">
+  <button class="mob-close" id="mobClose">×</button>
+  <div class="mob-links">
+    <a href="/tools/" class="mob-link" onclick="closeNav()">Tools</a>
+    <a href="/videos/" class="mob-link" onclick="closeNav()">Videos</a>
+    <a href="/about/" class="mob-link" onclick="closeNav()">About</a>
+    <a href="https://youtube.com/@RetirementClarity" class="mob-link" target="_blank" rel="noopener">Watch on YouTube</a>
+  </div>
+</div>
+
+<!-- HERO -->
+<main>
+<section style="max-width:var(--max);margin:0 auto;padding:5.5rem 1.5rem 5rem;">
+  <div class="hero" style="padding:0;max-width:none">
+    <div class="hero-copy">
+      <p class="hero-kicker">Retirement Clarity for Americans 55+</p>
+      <h1>You deserve answers<br>that are <em>actually</em> clear.</h1>
+      <p class="hero-sub">Free tools and honest videos on Social Security, Medicare, RMDs, and retirement income — no jargon, no sales pitch, no anxiety spiral.</p>
+      <div class="hero-actions">
+        <a href="/tools/" class="btn-primary">Explore Free Tools</a>
+        <a href="/videos/" class="btn-ghost">Watch the Videos</a>
+      </div>
+    </div>
+
+    <!-- STAT ROTATOR -->
+    <div class="stat-rotator" role="region" aria-label="Key retirement statistics" aria-live="polite">
+      <div class="sr-card">
+        <div class="sr-slides" id="slides">
+
+          <div class="sr-slide active" id="slide-0">
+            <p class="sr-num">96%</p>
+            <p class="sr-label">of Americans claim Social Security at the <strong>wrong time</strong> — costing the average household $111,000 in lifetime income.</p>
+            <p class="sr-source">CBS News / United Income Study</p>
+          </div>
+
+          <div class="sr-slide" id="slide-1">
+            <p class="sr-num">$172K</p>
+            <p class="sr-label">is what the average 65-year-old needs just for <strong>healthcare costs</strong> in retirement — separate from all other expenses.</p>
+            <p class="sr-source">Fidelity 2025 Retiree Health Care Cost Estimate</p>
+          </div>
+
+          <div class="sr-slide" id="slide-2">
+            <p class="sr-num">53%</p>
+            <p class="sr-label">of Americans approaching retirement still worry their <strong>savings won't be enough</strong> — even after decades of planning.</p>
+            <p class="sr-source">Northwestern Mutual 2026 Planning & Progress Study</p>
+          </div>
+
+          <div class="sr-slide" id="slide-3">
+            <p class="sr-num">20%</p>
+            <p class="sr-label">of Social Security's <strong>buying power</strong> was lost between 2010 and 2024 — not from cuts, but from inflation outpacing COLA adjustments.</p>
+            <p class="sr-source">Kiplinger / Senior Citizens League</p>
+          </div>
+
+        </div>
+        <div class="sr-dots" role="tablist" id="dots">
+          <div class="sr-dot active" role="tab" aria-label="Stat 1" onclick="goTo(0)"><div class="sr-dot-fill"></div></div>
+          <div class="sr-dot" role="tab" aria-label="Stat 2" onclick="goTo(1)"><div class="sr-dot-fill"></div></div>
+          <div class="sr-dot" role="tab" aria-label="Stat 3" onclick="goTo(2)"><div class="sr-dot-fill"></div></div>
+          <div class="sr-dot" role="tab" aria-label="Stat 4" onclick="goTo(3)"><div class="sr-dot-fill"></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- LIFECYCLE -->
+<section class="lifecycle-section">
+  <div class="lifecycle-inner">
+
+    <div class="lc-header reveal">
+      <p class="eyebrow">Your Retirement Journey</p>
+      <h2 class="section-title">Determine <em>where you're at</em> now.</h2>
+      <p>Retirement isn't one moment — it's a 30-year journey with four distinct phases. Each phase has its own questions, decisions, and tools. Select the stage that fits where you are today.</p>
+    </div>
+
+    <div class="lc-track reveal" id="lcTrack">
+
+      <div class="lc-stage active" onclick="setStage(0)" aria-label="Stage 1: Prepare">
+        <div class="lc-node">📐</div>
+        <span class="lc-age">Ages 55–62</span>
+        <p class="lc-name">Prepare</p>
+        <p class="lc-question">"Will I have enough?"</p>
+      </div>
+
+      <div class="lc-stage" onclick="setStage(1)" aria-label="Stage 2: Decide">
+        <div class="lc-node">⚖️</div>
+        <span class="lc-age">Ages 62–65</span>
+        <p class="lc-name">Decide</p>
+        <p class="lc-question">"When do I pull the trigger?"</p>
+      </div>
+
+      <div class="lc-stage" onclick="setStage(2)" aria-label="Stage 3: Transition">
+        <div class="lc-node">🔄</div>
+        <span class="lc-age">Ages 65–73</span>
+        <p class="lc-name">Transition</p>
+        <p class="lc-question">"How do I actually live on this?"</p>
+      </div>
+
+      <div class="lc-stage" onclick="setStage(3)" aria-label="Stage 4: Sustain">
+        <div class="lc-node">🌿</div>
+        <span class="lc-age">Ages 73+</span>
+        <p class="lc-name">Sustain</p>
+        <p class="lc-question">"How do I make this last?"</p>
+      </div>
+
+    </div>
+
+    <!-- Detail panels — one per stage -->
+    <div class="lc-detail active" id="detail-0">
+      <div class="ldc-col">
+        <p class="ldc-label">What this stage is about</p>
+        <p class="ldc-body">You're still building, but retirement is close enough to model clearly. The decisions you make now — Roth conversions, debt reduction, savings rate — have an outsized impact on everything that follows. The clock is running, but the window is still open.</p>
+      </div>
+      <div class="ldc-col">
+        <p class="ldc-label">Tools for this stage</p>
+        <div class="ldc-links">
+          <a href="/tools/retirement-savings-gap.html" class="ldc-link">Retirement Savings Gap Calculator</a>
+          <a href="/tools/inflation-calculator.html" class="ldc-link">Inflation Impact Calculator</a>
+          <a href="/tools/roth-conversion-estimator.html" class="ldc-link">Roth Conversion Estimator</a>
+          <a href="/tools/retirement-score.html" class="ldc-link">Am I On Track? Retirement Score</a>
+        </div>
+      </div>
+      <div class="ldc-col">
+        <p class="ldc-label">Videos for this stage</p>
+        <div class="ldc-links">
+          <a href="https://youtube.com/@RetirementClarity" class="ldc-link" target="_blank" rel="noopener">How Much Money Do You Need to Retire?</a>
+          <a href="https://youtube.com/@RetirementClarity" class="ldc-link" target="_blank" rel="noopener">Biggest Retirement Mistakes at 60</a>
+          <a href="https://youtube.com/@RetirementClarity" class="ldc-link" target="_blank" rel="noopener">How Inflation Is Quietly Destroying Savings</a>
+          <a href="https://youtube.com/@RetirementClarity" class="ldc-link" target="_blank" rel="noopener">Roth Conversion — Should You Do It?</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="lc-detail" id="detail-1">
+      <div class="ldc-col">
+        <p class="ldc-label">What this stage is about</p>
+        <p class="ldc-body">Social Security opens at 62. Medicare is approaching at 65. This is the window where the most consequential and least reversible decisions get made. Getting the timing right on these two programs — and coordinating them — can mean the difference of hundreds of thousands of dollars over a retirement.</p>
+      </div>
+      <div class="ldc-col">
+        <p class="ldc-label">Tools for this stage</p>
+        <div class="ldc-links">
+          <a href="/tools/ss-breakeven-calculator.html" class="ldc-link">Social Security Break-Even Calculator</a>
+          <a href="/tools/spousal-benefit-optimizer.html" class="ldc-link">Spousal Benefit Optimizer</a>
+          <a href="/tools/medicare-penalty-calculator.html" class="ldc-link">Medicare Penalty Calculator</a>
+          <a href="/tools/roth-conversion-estimator.html" class="ldc-link">Roth Conversion Estimator</a>
+        </div>
+      </div>
+      <div class="ldc-col">
+        <p class="ldc-label">Videos for this stage</p>
+        <div class="ldc-links">
+          <a href="https://youtube.com/@RetirementClarity" class="ldc-link" target="_blank" rel="noopener">When Should You Take Social Security?</a>
+          <a href="https://youtube.com/@RetirementClarity" class="ldc-link" target="_blank" rel="noopener">The Spousal Benefit Most Couples Miss</a>
+          <a href="https://youtube.com/@RetirementClarity" class="ldc-link" target="_blank" rel="noopener">SS and Medicare — Why Timing Has to Match</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="lc-detail" id="detail-2">
+      <div class="ldc-col">
+        <p class="ldc-label">What this stage is about</p>
+        <p class="ldc-body">Medicare is active. Social Security is decided. Now the work is building a reliable monthly income from what you have — and understanding what Medicare actually covers versus what you'll need to plan for separately. The gap between what people expect and what they experience in this stage is often significant.</p>
+      </div>
+      <div class="ldc-col">
+        <p class="ldc-label">Tools for this stage</p>
+        <div class="ldc-links">
+          <a href="/tools/retirement-paycheck-builder.html" class="ldc-link">Retirement Paycheck Builder</a>
+          <a href="/tools/healthcare-cost-estimator.html" class="ldc-link">Healthcare Cost Estimator</a>
+          <a href="/tools/medicare-penalty-calculator.html" class="ldc-link">Medicare Penalty Calculator</a>
+          <a href="/tools/retirement-score.html" class="ldc-link">Am I On Track? Retirement Score</a>
+        </div>
+      </div>
+      <div class="ldc-col">
+        <p class="ldc-label">Videos for this stage</p>
+        <div class="ldc-links">
+          <a href="https://youtube.com/@RetirementClarity" class="ldc-link" target="_blank" rel="noopener">How to Create a Retirement Paycheck</a>
+          <a href="https://youtube.com/@RetirementClarity" class="ldc-link" target="_blank" rel="noopener">What Medicare Actually Covers</a>
+          <a href="https://youtube.com/@RetirementClarity" class="ldc-link" target="_blank" rel="noopener">Medicare Explained — Parts A, B, C, and D</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="lc-detail" id="detail-3">
+      <div class="ldc-col">
+        <p class="ldc-label">What this stage is about</p>
+        <p class="ldc-body">At 73, the IRS requires you to start withdrawing from your tax-deferred accounts whether you need to or not. Healthcare costs are rising. The questions shift from building income to managing what you have as carefully as possible — and making sure the people you love are protected when you're not here to manage it yourself.</p>
+      </div>
+      <div class="ldc-col">
+        <p class="ldc-label">Tools for this stage</p>
+        <div class="ldc-links">
+          <a href="/tools/rmd-calculator.html" class="ldc-link">RMD Calculator</a>
+          <a href="/tools/healthcare-cost-estimator.html" class="ldc-link">Healthcare Cost Estimator</a>
+          <a href="/tools/retirement-paycheck-builder.html" class="ldc-link">Retirement Paycheck Builder</a>
+          <a href="/tools/inflation-calculator.html" class="ldc-link">Inflation Impact Calculator</a>
+        </div>
+      </div>
+      <div class="ldc-col">
+        <p class="ldc-label">Videos for this stage</p>
+        <div class="ldc-links">
+          <a href="https://youtube.com/@RetirementClarity" class="ldc-link" target="_blank" rel="noopener">What Happens to Your 401k When You Retire</a>
+          <a href="https://youtube.com/@RetirementClarity" class="ldc-link" target="_blank" rel="noopener">How Inflation Is Quietly Destroying Savings</a>
+          <a href="https://youtube.com/@RetirementClarity" class="ldc-link" target="_blank" rel="noopener">How to Create a Retirement Paycheck</a>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- TOOLS -->
+<section class="section tools-section">
+  <div class="section-inner">
+    <div class="section-header reveal">
+      <p class="eyebrow">Free Retirement Tools</p>
+      <h2 class="section-title">Ten calculators. <em>Real numbers.</em></h2>
+    </div>
+
+    <div class="tools-feature">
+      <div class="tf-copy reveal">
+        <p>Each tool is built around a specific retirement decision — using real 2026 IRS and CMS data, verified sources, and plain-English results. Start with the Retirement Score to see where you stand across six categories.</p>
+        <a href="/tools/" class="see-all-link">See all ten tools</a>
+      </div>
+
+      <div class="reveal">
+        <div class="tool-preview">
+          <div class="tp-badge">⭐ Start here</div>
+          <h3>Am I On Track?<br>Retirement Score</h3>
+          <p>Eight questions. A score out of 100. A personalized breakdown of where you stand — and what to prioritize next.</p>
+          <div class="tool-preview-meta">
+            <span class="tpm-pill"><span class="tpm-dot"></span>Takes 3 minutes</span>
+            <span class="tpm-pill"><span class="tpm-dot"></span>No email required</span>
+            <span class="tpm-pill"><span class="tpm-dot"></span>Free</span>
+          </div>
+          <a href="/tools/retirement-score.html" class="btn-primary" style="display:inline-flex;align-items:center;gap:.4rem">Open the Calculator →</a>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- EMAIL -->
+<section class="email-section">
+  <div class="email-inner">
+    <h2>Get the Social Security<br>Timing Checklist</h2>
+    <p>A plain-English one-pager on the four questions that determine the right claiming age for your situation. Free.</p>
+    <form class="email-form" onsubmit="handleEmail(event)">
+      <input type="email" class="email-input" placeholder="Your email address" required/>
+      <button type="submit" class="email-btn">Send it →</button>
+    </form>
+    <p class="email-fine">No spam. Unsubscribe any time.</p>
+  </div>
+</section>
+
+<!-- VIDEO -->
+<section class="section video-section">
+  <div class="section-inner">
+    <div class="section-header reveal">
+      <p class="eyebrow">Free Videos</p>
+      <h2 class="section-title">Watch the full<br><em>explanations.</em></h2>
+    </div>
+
+    <div class="video-feature">
+      <a href="https://youtube.com/@RetirementClarity" class="vf-thumb reveal" target="_blank" rel="noopener" aria-label="Watch on YouTube">
+        <div class="vf-thumb-bg"></div>
+        <div class="vf-play">▶</div>
+        <span class="vf-thumb-topic">Social Security</span>
+      </a>
+
+      <div class="vf-copy reveal">
+        <p class="vf-ep">Episode 01</p>
+        <p class="vf-title">When Should You Take Social Security — 62, 67, or 70?</p>
+        <p class="vf-desc">96% of Americans claim at the wrong time — costing the average household $111,000. The four questions that make the right answer clear for your situation.</p>
+        <div style="display:flex;gap:1rem;flex-wrap:wrap;align-items:center">
+          <a href="https://youtube.com/@RetirementClarity" class="btn-primary" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:.4rem">▶ Watch Now</a>
+          <a href="/videos/" class="see-all-link">See all 11 videos</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+</main>
+
+<!-- FOOTER -->
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div>
+      <a href="/" class="footer-logo">Regarding<em>Retirement</em>.com</a>
+      <p class="footer-tagline">Free retirement tools and honest guidance for Americans 55+. No jargon. No sales pitch.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Tools</h4>
+      <div class="footer-links">
+        <a href="/tools/retirement-score.html" class="footer-link">Retirement Score</a>
+        <a href="/tools/ss-breakeven-calculator.html" class="footer-link">SS Break-Even Calculator</a>
+        <a href="/tools/rmd-calculator.html" class="footer-link">RMD Calculator</a>
+        <a href="/tools/medicare-penalty-calculator.html" class="footer-link">Medicare Penalty Calculator</a>
+        <a href="/tools/roth-conversion-estimator.html" class="footer-link">Roth Conversion Estimator</a>
+        <a href="/tools/" class="footer-link">All 10 Tools →</a>
+      </div>
+    </div>
+    <div class="footer-col">
+      <h4>Videos</h4>
+      <div class="footer-links">
+        <a href="https://youtube.com/@RetirementClarity" class="footer-link" target="_blank" rel="noopener">When to Take Social Security</a>
+        <a href="https://youtube.com/@RetirementClarity" class="footer-link" target="_blank" rel="noopener">SS + Medicare Timing</a>
+        <a href="https://youtube.com/@RetirementClarity" class="footer-link" target="_blank" rel="noopener">What Medicare Covers</a>
+        <a href="https://youtube.com/@RetirementClarity" class="footer-link" target="_blank" rel="noopener">Your 401k When You Retire</a>
+        <a href="https://youtube.com/@RetirementClarity" class="footer-link" target="_blank" rel="noopener">All 11 Videos →</a>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p class="footer-copy">© 2026 RegardingRetirement.com</p>
+    <p class="footer-disclaimer">For educational purposes only. Not financial, tax, or legal advice. Please consult a qualified, fee-only fiduciary advisor before making retirement decisions.</p>
+  </div>
+</footer>
+
+<script>
+// ── STAT ROTATOR ──
+const DURATION = 4500;
+let current = 0;
+let timer;
+
+const slides = document.querySelectorAll('.sr-slide');
+const dots = document.querySelectorAll('.sr-dot');
+const dotFills = document.querySelectorAll('.sr-dot-fill');
+
+function goTo(n) {
+  // Deactivate current
+  slides[current].classList.remove('active');
+  dots[current].classList.remove('active');
+  dotFills[current].style.animation = 'none';
+
+  current = n;
+
+  // Activate new
+  slides[current].classList.add('active');
+  dots[current].classList.add('active');
+  // Restart fill animation
+  void dotFills[current].offsetWidth; // force reflow
+  dotFills[current].style.animation = `progress ${DURATION}ms linear forwards`;
+
+  clearTimeout(timer);
+  timer = setTimeout(() => goTo((current + 1) % slides.length), DURATION);
+}
+
+// Start
+dotFills[0].style.animation = `progress ${DURATION}ms linear forwards`;
+timer = setTimeout(() => goTo(1), DURATION);
+
+// ── LIFECYCLE STAGE SWITCHER ──
+function setStage(n) {
+  document.querySelectorAll('.lc-stage').forEach((s, i) => {
+    s.classList.toggle('active', i === n);
+  });
+  document.querySelectorAll('.lc-detail').forEach((d, i) => {
+    d.classList.toggle('active', i === n);
+  });
+}
+
+// ── HEADER SHADOW ──
+const hdr = document.querySelector('.site-header');
+window.addEventListener('scroll', () => {
+  hdr.style.boxShadow = window.scrollY > 10
+    ? '0 1px 16px rgba(27,43,75,.08)' : '';
+}, { passive: true });
+
+// ── REVEAL ──
+const revealEls = document.querySelectorAll('.reveal');
+const ro = new IntersectionObserver((entries) => {
+  entries.forEach((e, i) => {
+    if (e.isIntersecting) {
+      setTimeout(() => e.target.classList.add('in'), i * 60);
+      ro.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.08, rootMargin: '0px 0px -30px 0px' });
+revealEls.forEach(el => ro.observe(el));
+
+// ── MOBILE NAV ──
+const ham = document.getElementById('ham');
+const mobNav = document.getElementById('mobNav');
+const mobClose = document.getElementById('mobClose');
+ham.addEventListener('click', () => { mobNav.classList.add('open'); document.body.style.overflow = 'hidden'; });
+function closeNav() { mobNav.classList.remove('open'); document.body.style.overflow = ''; }
+mobClose.addEventListener('click', closeNav);
+
+// ── EMAIL ──
+function handleEmail(e) {
+  e.preventDefault();
+  const btn = e.target.querySelector('.email-btn');
+  btn.textContent = '✓ Check your inbox';
+  btn.style.background = '#16a362';
+  e.target.querySelector('.email-input').disabled = true;
+  btn.disabled = true;
+  // TODO: wire to Kit endpoint
+}
+</script>
+</body>
+</html>
