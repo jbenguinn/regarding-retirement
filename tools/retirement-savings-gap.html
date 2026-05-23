@@ -1,0 +1,1327 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Retirement Savings Gap Calculator | RegardingRetirement.com</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+
+:root{
+  --paper:#F8F4EE;
+  --paper-dark:#EEE8DC;
+  --paper-mid:#E6DDCC;
+  --ink:#18140F;
+  --ink-med:#2E2720;
+  --ink-soft:#6B5F52;
+  --ink-faint:#A09080;
+  --ink-ghost:#C8BCAC;
+  --accent:#9B3A1A;
+  --accent-warm:#C04E22;
+  --accent-pale:#F5E0D6;
+  --good:#1F5C35;
+  --good-pale:#D4EBDC;
+  --warn:#8B6800;
+  --warn-pale:#FBF0CC;
+  --danger:#8B1A1A;
+  --danger-pale:#F5D8D8;
+  --border:#D8CEBC;
+  --border-dark:#C0B09C;
+
+  --font-display:'Cormorant Garamond',Georgia,serif;
+  --font-body:'Libre Baskerville',Georgia,serif;
+}
+
+body{
+  font-family:var(--font-body);
+  background:var(--paper);
+  color:var(--ink);
+  min-height:100vh;
+  line-height:1.65;
+  font-size:15px;
+}
+
+/* ── HEADER ── */
+.site-header{
+  background:var(--ink);
+  padding:1rem 2rem;
+  display:flex;align-items:center;justify-content:space-between;
+}
+.logo{
+  font-family:var(--font-display);
+  font-size:1.15rem;font-weight:600;
+  color:var(--paper);letter-spacing:0.03em;
+  text-decoration:none;
+}
+.logo em{font-style:normal;color:#C8845A}
+.nav-tag{
+  font-size:10px;letter-spacing:0.14em;text-transform:uppercase;
+  color:#6B5F52;font-family:var(--font-body);
+}
+
+/* ── HERO ── */
+.hero{
+  background:var(--ink-med);
+  padding:4rem 2rem 3.5rem;
+  position:relative;
+  overflow:hidden;
+}
+.hero-texture{
+  position:absolute;inset:0;
+  background-image:
+    repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 39px,
+      rgba(255,255,255,0.03) 39px,
+      rgba(255,255,255,0.03) 40px
+    );
+  pointer-events:none;
+}
+.hero-glow{
+  position:absolute;
+  width:600px;height:400px;
+  border-radius:50%;
+  background:radial-gradient(circle,rgba(155,58,26,0.12) 0%,transparent 70%);
+  top:-100px;right:-100px;
+  pointer-events:none;
+}
+.hero-inner{
+  max-width:640px;
+  margin:0 auto;
+  text-align:center;
+  position:relative;
+}
+.hero-kicker{
+  display:inline-flex;align-items:center;gap:8px;
+  font-size:11px;letter-spacing:0.14em;text-transform:uppercase;
+  color:#C8845A;margin-bottom:1.25rem;font-weight:400;
+}
+.kicker-rule{width:28px;height:1px;background:#C8845A;opacity:0.6}
+.hero h1{
+  font-family:var(--font-display);
+  font-size:clamp(2.4rem,5vw,3.8rem);
+  font-weight:600;
+  color:var(--paper);
+  line-height:1.1;
+  margin-bottom:1.1rem;
+  letter-spacing:-0.01em;
+}
+.hero h1 em{
+  font-style:italic;
+  font-weight:400;
+  color:#C8845A;
+}
+.hero-body{
+  font-size:1rem;
+  color:#A09080;
+  max-width:480px;
+  margin:0 auto;
+  font-style:italic;
+  line-height:1.75;
+  font-family:var(--font-display);
+  font-size:1.15rem;
+}
+
+/* ── LAYOUT ── */
+.outer{max-width:900px;margin:0 auto;padding:3rem 1.5rem 5rem}
+
+/* Two-col on desktop */
+.two-col{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:1.5rem;
+  margin-bottom:1.5rem;
+}
+
+/* ── CARD BASE ── */
+.card{
+  background:white;
+  border:1px solid var(--border);
+  border-radius:6px;
+  padding:1.75rem;
+}
+.card-dark{
+  background:var(--ink-med);
+  border:1px solid rgba(255,255,255,0.06);
+  border-radius:6px;
+  padding:1.75rem;
+  color:var(--paper);
+}
+
+.card-eyebrow{
+  font-size:10px;letter-spacing:0.16em;text-transform:uppercase;
+  color:var(--accent-warm);margin-bottom:0.5rem;
+  font-family:var(--font-body);font-weight:700;
+}
+.card-title{
+  font-family:var(--font-display);
+  font-size:1.35rem;font-weight:600;
+  color:var(--ink);margin-bottom:0.3rem;
+  line-height:1.25;
+}
+.card-dark .card-title{color:var(--paper)}
+.card-sub{
+  font-size:0.82rem;color:var(--ink-soft);
+  font-style:italic;line-height:1.55;
+  margin-bottom:1.5rem;
+  font-family:var(--font-display);font-size:1rem;
+}
+.card-dark .card-sub{color:#8A7A6C}
+
+/* ── FORM FIELDS ── */
+.field{margin-bottom:1.25rem}
+.field:last-child{margin-bottom:0}
+.field-label{
+  font-size:11px;font-weight:700;letter-spacing:0.08em;
+  text-transform:uppercase;color:var(--ink-soft);
+  margin-bottom:6px;display:block;
+}
+.field-hint{
+  font-size:11px;color:var(--ink-faint);
+  font-style:italic;margin-bottom:6px;
+  line-height:1.4;font-family:var(--font-display);font-size:0.9rem;
+}
+.field-row{
+  display:flex;align-items:center;gap:0;
+  border:1px solid var(--border);
+  border-radius:4px;
+  background:var(--paper);
+  transition:border-color 0.15s;
+  overflow:hidden;
+}
+.field-row:focus-within{border-color:var(--accent-warm)}
+.field-prefix,.field-suffix{
+  padding:10px 11px;
+  font-size:0.9rem;color:var(--ink-faint);
+  background:var(--paper-dark);
+  border-right:1px solid var(--border);
+  flex-shrink:0;
+  font-family:var(--font-body);
+  user-select:none;
+}
+.field-suffix{
+  border-right:none;
+  border-left:1px solid var(--border);
+}
+.field-input{
+  flex:1;
+  padding:10px 12px;
+  border:none;outline:none;
+  background:transparent;
+  font-family:var(--font-display);
+  font-size:1.1rem;font-weight:600;
+  color:var(--ink);
+  -moz-appearance:textfield;
+  min-width:0;
+}
+.field-input::-webkit-inner-spin-button,
+.field-input::-webkit-outer-spin-button{-webkit-appearance:none}
+
+/* Range slider */
+.range-wrap{margin-top:4px}
+.range-input{
+  width:100%;
+  -webkit-appearance:none;
+  height:4px;
+  background:var(--paper-mid);
+  border-radius:2px;
+  outline:none;
+  cursor:pointer;
+}
+.range-input::-webkit-slider-thumb{
+  -webkit-appearance:none;
+  width:18px;height:18px;
+  border-radius:50%;
+  background:var(--accent);
+  cursor:pointer;
+  border:2px solid white;
+  box-shadow:0 1px 4px rgba(0,0,0,0.15);
+}
+.range-val{
+  font-family:var(--font-display);
+  font-size:1.1rem;font-weight:600;
+  color:var(--accent);
+  text-align:right;
+  display:block;
+  margin-top:4px;
+}
+
+/* ── CALCULATE BUTTON ── */
+.btn-calc{
+  width:100%;
+  padding:14px;
+  background:var(--accent);
+  color:white;
+  border:none;border-radius:4px;
+  font-family:var(--font-display);
+  font-size:1.2rem;font-weight:600;
+  cursor:pointer;letter-spacing:0.01em;
+  transition:all 0.2s ease;
+  margin-top:0.25rem;
+}
+.btn-calc:hover{background:var(--accent-warm);transform:translateY(-1px)}
+
+/* ── RESULTS ── */
+.results{display:none}
+.results.show{display:block;animation:riseIn 0.45s ease forwards}
+
+@keyframes riseIn{
+  from{opacity:0;transform:translateY(14px)}
+  to{opacity:1;transform:translateY(0)}
+}
+
+/* The number */
+.gap-display{
+  text-align:center;
+  padding:2.5rem 2rem;
+  position:relative;
+  overflow:hidden;
+}
+.gap-display-eyebrow{
+  font-size:11px;letter-spacing:0.14em;text-transform:uppercase;
+  color:var(--ink-faint);margin-bottom:1rem;
+  font-family:var(--font-body);
+}
+.gap-amount{
+  font-family:var(--font-display);
+  font-size:clamp(3rem,8vw,5.5rem);
+  font-weight:700;
+  line-height:1;
+  margin-bottom:0.4rem;
+  transition:color 0.4s ease;
+}
+.gap-label{
+  font-family:var(--font-display);
+  font-size:1.1rem;
+  font-style:italic;
+  color:var(--ink-soft);
+  margin-bottom:1.5rem;
+}
+.gap-status{
+  display:inline-block;
+  padding:6px 20px;
+  border-radius:20px;
+  font-size:0.85rem;
+  font-weight:700;
+  letter-spacing:0.05em;
+  text-transform:uppercase;
+}
+
+/* Status colors */
+.status-good{background:var(--good-pale);color:var(--good)}
+.status-warn{background:var(--warn-pale);color:var(--warn)}
+.status-danger{background:var(--danger-pale);color:var(--danger)}
+.amount-good{color:var(--good)}
+.amount-warn{color:var(--warn)}
+.amount-danger{color:var(--accent)}
+
+/* ── GAUGE ── */
+.gauge-wrap{
+  width:220px;height:120px;
+  margin:1.5rem auto 0;
+  position:relative;
+}
+canvas.gauge{width:220px!important;height:120px!important}
+
+/* ── METRICS GRID ── */
+.metrics-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:1rem;
+  margin-bottom:1.5rem;
+}
+.metric{
+  background:white;
+  border:1px solid var(--border);
+  border-radius:6px;
+  padding:1.1rem 1rem;
+  text-align:center;
+}
+.metric-label{
+  font-size:10px;letter-spacing:0.1em;text-transform:uppercase;
+  color:var(--ink-faint);margin-bottom:6px;
+  font-family:var(--font-body);
+}
+.metric-value{
+  font-family:var(--font-display);
+  font-size:1.4rem;font-weight:700;
+  color:var(--ink);line-height:1;
+  margin-bottom:3px;
+}
+.metric-sub{
+  font-size:11px;color:var(--ink-faint);
+  font-style:italic;
+  font-family:var(--font-display);font-size:0.85rem;
+}
+
+/* ── INCOME WATERFALL ── */
+.waterfall{
+  background:white;
+  border:1px solid var(--border);
+  border-radius:6px;
+  padding:1.75rem;
+  margin-bottom:1.5rem;
+}
+.waterfall-title{
+  font-family:var(--font-display);
+  font-size:1.15rem;font-weight:600;
+  color:var(--ink);margin-bottom:1.25rem;
+}
+.waterfall-row{
+  display:flex;align-items:center;
+  gap:1rem;margin-bottom:0.85rem;
+}
+.waterfall-row:last-child{margin-bottom:0}
+.wf-label{
+  font-size:0.82rem;color:var(--ink-soft);
+  width:160px;flex-shrink:0;
+  font-family:var(--font-display);font-size:0.95rem;
+}
+.wf-bar-wrap{flex:1;position:relative}
+.wf-bar-bg{
+  height:24px;
+  background:var(--paper-dark);
+  border-radius:3px;
+  overflow:hidden;
+}
+.wf-bar-fill{
+  height:24px;
+  border-radius:3px;
+  transition:width 0.8s cubic-bezier(0.4,0,0.2,1);
+  display:flex;align-items:center;
+  padding-left:8px;
+}
+.wf-bar-text{
+  font-size:11px;font-weight:700;
+  color:white;white-space:nowrap;
+  font-family:var(--font-body);
+}
+.wf-amount{
+  font-family:var(--font-display);
+  font-size:0.95rem;font-weight:600;
+  color:var(--ink);
+  width:90px;text-align:right;flex-shrink:0;
+}
+.wf-divider{
+  border:none;border-top:1px dashed var(--border);
+  margin:0.5rem 0 0.85rem;
+}
+
+/* ── CATCH UP PANEL ── */
+.catchup{
+  background:var(--ink);
+  border-radius:6px;
+  padding:1.75rem;
+  margin-bottom:1.5rem;
+  position:relative;overflow:hidden;
+  color:var(--paper);
+}
+.catchup::before{
+  content:'';
+  position:absolute;inset:0;
+  background:repeating-linear-gradient(
+    45deg,
+    transparent,transparent 20px,
+    rgba(255,255,255,0.015) 20px,rgba(255,255,255,0.015) 21px
+  );
+}
+.catchup-inner{position:relative}
+.catchup-eyebrow{
+  font-size:10px;letter-spacing:0.14em;text-transform:uppercase;
+  color:#C8845A;margin-bottom:0.6rem;font-family:var(--font-body);
+}
+.catchup-title{
+  font-family:var(--font-display);
+  font-size:1.3rem;font-weight:600;
+  color:var(--paper);margin-bottom:1.25rem;
+  line-height:1.3;
+}
+.catchup-options{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:0.75rem;
+}
+.catchup-option{
+  background:rgba(255,255,255,0.06);
+  border:1px solid rgba(255,255,255,0.1);
+  border-radius:5px;
+  padding:1rem;
+  text-align:center;
+}
+.co-years{
+  font-size:10px;letter-spacing:0.1em;text-transform:uppercase;
+  color:#9A8A7A;margin-bottom:6px;font-family:var(--font-body);
+}
+.co-amount{
+  font-family:var(--font-display);
+  font-size:1.5rem;font-weight:700;
+  color:#C8845A;line-height:1;margin-bottom:4px;
+}
+.co-label{
+  font-size:11px;color:#7A6A5A;font-style:italic;
+  font-family:var(--font-display);font-size:0.85rem;
+}
+.catchup-note{
+  font-size:0.82rem;color:#7A6A5A;
+  font-style:italic;margin-top:1rem;
+  font-family:var(--font-display);font-size:0.9rem;
+  line-height:1.6;
+}
+
+/* ── FIDELITY BENCHMARK ── */
+.benchmark{
+  background:var(--paper-dark);
+  border:1px solid var(--border);
+  border-radius:6px;
+  padding:1.5rem 1.75rem;
+  margin-bottom:1.5rem;
+}
+.benchmark-title{
+  font-family:var(--font-display);
+  font-size:1.1rem;font-weight:600;
+  color:var(--ink);margin-bottom:1rem;
+}
+.benchmark-rows{
+  display:flex;flex-direction:column;gap:0.6rem;
+}
+.bm-row{
+  display:flex;align-items:center;gap:1rem;
+}
+.bm-age{
+  font-size:11px;font-weight:700;
+  color:var(--ink-soft);width:50px;flex-shrink:0;
+  font-family:var(--font-body);
+}
+.bm-bar-wrap{flex:1}
+.bm-bar-bg{
+  height:16px;background:var(--border);
+  border-radius:2px;overflow:hidden;
+}
+.bm-bar-fill{
+  height:16px;border-radius:2px;
+  transition:width 0.6s ease;
+}
+.bm-target{
+  font-size:0.82rem;color:var(--ink-soft);
+  width:100px;text-align:right;flex-shrink:0;
+  font-family:var(--font-display);font-size:0.9rem;
+}
+.bm-current-marker{
+  position:relative;
+}
+.bm-you{
+  font-size:10px;font-weight:700;
+  color:var(--accent);letter-spacing:0.05em;
+  text-transform:uppercase;
+}
+
+/* ── INSIGHT ── */
+.insight{
+  background:white;
+  border-left:3px solid var(--accent);
+  border-radius:0 6px 6px 0;
+  padding:1.25rem 1.5rem;
+  margin-bottom:1.5rem;
+}
+.insight-label{
+  font-size:10px;letter-spacing:0.14em;text-transform:uppercase;
+  color:var(--accent);margin-bottom:0.5rem;
+  font-family:var(--font-body);
+}
+.insight-text{
+  font-family:var(--font-display);
+  font-size:1.05rem;
+  color:var(--ink-med);
+  line-height:1.7;
+  font-style:italic;
+}
+.insight-text strong{
+  font-style:normal;
+  color:var(--ink);
+}
+
+/* ── CTA ── */
+.cta{
+  background:var(--accent-pale);
+  border:1px solid rgba(155,58,26,0.2);
+  border-radius:6px;
+  padding:1.5rem 1.75rem;
+  display:flex;align-items:center;
+  justify-content:space-between;
+  gap:1rem;flex-wrap:wrap;
+}
+.cta-left{}
+.cta-title{
+  font-family:var(--font-display);
+  font-size:1.1rem;font-weight:600;
+  color:var(--ink);margin-bottom:3px;
+}
+.cta-sub{
+  font-size:0.85rem;color:var(--ink-soft);
+  font-style:italic;
+  font-family:var(--font-display);font-size:0.95rem;
+}
+.btn-cta{
+  padding:11px 22px;
+  background:var(--ink);color:var(--paper);
+  border:none;border-radius:4px;
+  font-family:var(--font-display);
+  font-size:1rem;font-weight:600;
+  cursor:pointer;white-space:nowrap;
+  text-decoration:none;display:inline-block;
+  flex-shrink:0;
+  transition:all 0.2s ease;
+}
+.btn-cta:hover{background:var(--accent)}
+
+/* ── SOURCES ── */
+.sources{
+  margin-top:2.5rem;
+  padding-top:1.5rem;
+  border-top:1px solid var(--border);
+}
+.sources-title{
+  font-size:10px;letter-spacing:0.12em;text-transform:uppercase;
+  color:var(--ink-faint);margin-bottom:0.75rem;
+  font-family:var(--font-body);font-weight:700;
+}
+.sources p{
+  font-size:12px;color:var(--ink-faint);
+  font-style:italic;line-height:1.7;margin-bottom:4px;
+  font-family:var(--font-display);font-size:0.88rem;
+}
+.sources a{color:var(--accent);text-decoration:underline;text-underline-offset:2px}
+
+/* ── FOOTER ── */
+.site-footer{
+  background:var(--ink-med);
+  padding:2rem;text-align:center;
+}
+.footer-logo{
+  font-family:var(--font-display);
+  font-size:1.1rem;color:var(--paper);margin-bottom:0.5rem;
+}
+.footer-logo em{font-style:normal;color:#C8845A}
+.footer-rule{width:40px;height:1px;background:var(--border);margin:1rem auto}
+.footer-text{
+  font-size:12px;color:var(--ink-soft);
+  line-height:1.7;max-width:460px;margin:0 auto;
+  font-family:var(--font-display);font-size:0.88rem;
+  font-style:italic;
+}
+
+/* ── RESPONSIVE ── */
+@media(max-width:640px){
+  .two-col{grid-template-columns:1fr}
+  .metrics-grid{grid-template-columns:1fr 1fr}
+  .catchup-options{grid-template-columns:1fr}
+  .hero{padding:3rem 1.25rem 2.5rem}
+  .outer{padding:2rem 1.25rem 3.5rem}
+  .cta{flex-direction:column;text-align:center}
+}
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header class="site-header">
+  <a href="/" class="logo">Regarding<em>Retirement</em>.com</a>
+  <span class="nav-tag">Free Calculator</span>
+</header>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-texture"></div>
+  <div class="hero-glow"></div>
+  <div class="hero-inner">
+    <p class="hero-kicker">
+      <span class="kicker-rule"></span>
+      Retirement Savings Gap Calculator
+      <span class="kicker-rule"></span>
+    </p>
+    <h1>Do you have <em>enough</em><br>saved to retire?</h1>
+    <p class="hero-body">Most people have a feeling. This calculator gives you an actual number — your savings target, your current gap, and exactly how much you'd need to save each month to close it.</p>
+  </div>
+</section>
+
+<!-- MAIN -->
+<main class="outer">
+
+  <!-- INPUT CARDS -->
+  <div class="two-col">
+
+    <!-- LEFT: About You -->
+    <div class="card">
+      <p class="card-eyebrow">About You</p>
+      <p class="card-title">Your age & timeline</p>
+      <p class="card-sub">When you retire determines how much time your savings have to grow — and how long they need to last.</p>
+
+      <div class="field">
+        <label class="field-label">Current Age</label>
+        <div class="field-row">
+          <input type="number" class="field-input" id="currentAge" value="60" min="40" max="75" oninput="syncCalc()"/>
+          <span class="field-suffix">yrs</span>
+        </div>
+      </div>
+
+      <div class="field">
+        <label class="field-label">Planned Retirement Age</label>
+        <div class="field-row">
+          <input type="number" class="field-input" id="retireAge" value="67" min="55" max="80" oninput="syncCalc()"/>
+          <span class="field-suffix">yrs</span>
+        </div>
+      </div>
+
+      <div class="field">
+        <label class="field-label">Life Expectancy</label>
+        <p class="field-hint">Use family history. Average is ~78 for men, ~81 for women.</p>
+        <div class="field-row">
+          <input type="number" class="field-input" id="lifeExp" value="87" min="75" max="100" oninput="syncCalc()"/>
+          <span class="field-suffix">yrs</span>
+        </div>
+      </div>
+
+      <div class="field">
+        <label class="field-label">Current Annual Income</label>
+        <div class="field-row">
+          <span class="field-prefix">$</span>
+          <input type="number" class="field-input" id="annualIncome" value="75000" min="20000" max="500000" oninput="syncCalc()"/>
+        </div>
+      </div>
+    </div>
+
+    <!-- RIGHT: Your Savings & Income -->
+    <div class="card">
+      <p class="card-eyebrow">Your Savings & Income</p>
+      <p class="card-title">What you have & expect</p>
+      <p class="card-sub">Include all retirement accounts — 401(k), IRA, Roth IRA. Social Security is estimated automatically if left at zero.</p>
+
+      <div class="field">
+        <label class="field-label">Current Retirement Savings</label>
+        <p class="field-hint">Total across all retirement accounts today</p>
+        <div class="field-row">
+          <span class="field-prefix">$</span>
+          <input type="number" class="field-input" id="currentSavings" value="280000" min="0" oninput="syncCalc()"/>
+        </div>
+      </div>
+
+      <div class="field">
+        <label class="field-label">Monthly Savings Contribution</label>
+        <p class="field-hint">What you currently put aside each month</p>
+        <div class="field-row">
+          <span class="field-prefix">$</span>
+          <input type="number" class="field-input" id="monthlySavings" value="800" min="0" oninput="syncCalc()"/>
+        </div>
+      </div>
+
+      <div class="field">
+        <label class="field-label">Expected Monthly Social Security</label>
+        <p class="field-hint">Leave at $0 to use our estimate based on your income</p>
+        <div class="field-row">
+          <span class="field-prefix">$</span>
+          <input type="number" class="field-input" id="socialSecurity" value="0" min="0" max="9999" oninput="syncCalc()"/>
+        </div>
+      </div>
+
+      <div class="field">
+        <label class="field-label">Expected Monthly Pension / Other Income</label>
+        <p class="field-hint">Pension, rental income, part-time work, annuity</p>
+        <div class="field-row">
+          <span class="field-prefix">$</span>
+          <input type="number" class="field-input" id="otherIncome" value="0" min="0" oninput="syncCalc()"/>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ASSUMPTION SLIDERS -->
+  <div class="card" style="margin-bottom:1.5rem">
+    <p class="card-eyebrow">Planning Assumptions</p>
+    <p class="card-title" style="margin-bottom:0.25rem">Adjust to match your expectations</p>
+    <p class="card-sub">These are the variables that most affect your number. The defaults are conservative and reasonable.</p>
+
+    <div class="two-col" style="margin-bottom:0">
+      <div class="field" style="margin-bottom:0">
+        <label class="field-label">Expected Annual Return on Savings</label>
+        <p class="field-hint">Before retirement — historically 6–7% for diversified portfolios</p>
+        <div class="range-wrap">
+          <input type="range" class="range-input" id="returnRate" min="3" max="10" step="0.5" value="6" oninput="updateRange('returnRate','returnVal','%');syncCalc()"/>
+          <span class="range-val" id="returnVal">6%</span>
+        </div>
+      </div>
+      <div class="field" style="margin-bottom:0">
+        <label class="field-label">Expected Annual Inflation Rate</label>
+        <p class="field-hint">Long-run Fed target is 2%. Use 3% to be conservative.</p>
+        <div class="range-wrap">
+          <input type="range" class="range-input" id="inflationRate" min="1" max="6" step="0.5" value="3" oninput="updateRange('inflationRate','inflationVal','%');syncCalc()"/>
+          <span class="range-val" id="inflationVal">3%</span>
+        </div>
+      </div>
+      <div class="field" style="margin-bottom:0">
+        <label class="field-label">Desired Income Replacement</label>
+        <p class="field-hint">% of current income you want in retirement. Fidelity suggests 70–80%.</p>
+        <div class="range-wrap">
+          <input type="range" class="range-input" id="replaceRate" min="50" max="100" step="5" value="75" oninput="updateRange('replaceRate','replaceVal','%');syncCalc()"/>
+          <span class="range-val" id="replaceVal">75%</span>
+        </div>
+      </div>
+      <div class="field" style="margin-bottom:0">
+        <label class="field-label">Withdrawal Rate in Retirement</label>
+        <p class="field-hint">The 4% rule is the standard. 3.5% is more conservative for long retirements.</p>
+        <div class="range-wrap">
+          <input type="range" class="range-input" id="withdrawRate" min="3" max="6" step="0.5" value="4" oninput="updateRange('withdrawRate','withdrawVal','%');syncCalc()"/>
+          <span class="range-val" id="withdrawVal">4%</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <button class="btn-calc" onclick="calculate()">Calculate My Retirement Gap →</button>
+
+  <!-- RESULTS -->
+  <div class="results" id="results" style="margin-top:1.75rem">
+
+    <!-- THE BIG NUMBER -->
+    <div class="card" style="margin-bottom:1.5rem;padding:0;overflow:hidden">
+      <div class="gap-display" id="gapDisplay">
+        <p class="gap-display-eyebrow">Your Retirement Savings Gap</p>
+        <p class="gap-amount" id="gapAmount">—</p>
+        <p class="gap-label" id="gapLabel">calculating...</p>
+        <span class="gap-status" id="gapStatus">—</span>
+
+        <!-- Gauge canvas -->
+        <div class="gauge-wrap">
+          <canvas class="gauge" id="gaugeCanvas" width="440" height="240"></canvas>
+        </div>
+      </div>
+    </div>
+
+    <!-- METRICS -->
+    <div class="metrics-grid">
+      <div class="metric">
+        <p class="metric-label">Savings Target</p>
+        <p class="metric-value" id="metTarget">—</p>
+        <p class="metric-sub">needed at retirement</p>
+      </div>
+      <div class="metric">
+        <p class="metric-label">Projected at Retirement</p>
+        <p class="metric-value" id="metProjected">—</p>
+        <p class="metric-sub">with current savings rate</p>
+      </div>
+      <div class="metric">
+        <p class="metric-label">Years of Runway</p>
+        <p class="metric-value" id="metRunway">—</p>
+        <p class="metric-sub">your savings should last</p>
+      </div>
+    </div>
+
+    <!-- INCOME WATERFALL -->
+    <div class="waterfall">
+      <p class="waterfall-title">Your Monthly Retirement Income Picture</p>
+      <div id="waterfallRows"></div>
+    </div>
+
+    <!-- CATCH-UP OPTIONS -->
+    <div class="catchup" id="catchupPanel">
+      <div class="catchup-inner">
+        <p class="catchup-eyebrow">To Close the Gap</p>
+        <p class="catchup-title" id="catchupTitle">How much more would you need to save?</p>
+        <div class="catchup-options" id="catchupOptions"></div>
+        <p class="catchup-note" id="catchupNote"></p>
+      </div>
+    </div>
+
+    <!-- FIDELITY BENCHMARK -->
+    <div class="benchmark">
+      <p class="benchmark-title">Fidelity Age-Based Savings Benchmarks — Where Do You Stand?</p>
+      <div class="benchmark-rows" id="benchmarkRows"></div>
+      <p style="font-size:11px;color:var(--ink-faint);font-style:italic;margin-top:0.75rem;font-family:var(--font-display);font-size:0.85rem">Source: Fidelity Investments — "How Much Do I Need to Retire?" — fidelity.com</p>
+    </div>
+
+    <!-- INSIGHT -->
+    <div class="insight">
+      <p class="insight-label">Your Situation in Plain English</p>
+      <p class="insight-text" id="insightText">—</p>
+    </div>
+
+    <!-- CTA -->
+    <div class="cta">
+      <div class="cta-left">
+        <p class="cta-title">Watch: How Much Do You Actually Need to Retire?</p>
+        <p class="cta-sub">The full video unpacks the Fidelity benchmarks, the 4% rule, and how to calculate your real number.</p>
+      </div>
+      <a href="https://youtube.com/@RetirementClarity" class="btn-cta" target="_blank">▶ Watch Free</a>
+    </div>
+
+    <!-- Sources -->
+    <div class="sources">
+      <p class="sources-title">Sources & Methodology</p>
+      <p>Fidelity Investments — How Much Do I Need to Retire? (Age-based savings benchmarks)<br>
+        <a href="https://www.fidelity.com/viewpoints/retirement/how-much-do-i-need-to-retire" target="_blank">fidelity.com/viewpoints/retirement/how-much-do-i-need-to-retire</a></p>
+      <p>Fidelity 2025 Retiree Health Care Cost Estimate — $172,000 average healthcare cost in retirement<br>
+        <a href="https://www.fidelity.com/learning-center/personal-finance/retirement/how-to-plan-for-retirement" target="_blank">fidelity.com — Retirement Planning Guide</a></p>
+      <p>Kiplinger / Alliance for Lifetime Income Peak 65 Study — 52.5% of Boomers have $250,000 or less<br>
+        <a href="https://www.kiplinger.com/retirement/magic-number-to-retire-comfortably" target="_blank">kiplinger.com — The Magic Number to Retire</a></p>
+      <p>William Bengen — Origin of the 4% safe withdrawal rule (updated to 4.7% in 2026)<br>
+        <a href="https://www.fidelity.com/viewpoints/retirement/retirement-guidelines" target="_blank">fidelity.com — Retirement Guidelines</a></p>
+    </div>
+
+  </div><!-- /results -->
+
+</main>
+
+<!-- FOOTER -->
+<footer class="site-footer">
+  <p class="footer-logo">Regarding<em>Retirement</em>.com</p>
+  <div class="footer-rule"></div>
+  <p class="footer-text">Free retirement education for Americans 55+. No financial advice. No sales pitch. Just clarity.<br><br>
+  This calculator is for educational purposes only and does not constitute financial advice. All projections are estimates based on the assumptions you provide. Actual results will vary. Please consult a qualified, fee-only fiduciary advisor before making retirement planning decisions.</p>
+</footer>
+
+<script>
+// ── HELPERS ──
+const $ = id => document.getElementById(id);
+const fmt = n => '$' + Math.round(Math.abs(n)).toLocaleString();
+const fmtK = n => {
+  const a = Math.abs(n);
+  if(a >= 1000000) return '$' + (a/1000000).toFixed(2).replace(/\.?0+$/,'') + 'M';
+  if(a >= 1000) return '$' + Math.round(a/1000) + 'K';
+  return '$' + Math.round(a);
+};
+
+function updateRange(sliderId, labelId, suffix){
+  $( labelId).textContent = $(sliderId).value + suffix;
+}
+
+function syncCalc(){
+  if($('results').classList.contains('show')) calculate();
+}
+
+// ── Social Security estimate ──
+function estimateSS(income, retireAge){
+  // Rough estimate: ~40% replacement at median income, scaled
+  const base = Math.min(income, 120000) * 0.35 + Math.max(0, income - 120000) * 0.05;
+  const monthlyAtFRA = base / 12;
+  if(retireAge >= 70) return monthlyAtFRA * 1.24;
+  if(retireAge >= 67) return monthlyAtFRA;
+  if(retireAge >= 62) return monthlyAtFRA * (1 - 0.3 * (67 - retireAge) / 5);
+  return monthlyAtFRA;
+}
+
+// ── MAIN CALC ──
+function calculate(){
+  const curAge    = parseInt($('currentAge').value) || 60;
+  const retireAge = parseInt($('retireAge').value)  || 67;
+  const lifeExp   = parseInt($('lifeExp').value)    || 87;
+  const income    = parseFloat($('annualIncome').value)    || 75000;
+  const savings   = parseFloat($('currentSavings').value)  || 0;
+  const monthly   = parseFloat($('monthlySavings').value)  || 0;
+  const ssInput   = parseFloat($('socialSecurity').value)  || 0;
+  const other     = parseFloat($('otherIncome').value)     || 0;
+  const returnR   = parseFloat($('returnRate').value)/100  || 0.06;
+  const inflR     = parseFloat($('inflationRate').value)/100 || 0.03;
+  const replaceR  = parseFloat($('replaceRate').value)/100 || 0.75;
+  const withdrawR = parseFloat($('withdrawRate').value)/100|| 0.04;
+
+  const yearsToRetire = Math.max(0, retireAge - curAge);
+  const yearsInRetire = Math.max(0, lifeExp - retireAge);
+
+  // ── FUTURE VALUE of current savings ──
+  const fvSavings = savings * Math.pow(1 + returnR, yearsToRetire);
+
+  // ── FV of monthly contributions ──
+  const monthlyR = returnR / 12;
+  const totalMonths = yearsToRetire * 12;
+  const fvContribs = totalMonths > 0
+    ? monthly * ((Math.pow(1 + monthlyR, totalMonths) - 1) / monthlyR)
+    : 0;
+
+  const projectedAtRetirement = fvSavings + fvContribs;
+
+  // ── Annual income need in retirement (today's dollars) ──
+  const annualNeedToday = income * replaceR;
+
+  // ── Inflate to retirement dollars ──
+  const annualNeedFuture = annualNeedToday * Math.pow(1 + inflR, yearsToRetire);
+
+  // ── Social Security ──
+  const ssMonthly = ssInput > 0 ? ssInput : estimateSS(income, retireAge);
+  const ssAnnual = ssMonthly * 12 * Math.pow(1 + inflR, yearsToRetire); // future dollars
+
+  // Other income in future dollars
+  const otherAnnual = other * 12 * Math.pow(1 + inflR, yearsToRetire);
+
+  // ── Gap that savings must cover ──
+  const annualFromSavings = Math.max(0, annualNeedFuture - ssAnnual - otherAnnual);
+
+  // ── Savings target (PV of annuity at withdrawal rate) ──
+  const savingsTarget = annualFromSavings / withdrawR;
+
+  // ── Gap ──
+  const gap = savingsTarget - projectedAtRetirement;
+
+  // ── Runway (how many years projected savings lasts) ──
+  let runway = 0;
+  if(projectedAtRetirement > 0 && annualFromSavings > 0){
+    // n = -ln(1 - P*r/PMT) / ln(1+r) where r = real return in retirement
+    const realR = Math.max(0.001, (returnR * 0.6) - inflR); // conservative retirement return
+    const ratio = annualFromSavings / projectedAtRetirement;
+    if(ratio <= realR){
+      runway = 50; // effectively perpetual
+    } else {
+      runway = Math.round(-Math.log(1 - realR / ratio) / Math.log(1 + realR));
+    }
+  }
+
+  // ── Display gap ──
+  const resultsEl = $('results');
+  resultsEl.classList.add('show');
+
+  const gapEl = $('gapAmount');
+  const labelEl = $('gapLabel');
+  const statusEl = $('gapStatus');
+
+  if(gap <= 0){
+    // Surplus
+    gapEl.textContent = fmtK(Math.abs(gap));
+    gapEl.className = 'gap-amount amount-good';
+    labelEl.textContent = 'projected surplus at retirement';
+    statusEl.textContent = 'On Track';
+    statusEl.className = 'gap-status status-good';
+  } else if(gap < savingsTarget * 0.3){
+    gapEl.textContent = fmtK(gap);
+    gapEl.className = 'gap-amount amount-warn';
+    labelEl.textContent = 'savings gap to close';
+    statusEl.textContent = 'Needs Attention';
+    statusEl.className = 'gap-status status-warn';
+  } else {
+    gapEl.textContent = fmtK(gap);
+    gapEl.className = 'gap-amount amount-danger';
+    labelEl.textContent = 'savings gap to close';
+    statusEl.textContent = 'Action Needed';
+    statusEl.className = 'gap-status status-danger';
+  }
+
+  // Animate number
+  animateNumber(gapEl, Math.abs(gap));
+
+  // ── Metrics ──
+  $('metTarget').textContent = fmtK(savingsTarget);
+  $('metProjected').textContent = fmtK(projectedAtRetirement);
+  $('metRunway').textContent = runway >= 50 ? '50+ yrs' : runway + ' yrs';
+
+  // ── Gauge ──
+  drawGauge(Math.min(1.5, projectedAtRetirement / Math.max(1, savingsTarget)));
+
+  // ── Waterfall ──
+  buildWaterfall(annualNeedFuture, ssAnnual, otherAnnual, annualFromSavings, projectedAtRetirement * withdrawR, inflR, yearsToRetire);
+
+  // ── Catch-up ──
+  buildCatchup(gap, yearsToRetire, returnR, monthly, gap <= 0);
+
+  // ── Benchmark ──
+  buildBenchmark(curAge, income, savings);
+
+  // ── Insight ──
+  buildInsight(gap, savingsTarget, projectedAtRetirement, yearsToRetire, runway, lifeExp, retireAge, ssMonthly, gap <= 0);
+
+  setTimeout(() => {
+    resultsEl.scrollIntoView({behavior:'smooth', block:'start'});
+  }, 150);
+}
+
+// ── ANIMATE NUMBER ──
+function animateNumber(el, target){
+  let cur = 0;
+  const step = target / 50;
+  const timer = setInterval(() => {
+    cur = Math.min(cur + step, target);
+    const prefix = el.className.includes('good') ? '' : '';
+    el.textContent = fmtK(cur);
+    if(cur >= target) clearInterval(timer);
+  }, 20);
+}
+
+// ── GAUGE ──
+function drawGauge(ratio){
+  const canvas = $('gaugeCanvas');
+  const ctx = canvas.getContext('2d');
+  const dpr = window.devicePixelRatio || 1;
+  canvas.width = 220 * dpr;
+  canvas.height = 120 * dpr;
+  canvas.style.width = '220px';
+  canvas.style.height = '120px';
+  ctx.scale(dpr, dpr);
+
+  const cx = 110, cy = 108, r = 85, lineW = 16;
+  const startAngle = Math.PI;
+  const endAngle = 2 * Math.PI;
+
+  // Background arc
+  ctx.beginPath();
+  ctx.arc(cx, cy, r, startAngle, endAngle);
+  ctx.strokeStyle = '#E6DDCC';
+  ctx.lineWidth = lineW;
+  ctx.lineCap = 'round';
+  ctx.stroke();
+
+  // Zones
+  const zones = [
+    {end: 0.4, color: '#C04E22'},
+    {end: 0.7, color: '#C4860A'},
+    {end: 1.0, color: '#4A8C60'},
+    {end: 1.5, color: '#1F5C35'},
+  ];
+  let prevEnd = 0;
+  zones.forEach(z => {
+    const sa = startAngle + prevEnd * Math.PI;
+    const ea = startAngle + z.end * Math.PI;
+    ctx.beginPath();
+    ctx.arc(cx, cy, r, sa, ea);
+    ctx.strokeStyle = z.color;
+    ctx.lineWidth = lineW - 2;
+    ctx.lineCap = 'butt';
+    ctx.stroke();
+    prevEnd = z.end;
+  });
+
+  // Needle
+  const needleAngle = startAngle + Math.min(1.5, Math.max(0, ratio)) / 1.5 * Math.PI;
+  const nx = cx + (r - lineW) * Math.cos(needleAngle);
+  const ny = cy + (r - lineW) * Math.sin(needleAngle);
+
+  ctx.beginPath();
+  ctx.moveTo(cx, cy);
+  ctx.lineTo(nx, ny);
+  ctx.strokeStyle = '#18140F';
+  ctx.lineWidth = 3;
+  ctx.lineCap = 'round';
+  ctx.stroke();
+
+  ctx.beginPath();
+  ctx.arc(cx, cy, 6, 0, Math.PI * 2);
+  ctx.fillStyle = '#18140F';
+  ctx.fill();
+
+  // Labels
+  ctx.font = `bold ${10 * dpr / dpr}px sans-serif`;
+  ctx.fillStyle = '#A09080';
+  ctx.textAlign = 'center';
+  ctx.fillText('0%', cx - r + 4, cy + 18);
+  ctx.fillText('100%', cx + r - 4, cy + 18);
+  ctx.fillText('Funded', cx, cy + 18);
+}
+
+// ── WATERFALL ──
+function buildWaterfall(need, ss, other, fromSavings, savingsProvides, inflR, years){
+  const el = $('waterfallRows');
+  el.innerHTML = '';
+  const todayNeed = need / Math.pow(1 + inflR, years);
+  const todaySS = ss / Math.pow(1 + inflR, years);
+  const todayOther = other / Math.pow(1 + inflR, years);
+  const todaySavings = savingsProvides / Math.pow(1 + inflR, years);
+
+  const monthlyNeed = todayNeed / 12;
+  const monthlySS = todaySS / 12;
+  const monthlyOther = todayOther / 12;
+  const monthlySavings = todaySavings / 12;
+
+  const maxBar = monthlyNeed;
+
+  function row(label, val, colorClass, isNeed){
+    const pct = Math.min(100, (val / maxBar) * 100);
+    const div = document.createElement('div');
+    div.className = 'waterfall-row';
+    div.innerHTML = `
+      <span class="wf-label">${label}</span>
+      <div class="wf-bar-wrap">
+        <div class="wf-bar-bg">
+          <div class="wf-bar-fill ${colorClass}" style="width:0%;background:${colorClass}" data-w="${pct}%">
+            ${val >= 100 ? `<span class="wf-bar-text">${fmt(val/1)}/mo</span>` : ''}
+          </div>
+        </div>
+      </div>
+      <span class="wf-amount">${fmt(val)}/mo</span>
+    `;
+    el.appendChild(div);
+  }
+
+  // Colors
+  const colors = {
+    need: '#C04E22',
+    ss: '#1E4A6E',
+    other: '#2D5A3D',
+    savings: '#8B6800',
+  };
+
+  row('Monthly income needed', monthlyNeed, colors.need, true);
+  const hr = document.createElement('hr');
+  hr.className = 'wf-divider';
+  el.appendChild(hr);
+  if(monthlySS > 0) row('Social Security', monthlySS, colors.ss, false);
+  if(monthlyOther > 0) row('Pension / Other income', monthlyOther, colors.other, false);
+  row('From your savings (4%)', monthlySavings, colors.savings, false);
+
+  // Animate bars
+  setTimeout(() => {
+    el.querySelectorAll('.wf-bar-fill').forEach(b => {
+      b.style.width = b.dataset.w;
+    });
+  }, 300);
+
+  // Add note
+  const gap = monthlyNeed - monthlySS - monthlyOther - monthlySavings;
+  if(gap > 50){
+    const note = document.createElement('p');
+    note.style.cssText = 'font-size:0.82rem;color:var(--accent);font-style:italic;margin-top:0.75rem;font-family:var(--font-display);font-size:0.9rem;';
+    note.textContent = `Monthly shortfall: ${fmt(gap)}/mo in today's dollars`;
+    el.appendChild(note);
+  } else if(gap <= 0){
+    const note = document.createElement('p');
+    note.style.cssText = 'font-size:0.82rem;color:var(--good);font-style:italic;margin-top:0.75rem;font-family:var(--font-display);font-size:0.9rem;';
+    note.textContent = `Monthly surplus: ${fmt(Math.abs(gap))}/mo in today's dollars — you\'re on track.`;
+    el.appendChild(note);
+  }
+}
+
+// ── CATCH-UP ──
+function buildCatchup(gap, years, returnR, currentMonthly, onTrack){
+  const panel = $('catchupPanel');
+  const optEl = $('catchupOptions');
+  const noteEl = $('catchupNote');
+  const titleEl = $('catchupTitle');
+  optEl.innerHTML = '';
+
+  if(onTrack){
+    titleEl.textContent = "You're projected to meet your savings target.";
+    const div = document.createElement('div');
+    div.className = 'catchup-option';
+    div.innerHTML = `<p class="co-years">STATUS</p><p class="co-amount" style="color:#4A8C60">On Track</p><p class="co-label">Keep saving consistently</p>`;
+    optEl.appendChild(div);
+    noteEl.textContent = "Your current savings rate puts you on track. Continue contributing consistently and revisit this calculation annually — especially if your income, spending expectations, or market returns change significantly.";
+    return;
+  }
+
+  if(years <= 0){
+    titleEl.textContent = "You're at or past retirement age.";
+    noteEl.textContent = "Focus shifts to optimizing withdrawals, Social Security timing, and healthcare coverage rather than savings accumulation.";
+    return;
+  }
+
+  titleEl.textContent = `To close a ${fmtK(gap)} gap in ${years} years, you'd need to save:`;
+
+  const monthlyR = returnR / 12;
+  const months = years * 12;
+
+  [5, 10, 15].forEach(yr => {
+    const m = Math.min(yr, years);
+    const mo = m * 12;
+    // PMT = FV * r / ((1+r)^n - 1)
+    const needed = gap * monthlyR / (Math.pow(1 + monthlyR, mo) - 1);
+    const additional = Math.max(0, needed - currentMonthly);
+
+    const div = document.createElement('div');
+    div.className = 'catchup-option';
+    div.innerHTML = `
+      <p class="co-years">Over ${m} Year${m > 1 ? 's' : ''}</p>
+      <p class="co-amount">${fmt(needed)}</p>
+      <p class="co-label">per month total<br><span style="color:#9A8A7A;font-size:10px">(+${fmt(additional)} more than now)</span></p>
+    `;
+    optEl.appendChild(div);
+  });
+
+  noteEl.textContent = `These figures assume a ${(parseFloat($('returnRate').value))}% annual return on contributions. If you're 50 or older, catch-up contributions allow you to contribute up to $8,000 extra per year to a 401(k) in 2026 — which significantly accelerates gap closure.`;
+}
+
+// ── BENCHMARK ──
+function buildBenchmark(curAge, income, savings){
+  const benchmarks = [
+    { age: 30, mult: 1 },
+    { age: 40, mult: 3 },
+    { age: 50, mult: 6 },
+    { age: 60, mult: 8 },
+    { age: 67, mult: 10 },
+  ];
+
+  const el = $('benchmarkRows');
+  el.innerHTML = '';
+
+  benchmarks.forEach(b => {
+    const target = income * b.mult;
+    const isCurrentAge = Math.abs(b.age - curAge) <= 4;
+    const userRatio = isCurrentAge ? savings / target : null;
+
+    const div = document.createElement('div');
+    div.className = 'bm-row';
+
+    let barColor = '#C8BCAC';
+    let fillW = 0;
+
+    if(isCurrentAge){
+      fillW = Math.min(100, (savings / target) * 100);
+      if(fillW >= 90) barColor = '#4A8C60';
+      else if(fillW >= 60) barColor = '#C4860A';
+      else barColor = '#C04E22';
+    } else {
+      fillW = 50; // placeholder
+      barColor = '#D8CEBC';
+    }
+
+    div.innerHTML = `
+      <span class="bm-age" style="${isCurrentAge ? 'color:var(--accent);font-weight:700' : ''}">Age ${b.age}${isCurrentAge ? ' ★' : ''}</span>
+      <div class="bm-bar-wrap">
+        <div class="bm-bar-bg">
+          <div class="bm-bar-fill" style="width:0%;background:${barColor}" data-w="${fillW}%"></div>
+        </div>
+        ${isCurrentAge ? `<span class="bm-you" style="color:${barColor}">You: ${fmtK(savings)} of ${fmtK(target)} target</span>` : ''}
+      </div>
+      <span class="bm-target">${b.mult}× income<br><span style="font-size:10px;color:var(--ink-faint)">${fmtK(target)}</span></span>
+    `;
+    el.appendChild(div);
+  });
+
+  setTimeout(() => {
+    el.querySelectorAll('.bm-bar-fill').forEach(b => {
+      b.style.width = b.dataset.w;
+    });
+  }, 400);
+}
+
+// ── INSIGHT ──
+function buildInsight(gap, target, projected, yearsToRetire, runway, lifeExp, retireAge, ssMonthly, onTrack){
+  const el = $('insightText');
+  const replaceR = parseFloat($('replaceRate').value);
+  const currentMonthly = parseFloat($('monthlySavings').value) || 0;
+
+  let text = '';
+
+  if(onTrack){
+    text = `With your current savings rate and projected returns, you\'re on track to meet your retirement target of <strong>${fmtK(target)}</strong>. Your savings are projected to last approximately <strong>${Math.min(runway, lifeExp - retireAge)} years</strong> in retirement — which covers your life expectancy. The most important thing now is consistency: don\'t reduce contributions, review your plan annually, and consider whether a Roth conversion strategy before age 73 could reduce your future tax exposure.`;
+  } else if(gap < target * 0.2){
+    text = `You\'re relatively close to your target. A gap of <strong>${fmtK(gap)}</strong> on a target of <strong>${fmtK(target)}</strong> is meaningful but addressable — especially with catch-up contributions available to anyone over 50. Your projected savings of <strong>${fmtK(projected)}</strong> covers the majority of what you\'ll need. Increasing your monthly contribution by a modest amount or delaying retirement by 1–2 years could close this gap entirely.`;
+  } else if(yearsToRetire >= 10){
+    text = `You have <strong>${yearsToRetire} years</strong> until retirement — which is real time to close a gap of <strong>${fmtK(gap)}</strong>. The most powerful levers are: increasing monthly contributions, delaying retirement by even a year or two, and ensuring your investments are appropriately positioned for growth. Small changes compounded over ${yearsToRetire} years have an outsized effect. This is worth a focused conversation with a fee-only advisor.`;
+  } else {
+    text = `With <strong>${yearsToRetire} years</strong> to retirement and a gap of <strong>${fmtK(gap)}</strong>, this situation calls for a honest look at your options: increasing savings significantly, adjusting your retirement age, right-sizing your income expectations, or some combination. Social Security optimization — particularly claiming age — becomes especially important when savings fall short. A fee-only fiduciary advisor who specializes in retirement income planning is worth the investment here.`;
+  }
+
+  el.innerHTML = text;
+}
+
+// ── INIT ──
+window.addEventListener('load', () => {
+  updateRange('returnRate','returnVal','%');
+  updateRange('inflationRate','inflationVal','%');
+  updateRange('replaceRate','replaceVal','%');
+  updateRange('withdrawRate','withdrawVal','%');
+  calculate();
+});
+</script>
+</body>
+</html>

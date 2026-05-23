@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Roth Conversion Tax Estimator | RegardingRetirement.com</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+:root{
+  --black:#0A0A0A;--near-black:#111111;--dark:#1A1A1A;--dark-mid:#222222;
+  --mid:#444444;--muted:#777777;--faint:#AAAAAA;--ghost:#DDDDDD;
+  --white:#FAFAFA;--off-white:#F4F4F4;--light:#EBEBEB;
+  --amber:#E8A020;--amber-dark:#B87818;--amber-light:#F0BC50;--amber-pale:#FBF5E0;
+  --red:#CC2222;--red-pale:#FEF0F0;
+  --green:#1A6B3C;--green-pale:#E4F5EC;
+  --border:#E0E0E0;
+  --font-display:'Instrument Serif',Georgia,serif;
+  --font-ui:'Syne',sans-serif;
+}
+body{font-family:var(--font-ui);background:var(--white);color:var(--black);min-height:100vh;font-size:15px;line-height:1.6;}
+
+.site-header{background:var(--black);padding:.9rem 2rem;display:flex;align-items:center;justify-content:space-between;}
+.logo{font-family:var(--font-display);font-size:1.05rem;color:var(--white);text-decoration:none;font-style:italic;}
+.logo em{font-style:normal;color:var(--amber);}
+.htag{font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);}
+
+/* HERO */
+.hero{background:var(--black);padding:4rem 2rem 3.5rem;position:relative;overflow:hidden;}
+.hero-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(232,160,32,.06) 1px,transparent 1px),linear-gradient(90deg,rgba(232,160,32,.06) 1px,transparent 1px);background-size:60px 60px;pointer-events:none;}
+.hero-inner{max-width:720px;margin:0 auto;position:relative;}
+.hero-tag{font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--amber);margin-bottom:1.25rem;font-weight:700;}
+.hero h1{font-family:var(--font-display);font-size:clamp(2.2rem,5vw,3.8rem);color:var(--white);line-height:1.1;margin-bottom:1rem;font-style:italic;}
+.hero h1 strong{font-style:normal;color:var(--amber);}
+.hero-sub{font-size:1rem;color:var(--muted);line-height:1.75;max-width:540px;}
+.hero-divider{width:60px;height:2px;background:var(--amber);margin:1.5rem 0;}
+.hero-stat-row{display:flex;gap:2.5rem;flex-wrap:wrap;}
+.hstat{border-left:2px solid var(--dark-mid);padding:.4rem 0 .4rem 1rem;}
+.hstat-num{font-family:var(--font-display);font-size:1.6rem;color:var(--amber);font-style:italic;}
+.hstat-label{font-size:10px;letter-spacing:.08em;color:var(--muted);text-transform:uppercase;margin-top:2px;}
+
+/* OUTER */
+.outer{max-width:780px;margin:0 auto;padding:2.5rem 1.5rem 5rem;}
+
+/* PANELS */
+.panel{background:var(--white);border:1px solid var(--border);margin-bottom:1.25rem;}
+.panel-head{background:var(--off-white);border-bottom:1px solid var(--border);padding:.75rem 1.25rem;display:flex;align-items:center;gap:.75rem;}
+.ph-step{width:22px;height:22px;border-radius:50%;background:var(--black);color:var(--amber);font-size:10px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.ph-title{font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--dark);}
+.panel-body{padding:1.5rem;}
+
+/* INPUTS */
+.ig{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1rem;}
+.field{}
+.fl{font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:5px;display:block;}
+.fh{font-size:11px;color:var(--faint);margin-bottom:5px;line-height:1.4;}
+.iw{display:flex;align-items:stretch;border:1.5px solid var(--border);background:var(--off-white);overflow:hidden;transition:border-color .15s;}
+.iw:focus-within{border-color:var(--black);}
+.ipre,.isuf{padding:9px 11px;font-size:11px;color:var(--faint);background:var(--light);border-right:1px solid var(--border);flex-shrink:0;display:flex;align-items:center;font-family:var(--font-ui);}
+.isuf{border-right:none;border-left:1px solid var(--border);}
+.fi{flex:1;padding:9px 11px;border:none;outline:none;background:transparent;font-family:var(--font-display);font-style:italic;font-size:1.05rem;color:var(--black);min-width:0;-moz-appearance:textfield;}
+.fi::-webkit-inner-spin-button,.fi::-webkit-outer-spin-button{-webkit-appearance:none;}
+
+/* TAX BRACKET DISPLAY */
+.bracket-display{background:var(--off-white);border:1px solid var(--border);padding:1rem 1.25rem;margin-bottom:1rem;}
+.bd-label{font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:.75rem;}
+.bracket-bars{display:flex;flex-direction:column;gap:.4rem;}
+.bb-row{display:flex;align-items:center;gap:.75rem;}
+.bb-label{font-size:11px;color:var(--muted);width:80px;flex-shrink:0;font-weight:500;}
+.bb-bar-bg{flex:1;height:16px;background:var(--light);position:relative;overflow:hidden;}
+.bb-bar-fill{height:16px;background:var(--black);transition:width .6s ease;position:relative;}
+.bb-bar-active{background:var(--amber)!important;}
+.bb-val{font-size:11px;color:var(--muted);width:50px;text-align:right;font-weight:500;}
+.bb-you{position:absolute;right:4px;top:50%;transform:translateY(-50%);font-size:9px;font-weight:700;color:var(--black);white-space:nowrap;}
+
+/* CONVERSION SLIDER */
+.slider-section{margin-bottom:1rem;}
+.sl-top{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:.5rem;}
+.sl-label{font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);}
+.sl-value{font-family:var(--font-display);font-size:1.4rem;font-style:italic;color:var(--black);}
+input[type=range]{width:100%;-webkit-appearance:none;height:4px;background:var(--light);border-radius:2px;outline:none;cursor:pointer;}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:20px;height:20px;border-radius:50%;background:var(--black);cursor:pointer;border:3px solid var(--amber);}
+.sl-bounds{display:flex;justify-content:space-between;font-size:10px;color:var(--faint);margin-top:4px;}
+
+/* CALC BUTTON */
+.btn-calc{display:block;width:100%;padding:14px;background:var(--black);color:var(--amber);border:none;font-family:var(--font-ui);font-size:13px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;cursor:pointer;transition:all .2s;margin-top:.5rem;}
+.btn-calc:hover{background:var(--amber);color:var(--black);}
+
+/* RESULTS */
+.results{display:none;}
+.results.show{display:block;animation:popIn .4s ease;}
+@keyframes popIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+
+/* Tax cost hero */
+.tax-hero{background:var(--black);padding:2rem;margin-bottom:1.25rem;display:grid;grid-template-columns:1fr 1fr 1fr;border-bottom:3px solid var(--amber);}
+.th-col{padding:1rem;border-right:1px solid var(--dark-mid);text-align:center;}
+.th-col:last-child{border-right:none;}
+.th-label{font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-bottom:.6rem;font-weight:700;}
+.th-value{font-family:var(--font-display);font-size:1.8rem;font-style:italic;color:var(--amber);line-height:1;margin-bottom:3px;}
+.th-sub{font-size:10px;color:var(--dark-mid);}
+.th-value.good{color:#4ADE80;}
+.th-value.warn{color:#FCA5A5;}
+
+/* Comparison table */
+.comp-table{width:100%;border-collapse:collapse;margin-bottom:1.25rem;}
+.comp-table th{background:var(--off-white);padding:.65rem 1rem;text-align:left;font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);border-bottom:2px solid var(--border);}
+.comp-table th:not(:first-child){text-align:right;}
+.comp-table td{padding:.65rem 1rem;border-bottom:1px solid var(--border);font-size:13px;color:var(--black);}
+.comp-table td:not(:first-child){text-align:right;font-family:var(--font-display);font-style:italic;}
+.comp-table tr:last-child td{border-bottom:none;font-weight:700;background:var(--off-white);}
+.td-good{color:var(--green)!important;}
+.td-bad{color:var(--red)!important;}
+
+/* Timeline */
+.timeline-panel{border:1px solid var(--border);margin-bottom:1.25rem;}
+.tp-head{background:var(--off-white);padding:.65rem 1.25rem;border-bottom:1px solid var(--border);}
+.tp-title{font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--dark);}
+.tp-body{padding:1.25rem;}
+.tl-year-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:.75rem;}
+.tl-yr{border:1px solid var(--border);padding:.85rem;position:relative;}
+.tl-yr-label{font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:.35rem;}
+.tl-yr-amount{font-family:var(--font-display);font-size:1.2rem;font-style:italic;color:var(--black);line-height:1;margin-bottom:.2rem;}
+.tl-yr-tax{font-size:11px;color:var(--red);font-weight:500;}
+.tl-yr-note{font-size:10px;color:var(--faint);margin-top:.4rem;font-style:italic;}
+.tl-yr.active{border-color:var(--amber);border-width:2px;}
+.tl-yr.active::before{content:'RECOMMENDED';position:absolute;top:-1px;right:-1px;background:var(--amber);color:var(--black);font-size:8px;font-weight:700;letter-spacing:.06em;padding:2px 6px;}
+
+/* Considerations */
+.considerations{display:flex;flex-direction:column;gap:.75rem;margin-bottom:1.25rem;}
+.consid{border-left:3px solid var(--border);padding:.85rem 1rem;display:flex;gap:.75rem;align-items:flex-start;}
+.consid.green{border-color:var(--green);background:var(--green-pale);}
+.consid.red{border-color:var(--red);background:var(--red-pale);}
+.consid.amber{border-color:var(--amber);background:var(--amber-pale);}
+.c-icon{font-size:1.1rem;flex-shrink:0;}
+.c-title{font-size:.82rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;margin-bottom:3px;}
+.consid.green .c-title{color:var(--green);}
+.consid.red .c-title{color:var(--red);}
+.consid.amber .c-title{color:var(--amber-dark);}
+.c-body{font-size:.82rem;line-height:1.55;font-style:italic;}
+.consid.green .c-body{color:#1A4A2A;}
+.consid.red .c-body{color:#7A1A1A;}
+.consid.amber .c-body{color:#7A5A10;}
+.c-body strong{font-style:normal;}
+
+/* Insight */
+.insight{background:var(--off-white);border-top:3px solid var(--amber);padding:1.25rem 1.5rem;margin-bottom:1.25rem;}
+.i-label{font-size:10px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--amber-dark);margin-bottom:.5rem;}
+.i-text{font-family:var(--font-display);font-style:italic;font-size:.95rem;color:var(--dark);line-height:1.7;}
+.i-text strong{font-style:normal;color:var(--black);}
+
+.cta{background:var(--black);padding:1.25rem 1.5rem;display:flex;align-items:center;justify-content:space-between;gap:1rem;flex-wrap:wrap;}
+.cta-t{font-family:var(--font-display);font-style:italic;font-size:.95rem;color:var(--white);margin-bottom:3px;}
+.cta-s{font-size:.82rem;color:var(--muted);}
+.btn-cta{padding:10px 20px;background:var(--amber);color:var(--black);border:none;font-family:var(--font-ui);font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;cursor:pointer;white-space:nowrap;text-decoration:none;display:inline-block;flex-shrink:0;transition:all .2s;}
+.btn-cta:hover{background:var(--amber-light);}
+
+.sources{margin-top:2.5rem;padding-top:1.5rem;border-top:1px solid var(--border);}
+.stitle{font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--faint);margin-bottom:.75rem;font-weight:700;}
+.sources p{font-size:12px;color:var(--faint);font-style:italic;line-height:1.7;margin-bottom:4px;}
+.sources a{color:var(--amber-dark);text-decoration:underline;text-underline-offset:2px;}
+
+.site-footer{background:var(--black);padding:2rem;text-align:center;}
+.flogo{font-family:var(--font-display);font-size:1rem;color:var(--white);margin-bottom:.5rem;font-style:italic;}
+.flogo em{font-style:normal;color:var(--amber);}
+.frule{width:36px;height:1px;background:var(--dark-mid);margin:1rem auto;}
+.ftext{font-size:12px;color:var(--muted);font-style:italic;line-height:1.7;max-width:460px;margin:0 auto;}
+
+@media(max-width:600px){
+  .ig{grid-template-columns:1fr;}
+  .tax-hero{grid-template-columns:1fr;}
+  .th-col{border-right:none;border-bottom:1px solid var(--dark-mid);}
+  .tl-year-grid{grid-template-columns:1fr 1fr;}
+  .cta{flex-direction:column;text-align:center;}
+  .outer{padding:2rem 1rem 3.5rem;}
+  .hero{padding:2.5rem 1.25rem 3rem;}
+}
+</style>
+</head>
+<body>
+<header class="site-header">
+  <a href="/" class="logo">Regarding<em>Retirement</em>.com</a>
+  <span class="htag">Roth Conversion Estimator</span>
+</header>
+<section class="hero">
+  <div class="hero-grid"></div>
+  <div class="hero-inner">
+    <p class="hero-tag">Roth Conversion Tax Estimator</p>
+    <h1>Convert now at a low rate — or pay more <strong>later</strong>?</h1>
+    <p class="hero-sub">The window between retirement and age 73 — before RMDs begin — is the most valuable tax planning window most Americans never use. This tool shows you exactly what converting costs now, and how much it saves later.</p>
+    <div class="hero-divider"></div>
+    <div class="hero-stat-row">
+      <div class="hstat"><p class="hstat-num">$0</p><p class="hstat-label">Roth withdrawals taxed</p></div>
+      <div class="hstat"><p class="hstat-num">73</p><p class="hstat-label">Age RMDs begin</p></div>
+      <div class="hstat"><p class="hstat-num">8%</p><p class="hstat-label">Guaranteed IRA growth per year delayed SS</p></div>
+    </div>
+  </div>
+</section>
+
+<main class="outer">
+  <!-- Step 1: Current Situation -->
+  <div class="panel">
+    <div class="panel-head"><div class="ph-step">1</div><span class="ph-title">Your Current Financial Situation</span></div>
+    <div class="panel-body">
+      <div class="ig">
+        <div class="field"><label class="fl">Current Age</label><p class="fh">Best window: 60–72, before RMDs at 73</p><div class="iw"><input type="number" class="fi" id="age" value="67" min="55" max="80" oninput="live()"/><span class="isuf">yrs</span></div></div>
+        <div class="field"><label class="fl">Traditional IRA / 401(k) Balance</label><p class="fh">Total tax-deferred account balance</p><div class="iw"><span class="ipre">$</span><input type="number" class="fi" id="tradBalance" value="600000" min="0" oninput="live()"/></div></div>
+        <div class="field"><label class="fl">Current Annual Income (other than IRA)</label><p class="fh">Social Security, pension, part-time work, investment income</p><div class="iw"><span class="ipre">$</span><input type="number" class="fi" id="otherIncome" value="35000" min="0" oninput="live()"/></div></div>
+        <div class="field"><label class="fl">Filing Status</label><div class="iw" style="padding:0"><select class="fi" id="filingStatus" style="cursor:pointer;padding:9px 11px" onchange="live()"><option value="single">Single</option><option value="mfj" selected>Married Filing Jointly</option><option value="mfs">Married Filing Separately</option></select></div></div>
+      </div>
+
+      <!-- Bracket display -->
+      <div class="bracket-display" id="bracketDisplay">
+        <p class="bd-label">Your Current Federal Tax Brackets (2026)</p>
+        <div class="bracket-bars" id="bracketBars"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Step 2: Conversion -->
+  <div class="panel">
+    <div class="panel-head"><div class="ph-step">2</div><span class="ph-title">Conversion Strategy</span></div>
+    <div class="panel-body">
+      <div class="ig">
+        <div class="field"><label class="fl">Years Until / Since Retirement</label><p class="fh">Years from now until age 73 (RMD start) is your conversion window</p><div class="iw"><input type="number" class="fi" id="yearsToRMD" value="6" min="0" max="20" oninput="live()"/><span class="isuf">yrs</span></div></div>
+        <div class="field"><label class="fl">Expected Return on IRA Balance</label><div class="iw"><input type="number" class="fi" id="returnRate" value="6" min="0" max="12" step=".5" oninput="live()"/><span class="isuf">%/yr</span></div></div>
+      </div>
+      <div class="slider-section">
+        <div class="sl-top"><span class="sl-label">Annual Conversion Amount</span><span class="sl-value" id="conversionVal">$50,000</span></div>
+        <input type="range" id="conversionAmt" min="5000" max="200000" step="5000" value="50000" oninput="updateSlider();live()"/>
+        <div class="sl-bounds"><span>$5,000</span><span>$200,000</span></div>
+        <p style="font-size:11px;color:var(--faint);font-style:italic;margin-top:.5rem;">Converting too much in one year can push you into a higher bracket or trigger IRMAA Medicare surcharges. The optimal amount stays within your current bracket.</p>
+      </div>
+    </div>
+  </div>
+
+  <button class="btn-calc" onclick="calculate()">Calculate My Roth Conversion Strategy →</button>
+
+  <!-- RESULTS -->
+  <div class="results" id="results" style="margin-top:1.25rem">
+    <!-- Tax hero -->
+    <div class="tax-hero">
+      <div class="th-col"><p class="th-label">Tax Cost This Year</p><p class="th-value warn" id="thCostNow">—</p><p class="th-sub">if you convert now</p></div>
+      <div class="th-col"><p class="th-label">Total Tax Over Window</p><p class="th-value warn" id="thCostTotal">—</p><p class="th-sub">converting annually until RMDs</p></div>
+      <div class="th-col"><p class="th-label">Estimated Tax Savings</p><p class="th-value good" id="thSavings">—</p><p class="th-sub">vs. paying RMD taxes later</p></div>
+    </div>
+
+    <!-- Comparison table -->
+    <table class="comp-table" id="compTable"></table>
+
+    <!-- Year-by-year plan -->
+    <div class="timeline-panel">
+      <div class="tp-head"><p class="tp-title">Year-by-Year Conversion Plan</p></div>
+      <div class="tp-body"><div class="tl-year-grid" id="yearGrid"></div></div>
+    </div>
+
+    <!-- Considerations -->
+    <div class="considerations" id="considerations"></div>
+
+    <!-- Insight -->
+    <div class="insight">
+      <p class="i-label">The Honest Assessment</p>
+      <p class="i-text" id="insightText">—</p>
+    </div>
+
+    <div class="cta">
+      <div><p class="cta-t">Watch: Roth Conversion — Should You Do It Before You Retire?</p><p class="cta-s">The full video covers the bridge years strategy, IRMAA exposure, and whether converting makes sense for your bracket.</p></div>
+      <a href="https://youtube.com/@RetirementClarity" class="btn-cta" target="_blank">▶ Watch Free</a>
+    </div>
+
+    <div class="sources">
+      <p class="stitle">Sources</p>
+      <p>The Motley Fool — Roth Conversions in Your 60s: The Bridge Years Strategy<br><a href="https://www.fool.com/retirement/2026/04/17/roth-conversions-in-your-60s-the-bridge-years-strategy-too-many-retirees-miss/" target="_blank">fool.com — Roth Conversion Bridge Strategy</a></p>
+      <p>IRS — 2026 Federal Income Tax Brackets and RMD Rules<br><a href="https://www.irs.gov/retirement-plans/retirement-plan-and-ira-required-minimum-distributions-faqs" target="_blank">irs.gov — RMD FAQs</a></p>
+      <p>Fidelity — Roth IRA Conversions and Tax Planning<br><a href="https://www.fidelity.com/viewpoints/retirement/retirement-guidelines" target="_blank">fidelity.com — Retirement Tax Guidelines</a></p>
+    </div>
+  </div>
+</main>
+
+<footer class="site-footer">
+  <p class="flogo">Regarding<em>Retirement</em>.com</p>
+  <div class="frule"></div>
+  <p class="ftext">Free retirement education for Americans 55+. For educational purposes only. Not tax or financial advice. Tax brackets change. Consult a qualified tax advisor or fee-only fiduciary before making Roth conversion decisions.</p>
+</footer>
+
+<script>
+const $=id=>document.getElementById(id);
+
+// 2026 Tax Brackets
+const BRACKETS={
+  single:[{rate:.10,max:11925},{rate:.12,max:48475},{rate:.22,max:103350},{rate:.24,max:197300},{rate:.32,max:250525},{rate:.35,max:626350},{rate:.37,max:Infinity}],
+  mfj:[{rate:.10,max:23850},{rate:.12,max:96950},{rate:.22,max:206700},{rate:.24,max:394600},{rate:.32,max:501050},{rate:.35,max:751600},{rate:.37,max:Infinity}],
+  mfs:[{rate:.10,max:11925},{rate:.12,max:48475},{rate:.22,max:103350},{rate:.24,max:197300},{rate:.32,max:250525},{rate:.35,max:375800},{rate:.37,max:Infinity}]
+};
+const STD_DEDUCTION={single:15000,mfj:30000,mfs:15000}; // 2026 estimated
+
+const $=id=>document.getElementById(id);
+const fmtD=n=>{const a=Math.abs(n);if(a>=1e6)return'$'+(a/1e6).toFixed(2).replace(/\.?0+$/,'')+'M';if(a>=1e3)return'$'+Math.round(a/1e3).toLocaleString()+'K';return'$'+Math.round(a).toLocaleString();};
+
+function calcTax(income,status){
+  const brackets=BRACKETS[status]||BRACKETS.mfj;
+  const stdDed=STD_DEDUCTION[status]||30000;
+  const taxable=Math.max(0,income-stdDed);
+  let tax=0,prev=0;
+  for(const b of brackets){
+    const top=Math.min(taxable,b.max);
+    if(top<=prev)break;
+    tax+=(top-prev)*b.rate;
+    prev=top;
+    if(taxable<=b.max)break;
+  }
+  return{tax:Math.round(tax),taxable};
+}
+
+function getMarginalRate(income,status){
+  const brackets=BRACKETS[status]||BRACKETS.mfj;
+  const stdDed=STD_DEDUCTION[status]||30000;
+  const taxable=Math.max(0,income-stdDed);
+  for(const b of brackets){if(taxable<=b.max)return b.rate;}
+  return .37;
+}
+
+function getBracketHeadroom(income,status){
+  // How much more can be added before hitting next bracket
+  const brackets=BRACKETS[status]||BRACKETS.mfj;
+  const stdDed=STD_DEDUCTION[status]||30000;
+  const taxable=Math.max(0,income-stdDed);
+  for(const b of brackets){if(taxable<=b.max)return Math.max(0,(b.max-taxable));}
+  return 0;
+}
+
+function updateSlider(){
+  const v=parseInt($('conversionAmt').value)||50000;
+  $('conversionVal').textContent='$'+v.toLocaleString();
+}
+
+function renderBracketDisplay(income,status){
+  const brackets=BRACKETS[status]||BRACKETS.mfj;
+  const stdDed=STD_DEDUCTION[status]||30000;
+  const taxable=Math.max(0,income-stdDed);
+  const el=$('bracketBars');el.innerHTML='';
+  let prev=0;
+  brackets.slice(0,6).forEach(b=>{
+    const top=Math.min(b.max,800000);
+    const width=(top/800000)*100;
+    const isActive=taxable>prev&&taxable<=b.max;
+    const row=document.createElement('div');row.className='bb-row';
+    row.innerHTML=`<span class="bb-label">${(b.rate*100).toFixed(0)}%</span>
+      <div class="bb-bar-bg"><div class="bb-bar-fill${isActive?' bb-bar-active':''}" style="width:${width}%">${isActive?'<span class="bb-you">← You are here</span>':''}</div></div>
+      <span class="bb-val">${b.max>=1e6?'$'+Math.round(b.max/1e3)+'K':'$'+Math.round(prev/1e3)+'K'}</span>`;
+    el.appendChild(row);
+    prev=b.max;
+  });
+}
+
+function live(){
+  const income=parseFloat($('otherIncome').value)||0;
+  const status=$('filingStatus').value||'mfj';
+  renderBracketDisplay(income,status);
+  if($('results').classList.contains('show'))calculate();
+}
+
+function calculate(){
+  const age=parseInt($('age').value)||67;
+  const balance=parseFloat($('tradBalance').value)||600000;
+  const otherIncome=parseFloat($('otherIncome').value)||0;
+  const status=$('filingStatus').value||'mfj';
+  const yearsToRMD=parseInt($('yearsToRMD').value)||6;
+  const returnRate=(parseFloat($('returnRate').value)||6)/100;
+  const convAmt=parseInt($('conversionAmt').value)||50000;
+
+  const resultsEl=$('results');resultsEl.classList.add('show');
+
+  // Tax on conversion this year
+  const baseT=calcTax(otherIncome,status);
+  const withConvT=calcTax(otherIncome+convAmt,status);
+  const taxThisYear=withConvT.tax-baseT.tax;
+  const effectiveRate=convAmt>0?taxThisYear/convAmt:0;
+
+  // Future RMD tax (rough): balance at 73 / IRS factor ~26.5 at 73
+  const yearsRemaining=Math.max(1,yearsToRMD);
+  const futureBalance=balance*Math.pow(1+returnRate,yearsRemaining);
+  const futureRMDAnnual=futureBalance/26.5; // age 73 factor
+  const futureRMDTax=calcTax(otherIncome+futureRMDAnnual,status).tax-calcTax(otherIncome,status).tax;
+
+  // Total conversion tax over window
+  const totalConversionTax=taxThisYear*yearsRemaining;
+  const totalConvertedAmount=convAmt*yearsRemaining;
+  const taxSavingsEstimate=Math.max(0,(futureRMDTax-taxThisYear)*yearsRemaining);
+
+  $('thCostNow').textContent=fmtD(taxThisYear);
+  $('thCostTotal').textContent=fmtD(totalConversionTax);
+  $('thSavings').textContent=taxSavingsEstimate>0?fmtD(taxSavingsEstimate):'$0';
+
+  // Comparison table
+  const headroom=getBracketHeadroom(otherIncome,status);
+  const optimalConversion=Math.min(Math.round(headroom/5000)*5000,convAmt+20000);
+  const table=$('compTable');
+  table.innerHTML=`
+    <thead><tr><th>Scenario</th><th>Annual Tax Cost</th><th>Effective Rate</th><th>10-Year Tax Total</th></tr></thead>
+    <tbody>
+      <tr><td>Convert ${fmtD(convAmt)}/year (your amount)</td><td class="td-bad">${fmtD(taxThisYear)}/yr</td><td>${(effectiveRate*100).toFixed(1)}%</td><td class="td-bad">${fmtD(taxThisYear*10)}</td></tr>
+      <tr><td>Convert ${fmtD(optimalConversion)}/year (bracket-optimized)</td><td>${fmtD(calcTax(otherIncome+optimalConversion,status).tax-baseT.tax)}/yr</td><td>${optimalConversion>0?((calcTax(otherIncome+optimalConversion,status).tax-baseT.tax)/optimalConversion*100).toFixed(1):'0'}%</td><td>${fmtD((calcTax(otherIncome+optimalConversion,status).tax-baseT.tax)*10)}</td></tr>
+      <tr><td>No conversion — pay RMDs at 73</td><td class="td-bad">${fmtD(futureRMDTax)}/yr</td><td>${futureRMDAnnual>0?((futureRMDTax/futureRMDAnnual)*100).toFixed(1):'0'}%</td><td class="td-bad">${fmtD(futureRMDTax*10)}</td></tr>
+    </tbody>
+  `;
+
+  // Year grid
+  const grid=$('yearGrid');grid.innerHTML='';
+  const scenarios=[
+    {label:'Year 1',conv:convAmt,active:false},
+    {label:'Year 2',conv:convAmt,active:false},
+    {label:'Year 3',conv:convAmt,active:true},
+    {label:'Year 4',conv:convAmt,active:false},
+    {label:'Year 5',conv:convAmt,active:false},
+  ];
+  scenarios.slice(0,Math.min(5,yearsRemaining+1)).forEach(s=>{
+    const t=calcTax(otherIncome+s.conv,status).tax-baseT.tax;
+    const div=document.createElement('div');
+    div.className='tl-yr'+(s.active?' active':'');
+    div.innerHTML=`<p class="tl-yr-label">${s.label}</p><p class="tl-yr-amount">${fmtD(s.conv)}</p><p class="tl-yr-tax">Tax: ${fmtD(t)}</p><p class="tl-yr-note">Effective: ${s.conv>0?(t/s.conv*100).toFixed(1):'0'}% on conversion</p>`;
+    grid.appendChild(div);
+  });
+
+  // Considerations
+  const consEl=$('considerations');consEl.innerHTML='';
+  const marginalRate=getMarginalRate(otherIncome+convAmt,status);
+  const futureMarginalRate=getMarginalRate(otherIncome+futureRMDAnnual,status);
+
+  if(marginalRate<futureMarginalRate){
+    addC(consEl,'green','✅','Converting Now Saves Money','Your current marginal rate of <strong>'+(marginalRate*100).toFixed(0)+'%</strong> is lower than your projected RMD marginal rate of <strong>'+(futureMarginalRate*100).toFixed(0)+'%</strong>. Every dollar converted now is taxed less than it would be when RMDs force withdrawals.')
+  } else {
+    addC(consEl,'amber','⚖️','Rates Are Similar — Timing Matters Less','Your current and projected future marginal rates are similar. The conversion still provides tax diversification and eliminates RMD uncertainty, but the financial advantage is less clear-cut.')
+  }
+
+  const irmaLimit=status==='mfj'?212000:106000;
+  if(otherIncome+convAmt>irmaLimit){
+    addC(consEl,'red','⚠️','IRMAA Risk','Converting <strong>'+fmtD(convAmt)+'</strong> pushes your income to <strong>'+fmtD(otherIncome+convAmt)+'</strong> — above the <strong>'+fmtD(irmaLimit)+'</strong> IRMAA threshold for '+status+'s. This triggers additional Medicare Part B and Part D premiums. Consider reducing the conversion to stay below the threshold.')
+  }
+
+  if(headroom>0&&convAmt>headroom){
+    addC(consEl,'amber','💡','Optimal Amount Is '+fmtD(optimalConversion),'Converting <strong>'+fmtD(convAmt)+'</strong> pushes income into the next tax bracket. Converting only <strong>'+fmtD(optimalConversion)+'</strong> fills your current bracket at a lower rate. Multiple smaller conversions over the window may be more tax-efficient.');
+  }
+
+  addC(consEl,'green','💰','Pay Tax From Outside the IRA','For maximum benefit, use cash savings outside the IRA to pay the conversion tax. Paying the tax from the IRA itself reduces the amount transferred to Roth and eliminates a key advantage of the strategy.');
+
+  // Insight
+  const makes_sense=marginalRate<=futureMarginalRate;
+  $('insightText').innerHTML=`Converting <strong>${fmtD(convAmt)}/year</strong> for <strong>${yearsRemaining} years</strong> has a total tax cost of approximately <strong>${fmtD(totalConversionTax)}</strong> — converting your current effective rate of <strong>${(effectiveRate*100).toFixed(1)}%</strong>. Without conversions, your projected first-year RMD at 73 is approximately <strong>${fmtD(futureRMDAnnual)}</strong>, taxed at a marginal rate of <strong>${(futureMarginalRate*100).toFixed(0)}%</strong>. ${makes_sense?'Based on these numbers, converting now appears financially advantageous. The lower your income in the pre-RMD window, the more valuable this strategy becomes.':'The rate difference between now and your projected RMD rate is small. Conversions still provide tax diversification and eliminate RMD uncertainty — but the financial argument is stronger when income is lower during the conversion years.'} This analysis is an estimate — work with a fee-only tax advisor to model your specific bracket path.`;
+
+  setTimeout(()=>resultsEl.scrollIntoView({behavior:'smooth',block:'start'}),100);
+}
+
+function addC(el,cls,icon,title,body){
+  const d=document.createElement('div');d.className='consid '+cls;
+  d.innerHTML=`<span class="c-icon">${icon}</span><div><p class="c-title">${title}</p><p class="c-body">${body}</p></div>`;
+  el.appendChild(d);
+}
+
+window.addEventListener('load',()=>{updateSlider();live();});
+</script>
+</body>
+</html>

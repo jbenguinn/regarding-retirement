@@ -1,0 +1,581 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Social Security Spousal Benefit Optimizer | RegardingRetirement.com</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+:root{
+  --burg:#5C1A2E;--burg-mid:#7A2240;--burg-light:#9E3055;--burg-pale:#F9EEF1;
+  --ivory:#FDFAF4;--ivory-dark:#F5EFE0;--ivory-mid:#EDE4CC;
+  --gold:#B8943A;--gold-light:#D4AC52;--gold-dark:#8A6E22;--gold-pale:#FBF6E4;
+  --ink:#1A0E12;--ink-soft:#3A2030;--ink-muted:#6A5058;--ink-faint:#A09098;
+  --green:#1A5C38;--green-pale:#E4F5EC;
+  --border:#D8CDB8;
+  --font-display:'Cinzel',serif;
+  --font-body:'EB Garamond',Georgia,serif;
+}
+body{font-family:var(--font-body);background:var(--ivory);color:var(--ink);min-height:100vh;font-size:16px;line-height:1.7;}
+
+/* GEOMETRIC ORNAMENT */
+.ornament{display:flex;align-items:center;gap:.75rem;margin-bottom:1rem;}
+.orn-line{flex:1;height:1px;background:linear-gradient(to right,transparent,var(--gold),transparent);}
+.orn-diamond{width:8px;height:8px;background:var(--gold);transform:rotate(45deg);flex-shrink:0;}
+
+.site-header{background:var(--burg);padding:.9rem 2rem;display:flex;align-items:center;justify-content:space-between;border-bottom:2px solid var(--gold-dark);}
+.logo{font-family:var(--font-display);font-size:.9rem;color:var(--ivory);text-decoration:none;letter-spacing:.1em;}
+.logo em{font-style:normal;color:var(--gold-light);}
+.htag{font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:rgba(253,250,244,.3);font-family:var(--font-display);}
+
+/* HERO */
+.hero{background:var(--burg);padding:4rem 2rem 3.5rem;position:relative;overflow:hidden;}
+.hero-pattern{position:absolute;inset:0;background-image:repeating-linear-gradient(45deg,transparent,transparent 20px,rgba(184,148,58,.04) 20px,rgba(184,148,58,.04) 21px),repeating-linear-gradient(-45deg,transparent,transparent 20px,rgba(184,148,58,.04) 20px,rgba(184,148,58,.04) 21px);pointer-events:none;}
+.hero-inner{max-width:700px;margin:0 auto;position:relative;text-align:center;}
+.hero-crown{font-family:var(--font-display);font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);margin-bottom:1.25rem;}
+.hero-ornament{display:flex;align-items:center;gap:.75rem;justify-content:center;margin-bottom:1.5rem;}
+.ho-line{width:60px;height:1px;background:rgba(184,148,58,.4);}
+.ho-diamond{width:6px;height:6px;background:var(--gold-dark);transform:rotate(45deg);}
+.hero h1{font-family:var(--font-display);font-size:clamp(1.8rem,4vw,2.9rem);color:var(--ivory);line-height:1.2;margin-bottom:1rem;letter-spacing:.04em;}
+.hero h1 em{font-style:italic;font-family:var(--font-body);font-weight:400;letter-spacing:0;color:var(--gold-light);}
+.hero-sub{font-size:1rem;color:rgba(253,250,244,.5);font-style:italic;line-height:1.75;max-width:500px;margin:0 auto;}
+.hero-rule{width:80px;height:2px;background:linear-gradient(to right,transparent,var(--gold),transparent);margin:1.5rem auto 0;}
+
+/* OUTER */
+.outer{max-width:760px;margin:0 auto;padding:2.5rem 1.5rem 5rem;}
+
+/* SECTION */
+.section-header{text-align:center;margin-bottom:1.5rem;}
+.sh-eyebrow{font-family:var(--font-display);font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--gold-dark);margin-bottom:.5rem;}
+.sh-title{font-family:var(--font-display);font-size:1.1rem;color:var(--burg);letter-spacing:.06em;}
+
+/* SPOUSE CARDS */
+.spouse-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.25rem;margin-bottom:1.5rem;}
+.spouse-card{background:var(--ivory);border:1.5px solid var(--border);padding:1.5rem;position:relative;}
+.spouse-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;}
+.sc-primary::before{background:var(--burg);}
+.sc-secondary::before{background:var(--gold-dark);}
+.sc-badge{display:inline-flex;align-items:center;gap:.5rem;margin-bottom:1.1rem;}
+.sc-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0;}
+.sc-primary .sc-dot{background:var(--burg);}
+.sc-secondary .sc-dot{background:var(--gold-dark);}
+.sc-label{font-family:var(--font-display);font-size:9px;letter-spacing:.14em;text-transform:uppercase;}
+.sc-primary .sc-label{color:var(--burg);}
+.sc-secondary .sc-label{color:var(--gold-dark);}
+
+.field{margin-bottom:1rem;}
+.fl{font-family:var(--font-display);font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-muted);margin-bottom:5px;display:block;}
+.fh{font-size:.8rem;color:var(--ink-faint);font-style:italic;margin-bottom:5px;line-height:1.4;}
+.irow{display:flex;align-items:stretch;border:1.5px solid var(--border);background:var(--ivory-dark);overflow:hidden;transition:border-color .15s;}
+.irow:focus-within{border-color:var(--burg);}
+.ipre,.isuf{padding:8px 10px;font-size:11px;color:var(--ink-faint);background:var(--ivory-mid);border-right:1px solid var(--border);flex-shrink:0;display:flex;align-items:center;font-family:var(--font-display);}
+.isuf{border-right:none;border-left:1px solid var(--border);}
+.fi{flex:1;padding:8px 10px;border:none;outline:none;background:transparent;font-family:var(--font-body);font-size:1rem;color:var(--ink);min-width:0;-moz-appearance:textfield;}
+.fi::-webkit-inner-spin-button,.fi::-webkit-outer-spin-button{-webkit-appearance:none;}
+
+/* Health toggle */
+.health-toggle{display:flex;gap:.5rem;margin-top:.25rem;}
+.ht-btn{flex:1;padding:7px 10px;border:1.5px solid var(--border);background:transparent;font-family:var(--font-display);font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-muted);cursor:pointer;transition:all .15s;text-align:center;}
+.ht-btn.active{background:var(--burg);border-color:var(--burg);color:white;}
+
+/* Assumptions */
+.assumptions-card{background:var(--ivory-dark);border:1px solid var(--border);padding:1.25rem 1.5rem;margin-bottom:1.5rem;}
+.ac-title{font-family:var(--font-display);font-size:9px;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-muted);margin-bottom:1rem;}
+.ac-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem;}
+
+/* CALCULATE */
+.btn-calc{display:block;width:100%;padding:14px;background:var(--burg);color:var(--ivory);border:none;border-top:2px solid var(--gold-dark);font-family:var(--font-display);font-size:12px;letter-spacing:.14em;text-transform:uppercase;cursor:pointer;transition:all .2s;margin-bottom:0;}
+.btn-calc:hover{background:var(--burg-mid);}
+
+/* RESULTS */
+.results{display:none;}
+.results.show{display:block;animation:unveil .5s ease;}
+@keyframes unveil{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
+
+/* Strategy comparison */
+.strategy-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin-bottom:1.5rem;}
+.strat-card{background:var(--ivory);border:1.5px solid var(--border);padding:1.25rem;text-align:center;position:relative;transition:all .2s;}
+.strat-card.winner{border-color:var(--gold);border-width:2px;box-shadow:0 4px 16px rgba(184,148,58,.15);}
+.strat-card.winner::before{content:'BEST';position:absolute;top:-1px;left:50%;transform:translateX(-50%);background:var(--gold);color:var(--ink);font-family:var(--font-display);font-size:8px;letter-spacing:.1em;padding:3px 10px;}
+.strat-title{font-family:var(--font-display);font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-muted);margin-bottom:.75rem;}
+.strat-lifetime{font-family:var(--font-body);font-size:1.6rem;font-style:italic;font-weight:500;color:var(--burg);line-height:1;margin-bottom:.25rem;}
+.strat-lifetime.gold{color:var(--gold-dark);}
+.strat-label{font-size:.78rem;color:var(--ink-faint);margin-bottom:.75rem;}
+.strat-details{font-size:.78rem;color:var(--ink-muted);font-style:italic;line-height:1.5;border-top:1px solid var(--border);padding-top:.6rem;margin-top:.25rem;}
+
+/* Survivor box */
+.survivor-box{background:var(--burg);border-bottom:2px solid var(--gold-dark);padding:1.5rem;margin-bottom:1.5rem;display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;}
+.sb-col{color:var(--ivory);}
+.sb-label{font-family:var(--font-display);font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:rgba(253,250,244,.4);margin-bottom:.5rem;}
+.sb-amount{font-family:var(--font-body);font-size:1.8rem;font-style:italic;color:var(--ivory);line-height:1;margin-bottom:.25rem;}
+.sb-note{font-size:.82rem;color:rgba(253,250,244,.5);font-style:italic;line-height:1.5;}
+.sb-impact{background:rgba(184,148,58,.15);border:1px solid rgba(184,148,58,.25);padding:1rem;margin-top:1rem;}
+.si-label{font-family:var(--font-display);font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--gold-light);margin-bottom:.35rem;}
+.si-text{font-size:.85rem;color:rgba(253,250,244,.65);font-style:italic;line-height:1.55;}
+.si-text strong{font-style:normal;color:var(--gold-light);}
+
+/* Chart */
+.chart-box{background:var(--ivory);border:1.5px solid var(--border);padding:1.5rem;margin-bottom:1.5rem;}
+.cb-title{font-family:var(--font-display);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--burg);margin-bottom:.25rem;}
+.cb-sub{font-size:.82rem;color:var(--ink-faint);font-style:italic;margin-bottom:1.25rem;}
+.chart-legend{display:flex;gap:1.25rem;flex-wrap:wrap;margin-bottom:1rem;}
+.cl{display:flex;align-items:center;gap:.5rem;font-size:.8rem;color:var(--ink-muted);}
+.cl-sw{width:20px;height:3px;border-radius:2px;}
+
+/* Spousal benefit breakdown */
+.spousal-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1.5rem;}
+.spousal-card{background:var(--ivory-dark);border:1px solid var(--border);padding:1.1rem;}
+.spousal-title{font-family:var(--font-display);font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-muted);margin-bottom:.75rem;}
+.spousal-rows{display:flex;flex-direction:column;gap:.5rem;}
+.sp-row{display:flex;justify-content:space-between;align-items:baseline;padding:.4rem 0;border-bottom:1px dashed var(--border);}
+.sp-row:last-child{border-bottom:none;font-weight:600;}
+.spr-label{font-size:.82rem;color:var(--ink-muted);}
+.spr-val{font-family:var(--font-body);font-size:1rem;font-style:italic;color:var(--burg);}
+
+/* Insight */
+.insight{background:var(--burg-pale);border:1px solid rgba(92,26,46,.15);border-left:3px solid var(--burg);padding:1.25rem 1.5rem;margin-bottom:1.5rem;}
+.i-label{font-family:var(--font-display);font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--burg);margin-bottom:.5rem;}
+.i-text{font-family:var(--font-body);font-style:italic;font-size:.95rem;color:var(--ink-soft);line-height:1.7;}
+.i-text strong{font-style:normal;color:var(--burg);}
+
+/* Key rules */
+.rules-grid{display:grid;grid-template-columns:1fr 1fr;gap:.75rem;margin-bottom:1.5rem;}
+.rule{background:var(--ivory-dark);border:1px solid var(--border);padding:1rem;}
+.rule-icon{font-size:1.1rem;margin-bottom:.4rem;}
+.rule-title{font-family:var(--font-display);font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--burg);margin-bottom:.35rem;}
+.rule-body{font-size:.8rem;color:var(--ink-muted);font-style:italic;line-height:1.5;}
+.rule-body strong{font-style:normal;color:var(--ink);}
+
+.cta{background:var(--burg);border-top:2px solid var(--gold-dark);padding:1.25rem 1.5rem;display:flex;align-items:center;justify-content:space-between;gap:1rem;flex-wrap:wrap;}
+.cta-t{font-family:var(--font-display);font-size:.9rem;color:var(--ivory);margin-bottom:3px;letter-spacing:.04em;}
+.cta-s{font-size:.82rem;color:rgba(253,250,244,.45);font-style:italic;}
+.btn-cta{padding:10px 20px;background:var(--gold-dark);color:var(--ivory);border:none;font-family:var(--font-display);font-size:9px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;cursor:pointer;white-space:nowrap;text-decoration:none;display:inline-block;flex-shrink:0;transition:all .2s;}
+.btn-cta:hover{background:var(--gold);}
+
+.sources{margin-top:2.5rem;padding-top:1.5rem;border-top:1px solid var(--border);}
+.stitle{font-family:var(--font-display);font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-faint);margin-bottom:.75rem;}
+.sources p{font-size:12px;color:var(--ink-faint);font-style:italic;line-height:1.7;margin-bottom:4px;}
+.sources a{color:var(--burg);text-decoration:underline;text-underline-offset:2px;}
+
+.site-footer{background:var(--burg);border-top:2px solid var(--gold-dark);padding:2rem;text-align:center;}
+.flogo{font-family:var(--font-display);font-size:.9rem;color:var(--ivory);margin-bottom:.5rem;letter-spacing:.08em;}
+.flogo em{font-style:normal;color:var(--gold-light);}
+.frule{width:36px;height:1px;background:rgba(253,250,244,.2);margin:1rem auto;}
+.ftext{font-size:12px;color:rgba(253,250,244,.3);font-style:italic;line-height:1.7;max-width:460px;margin:0 auto;}
+
+@media(max-width:620px){
+  .spouse-grid{grid-template-columns:1fr;}
+  .strategy-grid{grid-template-columns:1fr;}
+  .strat-card.winner::before{display:none;}
+  .survivor-box{grid-template-columns:1fr;}
+  .spousal-grid{grid-template-columns:1fr;}
+  .rules-grid{grid-template-columns:1fr;}
+  .ac-grid{grid-template-columns:1fr;}
+  .cta{flex-direction:column;text-align:center;}
+  .outer{padding:2rem 1rem 3.5rem;}
+  .hero{padding:2.5rem 1.25rem 3rem;}
+}
+</style>
+</head>
+<body>
+<header class="site-header">
+  <a href="/" class="logo">Regarding<em>Retirement</em>.com</a>
+  <span class="htag">Spousal Benefit Optimizer</span>
+</header>
+<section class="hero">
+  <div class="hero-pattern"></div>
+  <div class="hero-inner">
+    <p class="hero-crown">Social Security Spousal Benefit Optimizer</p>
+    <div class="hero-ornament"><div class="ho-line"></div><div class="ho-diamond"></div><div class="ho-line"></div></div>
+    <h1>The claiming decision that protects<br>your spouse <em>for life</em></h1>
+    <p class="hero-sub">For married couples, Social Security isn't one decision — it's two, made together. The higher earner's claiming age determines the surviving spouse's income for the rest of their life.</p>
+    <div class="hero-rule"></div>
+  </div>
+</section>
+
+<main class="outer">
+  <div class="section-header"><p class="sh-eyebrow">Step One</p><p class="sh-title">Enter Both Spouses' Information</p></div>
+  <div class="ornament"><div class="orn-line"></div><div class="orn-diamond"></div><div class="orn-line"></div></div>
+
+  <!-- Spouse Cards -->
+  <div class="spouse-grid">
+    <!-- Higher Earner -->
+    <div class="spouse-card sc-primary">
+      <div class="sc-badge"><div class="sc-dot"></div><span class="sc-label">Higher Earner</span></div>
+      <div class="field"><label class="fl">Current Age</label><div class="irow"><input type="number" class="fi" id="age1" value="62" min="55" max="75" oninput="live()"/><span class="isuf">yrs</span></div></div>
+      <div class="field"><label class="fl">Full Retirement Age Benefit</label><p class="fh">Benefit at age 67 — find at SSA.gov</p><div class="irow"><span class="ipre">$</span><input type="number" class="fi" id="fra1" value="2800" min="0" max="9999" oninput="live()"/></div></div>
+      <div class="field"><label class="fl">Planned Claiming Age</label><div class="irow"><input type="number" class="fi" id="claim1" value="70" min="62" max="70" oninput="live()"/><span class="isuf">yrs</span></div></div>
+      <div class="field"><label class="fl">Health / Life Expectancy</label>
+        <div class="health-toggle" id="health1Group">
+          <button class="ht-btn" onclick="setHealth('health1',this,'below')">Below Avg</button>
+          <button class="ht-btn active" onclick="setHealth('health1',this,'average')">Average</button>
+          <button class="ht-btn" onclick="setHealth('health1',this,'above')">Above Avg</button>
+        </div>
+        <input type="hidden" id="health1" value="average"/>
+      </div>
+    </div>
+    <!-- Lower Earner / Spouse -->
+    <div class="spouse-card sc-secondary">
+      <div class="sc-badge"><div class="sc-dot"></div><span class="sc-label">Spouse / Lower Earner</span></div>
+      <div class="field"><label class="fl">Current Age</label><div class="irow"><input type="number" class="fi" id="age2" value="60" min="55" max="75" oninput="live()"/><span class="isuf">yrs</span></div></div>
+      <div class="field"><label class="fl">Full Retirement Age Benefit (Own Record)</label><p class="fh">Their own earned benefit at 67. May be $0 if little/no work history.</p><div class="irow"><span class="ipre">$</span><input type="number" class="fi" id="fra2" value="900" min="0" max="9999" oninput="live()"/></div></div>
+      <div class="field"><label class="fl">Planned Claiming Age</label><div class="irow"><input type="number" class="fi" id="claim2" value="67" min="62" max="70" oninput="live()"/><span class="isuf">yrs</span></div></div>
+      <div class="field"><label class="fl">Health / Life Expectancy</label>
+        <div class="health-toggle" id="health2Group">
+          <button class="ht-btn" onclick="setHealth('health2',this,'below')">Below Avg</button>
+          <button class="ht-btn active" onclick="setHealth('health2',this,'average')">Average</button>
+          <button class="ht-btn" onclick="setHealth('health2',this,'above')">Above Avg</button>
+        </div>
+        <input type="hidden" id="health2" value="average"/>
+      </div>
+    </div>
+  </div>
+
+  <!-- Assumptions -->
+  <div class="assumptions-card">
+    <p class="ac-title">Projection Assumptions</p>
+    <div class="ac-grid">
+      <div class="field"><label class="fl">COLA (Annual Benefit Increase)</label><p class="fh">2025 COLA was 2.5%. Long-run average ~2.5%.</p><div class="irow"><input type="number" class="fi" id="cola" value="2.5" min="0" max="6" step=".5" oninput="live()"/><span class="isuf">%/yr</span></div></div>
+      <div class="field"><label class="fl">Discount / Inflation Rate</label><p class="fh">Used to show today's dollar equivalent of future benefits.</p><div class="irow"><input type="number" class="fi" id="discountRate" value="3" min="0" max="6" step=".5" oninput="live()"/><span class="isuf">%/yr</span></div></div>
+    </div>
+  </div>
+
+  <button class="btn-calc" onclick="calculate()">Compare All Claiming Strategies →</button>
+
+  <!-- RESULTS -->
+  <div class="results" id="results" style="margin-top:1.5rem">
+
+    <div class="ornament"><div class="orn-line"></div><div class="orn-diamond"></div><div class="orn-line"></div></div>
+
+    <!-- Strategy comparison -->
+    <div class="section-header"><p class="sh-eyebrow">Lifetime Household Income</p><p class="sh-title">Three Claiming Strategies Compared</p></div>
+    <div class="strategy-grid" id="strategyGrid"></div>
+
+    <!-- Survivor box -->
+    <div class="section-header"><p class="sh-eyebrow">The Survivor Benefit</p><p class="sh-title">What the Surviving Spouse Receives</p></div>
+    <div class="survivor-box" id="survivorBox"></div>
+
+    <!-- Spousal benefit breakdown -->
+    <div class="section-header"><p class="sh-eyebrow">Spousal Benefit Calculation</p><p class="sh-title">How the Spouse's Benefit Is Determined</p></div>
+    <div class="spousal-grid" id="spousalGrid"></div>
+
+    <!-- Chart -->
+    <div class="chart-box">
+      <p class="cb-title">Cumulative Household Income — All Three Strategies</p>
+      <p class="cb-sub">Hover for values. Lines diverge as years pass — the gap is the cost of the claiming decision.</p>
+      <div class="chart-legend" id="chartLegend"></div>
+      <div style="position:relative;width:100%;height:240px;"><canvas id="ssChart"></canvas></div>
+      <p style="font-size:11px;color:var(--ink-faint);font-style:italic;text-align:center;margin-top:.5rem;">Projected in nominal dollars with COLA applied. Hover for exact values.</p>
+    </div>
+
+    <!-- Key rules -->
+    <div class="section-header"><p class="sh-eyebrow">Essential Rules</p><p class="sh-title">Four Things Every Couple Must Know</p></div>
+    <div class="rules-grid">
+      <div class="rule"><div class="rule-icon">👥</div><p class="rule-title">Spousal Benefit Maximum</p><p class="rule-body">The spousal benefit is up to <strong>50% of the higher earner's FRA benefit</strong> — not 50% of what they actually receive. Claiming before your own FRA permanently reduces your spousal benefit.</p></div>
+      <div class="rule"><div class="rule-icon">⏳</div><p class="rule-title">The File-First Requirement</p><p class="rule-body">The higher earner <strong>must be actively collecting</strong> Social Security before the lower earner can claim spousal benefits. Strategies that depend on filing without claiming are no longer available.</p></div>
+      <div class="rule"><div class="rule-icon">💔</div><p class="rule-title">Survivor Benefit Rule</p><p class="rule-body">When one spouse dies, the <strong>smaller of the two checks stops</strong>. The survivor keeps only the larger. Every year the higher earner waits to claim increases the survivor's permanent income by up to 8%.</p></div>
+      <div class="rule"><div class="rule-icon">💍</div><p class="rule-title">Divorced Spouse Benefits</p><p class="rule-body">If you were married <strong>10+ years</strong> and are now divorced and unmarried, you may still collect up to 50% of your ex-spouse's FRA benefit — without affecting their benefit or current spouse's benefit.</p></div>
+    </div>
+
+    <!-- Insight -->
+    <div class="insight">
+      <p class="i-label">Your Personalized Recommendation</p>
+      <p class="i-text" id="insightText">—</p>
+    </div>
+
+    <div class="cta">
+      <div><p class="cta-t">Watch: The Social Security Spousal Benefit Most Couples Miss</p><p class="cta-s">The full video covers spousal, survivor, and divorced spouse benefits — and the claiming strategies that maximize both.</p></div>
+      <a href="https://youtube.com/@RetirementClarity" class="btn-cta" target="_blank">▶ Watch Free</a>
+    </div>
+
+    <div class="sources">
+      <p class="stitle">Sources</p>
+      <p>Nationwide Retirement Institute 2025 — 30% of Americans believe SS offers no spousal benefits; 50% unaware of divorced spouse benefits<br><a href="https://www.fool.com/retirement/2026/04/05/social-security-benefits-4-things-retirees-know/" target="_blank">fool.com — Social Security Knowledge Gaps</a></p>
+      <p>Social Security Administration — Benefits for Spouses and Survivors<br><a href="https://www.ssa.gov/oact/quickcalc/spouse.html" target="_blank">ssa.gov — Spousal Benefits Calculator</a></p>
+      <p>Greenbush Financial — Social Security Spousal Benefit Rules Explained<br><a href="https://www.greenbushfinancial.com/all-blogs/social-security-spousal-benefits" target="_blank">greenbushfinancial.com — Spousal Benefits Guide</a></p>
+      <p>SSA — The average American woman spends 15 years as a widow (actuarial data)<br><a href="https://www.ssa.gov/oact/NOTES/as120/LifeTables_Body.html" target="_blank">ssa.gov — Life Tables</a></p>
+    </div>
+  </div>
+</main>
+
+<footer class="site-footer">
+  <p class="flogo">Regarding<em>Retirement</em>.com</p>
+  <div class="frule"></div>
+  <p class="ftext">Free retirement education for Americans 55+. For educational purposes only. Not financial advice. Social Security rules are complex. Please consult a qualified Social Security specialist or fee-only fiduciary advisor before making claiming decisions.</p>
+</footer>
+
+<script>
+const $=id=>document.getElementById(id);
+const fmtD=n=>{const a=Math.abs(n);if(a>=1e6)return'$'+(a/1e6).toFixed(2).replace(/\.?0+$/,'')+'M';if(a>=1e3)return'$'+Math.round(a/1e3).toLocaleString()+'K';return'$'+Math.round(a).toLocaleString();};
+const fmt=n=>'$'+Math.round(Math.abs(n)).toLocaleString();
+
+function setHealth(id,el,val){
+  document.getElementById(id).value=val;
+  el.closest('.health-toggle').querySelectorAll('.ht-btn').forEach(b=>b.classList.remove('active'));
+  el.classList.add('active');
+  live();
+}
+
+function live(){if($('results').classList.contains('show'))calculate();}
+
+function getLifeExp(age,health){
+  const base={below:78,average:84,above:91};
+  const b=base[health]||84;
+  return Math.max(age+10,b);
+}
+
+function getBenefit(fraAmt,claimAge){
+  if(claimAge<=62) return fraAmt*0.70;
+  if(claimAge>=70) return fraAmt*1.24;
+  if(claimAge<=67){
+    // 5/9 of 1% per month for first 36 months, 5/12 after
+    const monthsEarly=(67-claimAge)*12;
+    const r=monthsEarly<=36?monthsEarly*(5/9/100):(36*(5/9/100)+(monthsEarly-36)*(5/12/100));
+    return fraAmt*(1-r);
+  }
+  // After FRA: 8% per year
+  return fraAmt*(1+(claimAge-67)*0.08);
+}
+
+function getSpousalBenefit(fra1,claimAge2){
+  const halfFRA=fra1*0.5;
+  // Reduce if spouse claims before their own FRA
+  const monthsEarly=claimAge2<67?(67-claimAge2)*12:0;
+  const reduction=monthsEarly<=36?monthsEarly*(25/12/100):(36*(25/12/100)+(monthsEarly-36)*(5/12/100));
+  return halfFRA*(1-Math.max(0,reduction));
+}
+
+function calcHouseholdLifetime(fra1,claim1,age1,health1,fra2,claim2,age2,health2,cola,discount){
+  const lifeExp1=getLifeExp(age1,health1);
+  const lifeExp2=getLifeExp(age2,health2);
+  const retirementStart=Math.max(claim1,claim2);
+
+  let total=0;
+  const startYear=Math.min(claim1,claim2);
+  const endYear=Math.max(lifeExp1,lifeExp2);
+
+  // Person 1 income
+  const b1=getBenefit(fra1,claim1);
+  for(let age=claim1;age<=lifeExp1;age++){
+    const yr=age-age1;
+    const monthlyNominal=b1*Math.pow(1+cola/100,yr);
+    const pv=monthlyNominal*12/Math.pow(1+discount/100,yr);
+    total+=pv;
+  }
+
+  // Person 2 income (own or spousal, whichever higher)
+  const ownBenefit=getBenefit(fra2,claim2);
+  const spousalAmt=getSpousalBenefit(fra1,claim2);
+  // Spouse can only claim spousal if P1 is filing
+  const effectiveSpouseStart=Math.max(claim2,claim1); // must wait for P1 to file
+  const useSpousal=spousalAmt>ownBenefit&&fra2>0&&spousalAmt>0;
+  const actualB2=Math.max(ownBenefit,spousalAmt);
+  const spouseClaimAge=useSpousal?effectiveSpouseStart:claim2;
+
+  for(let age=spouseClaimAge;age<=lifeExp2;age++){
+    const yr=age-age2;
+    const monthlyNominal=actualB2*Math.pow(1+cola/100,yr);
+    const pv=monthlyNominal*12/Math.pow(1+discount/100,yr);
+    total+=pv;
+  }
+
+  return{total:Math.round(total),b1,b2:actualB2,ownBenefit,spousalAmt,useSpousal,lifeExp1,lifeExp2,spouseClaimAge};
+}
+
+function calculate(){
+  const age1=parseInt($('age1').value)||62;const fra1=parseFloat($('fra1').value)||2800;const claim1=parseInt($('claim1').value)||70;const health1=$('health1').value||'average';
+  const age2=parseInt($('age2').value)||60;const fra2=parseFloat($('fra2').value)||900;const claim2=parseInt($('claim2').value)||67;const health2=$('health2').value||'average';
+  const cola=parseFloat($('cola').value)||2.5;const discount=parseFloat($('discountRate').value)||3;
+
+  const resultsEl=$('results');resultsEl.classList.add('show');
+
+  // Three strategies
+  const s1=calcHouseholdLifetime(fra1,62,age1,health1,fra2,62,age2,health2,cola,discount);// Both early
+  const s2=calcHouseholdLifetime(fra1,67,age1,health1,fra2,67,age2,health2,cola,discount);// Both FRA
+  const s3=calcHouseholdLifetime(fra1,70,age1,health1,fra2,claim2,age2,health2,cola,discount);// Higher waits
+
+  const winner=[s1,s2,s3].indexOf(Math.max(s1.total,s2.total,s3.total));
+  const strategies=[
+    {label:'Both Claim at 62',s:s1,col:'--burg-light'},
+    {label:'Both Claim at 67',s:s2,col:'--gold-dark'},
+    {label:'Higher Earner Waits to 70',s:s3,col:'--burg'},
+  ];
+
+  // Strategy cards
+  const sg=$('strategyGrid');sg.innerHTML='';
+  strategies.forEach((st,i)=>{
+    const div=document.createElement('div');
+    div.className='strat-card'+(i===winner?' winner':'');
+    div.innerHTML=`<p class="strat-title">${st.label}</p>
+      <p class="strat-lifetime${i===winner?' gold':''}">${fmtD(st.s.total)}</p>
+      <p class="strat-label">Total household income (PV)</p>
+      <div class="strat-details">
+        Higher: ${fmt(getBenefit(fra1,i===0?62:i===1?67:70))}/mo<br>
+        Spouse: ${fmt(st.s.b2)}/mo ${st.s.useSpousal?'(spousal)':'(own)'}<br>
+        Combined: ${fmt(getBenefit(fra1,i===0?62:i===1?67:70)+st.s.b2)}/mo
+      </div>`;
+    sg.appendChild(div);
+  });
+
+  // Survivor box
+  const survBox=$('survivorBox');
+  const s3b1=getBenefit(fra1,70);
+  const s1b1=getBenefit(fra1,62);
+  const survDiff=s3b1-s1b1;
+  const yearsAsWidow=15;
+  survBox.innerHTML=`
+    <div class="sb-col">
+      <p class="sb-label">Survivor Benefit — Higher Earner Waits to 70</p>
+      <p class="sb-amount">${fmt(s3b1)}/mo</p>
+      <p class="sb-note">The surviving spouse receives the larger of the two checks. This is it if the higher earner waits to 70.</p>
+    </div>
+    <div class="sb-col">
+      <p class="sb-label">Survivor Benefit — Higher Earner Claims at 62</p>
+      <p class="sb-amount">${fmt(s1b1)}/mo</p>
+      <p class="sb-note">A ${fmt(survDiff)}/mo difference in the survivor's permanent income — for every year of widowhood.</p>
+      <div class="sb-impact">
+        <p class="si-label">15-Year Widowhood Impact</p>
+        <p class="si-text">The difference between claiming at 62 vs. 70 is <strong>${fmt(survDiff*12*yearsAsWidow)}</strong> over a typical 15-year widowhood — the single largest factor in the claiming decision for married couples.</p>
+      </div>
+    </div>
+  `;
+
+  // Spousal breakdown
+  const spousalBenefit=getSpousalBenefit(fra1,claim2);
+  const ownB2=getBenefit(fra2,claim2);
+  const usesSpousal=spousalBenefit>ownB2&&fra2>=0;
+  const sg2=$('spousalGrid');sg2.innerHTML='';
+  [{title:'Spouse\'s Own Benefit',rows:[
+    {l:'FRA benefit',v:fmt(fra2)},
+    {l:'Claiming age',v:'Age '+claim2},
+    {l:'Monthly benefit',v:fmt(ownB2)},
+    {l:'Source',v:usesSpousal?'Superseded by spousal':'Used (own record)'},
+  ]},{title:'Spousal Benefit (50% Rule)',rows:[
+    {l:"Higher earner's FRA benefit",v:fmt(fra1)},
+    {l:'50% of FRA benefit',v:fmt(fra1*0.5)},
+    {l:'Early claim reduction',v:claim2<67?'-'+((1-spousalBenefit/(fra1*0.5))*100).toFixed(1)+'%':'None'},
+    {l:'Final spousal benefit',v:fmt(spousalBenefit)},
+  ]}].forEach(card=>{
+    const div=document.createElement('div');div.className='spousal-card';
+    div.innerHTML=`<p class="spousal-title">${card.title}</p><div class="spousal-rows">${card.rows.map(r=>`<div class="sp-row"><span class="spr-label">${r.l}</span><span class="spr-val">${r.v}</span></div>`).join('')}</div>`;
+    sg2.appendChild(div);
+  });
+
+  // Chart
+  buildChart(fra1,claim1,age1,health1,fra2,claim2,age2,health2,cola);
+
+  // Insight
+  const bestStrategy=['claiming at 62','claiming at 67','having the higher earner wait until 70'][winner];
+  const lifeExp2=getLifeExp(age2,health2);
+  $('insightText').innerHTML=`Based on your inputs, <strong>${bestStrategy}</strong> produces the highest estimated lifetime household income of <strong>${fmtD(strategies[winner].s.total)}</strong>. However, the most important variable in your specific situation is the survivor benefit: if the higher earner claims at 62 instead of 70, the surviving spouse's permanent monthly income is <strong>${fmt(survDiff)}</strong> lower — every month — for life. Over a 15-year widowhood, that gap is <strong>${fmtD(survDiff*12*15)}</strong>. For couples with a significant age or earnings gap, maximizing the higher earner's benefit almost always protects the lower-earning spouse most effectively — regardless of which strategy wins on total lifetime income. This decision deserves a conversation with a fee-only Social Security specialist.`;
+
+  setTimeout(()=>resultsEl.scrollIntoView({behavior:'smooth',block:'start'}),100);
+}
+
+function buildChart(fra1,claim1,age1,health1,fra2,claim2,age2,health2,cola){
+  const lifeExp1=getLifeExp(age1,health1);
+  const lifeExp2=getLifeExp(age2,health2);
+  const canvas=$('ssChart');
+  const ctx=canvas.getContext('2d');
+  const dpr=window.devicePixelRatio||1;
+  const W=canvas.parentElement.clientWidth,H=240;
+  canvas.width=W*dpr;canvas.height=H*dpr;
+  canvas.style.width=W+'px';canvas.style.height=H+'px';
+  ctx.scale(dpr,dpr);
+
+  const startAge=Math.max(55,Math.min(age1,age2)-2);
+  const endAge=Math.max(lifeExp1,lifeExp2)+2;
+  const ages=Array.from({length:endAge-startAge+1},(_,i)=>startAge+i);
+
+  function cumIncome(claimA,fraA,ageA,lifeA,claimB,fraB,ageB,lifeB){
+    let cum=0;
+    return ages.map(yr=>{
+      const ba=getBenefit(fraA,claimA);const bb=getBenefit(fraB,claimB);
+      const spousalB=getSpousalBenefit(fraA,claimB);
+      const effectiveB=Math.max(bb,claimA<=yr&&claimA<=yr?spousalB:bb);
+      const a1=yr>=claimA&&(yr-ageA+age1)<=lifeA?ba*12:0;
+      const a2=yr>=Math.max(claimB,claimA)&&(yr-ageB+age2)<=lifeB?effectiveB*12:0;
+      const cola_mult=Math.pow(1+(parseFloat($('cola').value)||2.5)/100,yr-startAge);
+      cum+=(a1+a2)*cola_mult;
+      return cum;
+    });
+  }
+
+  const d1=cumIncome(62,fra1,age1,lifeExp1,62,fra2,age2,lifeExp2);
+  const d2=cumIncome(67,fra1,age1,lifeExp1,67,fra2,age2,lifeExp2);
+  const d3=cumIncome(70,fra1,age1,lifeExp1,claim2,fra2,age2,lifeExp2);
+
+  const maxV=Math.max(...d1,...d2,...d3)*1.05;
+  const PAD={top:16,right:20,bottom:36,left:68};
+  const pW=W-PAD.left-PAD.right,pH=H-PAD.top-PAD.bottom;
+
+  function xP(i){return PAD.left+(i/(ages.length-1))*pW;}
+  function yP(v){return PAD.top+pH*(1-v/maxV);}
+
+  // Grid
+  for(let i=0;i<=4;i++){
+    const v=maxV*i/4,y=yP(v);
+    ctx.strokeStyle='#EDE4CC';ctx.lineWidth=1;
+    ctx.beginPath();ctx.moveTo(PAD.left,y);ctx.lineTo(PAD.left+pW,y);ctx.stroke();
+    ctx.fillStyle='#A09098';ctx.font='10px EB Garamond,serif';ctx.textAlign='right';
+    ctx.fillText(v>=1e6?(v/1e6).toFixed(1)+'M':Math.round(v/1e3)+'K',PAD.left-5,y+4);
+  }
+  ages.filter(a=>a%5===0).forEach((a,_,arr)=>{
+    const i=ages.indexOf(a);
+    const x=xP(i);
+    ctx.strokeStyle='#EDE4CC';ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(x,PAD.top);ctx.lineTo(x,PAD.top+pH);ctx.stroke();
+    ctx.fillStyle='#A09098';ctx.font='10px EB Garamond,serif';ctx.textAlign='center';ctx.fillText(a,x,PAD.top+pH+16);
+  });
+
+  // Lines
+  const LINES=[{d:d1,color:'#9E3055',dash:false},{d:d2,color:'#B8943A',dash:true},{d:d3,color:'#5C1A2E',dash:false}];
+  LINES.forEach(({d,color,dash})=>{
+    ctx.beginPath();ctx.strokeStyle=color;ctx.lineWidth=2.5;ctx.lineJoin='round';
+    if(dash)ctx.setLineDash([5,3]);else ctx.setLineDash([]);
+    d.forEach((v,i)=>{const x=xP(i),y=yP(v);i===0?ctx.moveTo(x,y):ctx.lineTo(x,y);});
+    ctx.stroke();ctx.setLineDash([]);
+  });
+
+  // Legend
+  const legEl=$('chartLegend');legEl.innerHTML='';
+  [['Both at 62','#9E3055',false],['Both at 67','#B8943A',true],['Higher waits to 70','#5C1A2E',false]].forEach(([l,c,d])=>{
+    const div=document.createElement('div');div.className='cl';
+    div.innerHTML=`<div class="cl-sw" style="background:${c};${d?'border-top:2px dashed '+c+';background:transparent':''}"></div><span>${l}</span>`;
+    legEl.appendChild(div);
+  });
+
+  // Axes
+  ctx.strokeStyle='#D8CDB8';ctx.lineWidth=1;
+  ctx.beginPath();ctx.moveTo(PAD.left,PAD.top);ctx.lineTo(PAD.left,PAD.top+pH);ctx.lineTo(PAD.left+pW,PAD.top+pH);ctx.stroke();
+
+  // Hover
+  canvas.onmousemove=function(e){
+    const rect=canvas.getBoundingClientRect();
+    const mx=(e.clientX-rect.left)*(W/rect.width);
+    const idx=Math.min(ages.length-1,Math.max(0,Math.round(((mx-PAD.left)/pW)*(ages.length-1))));
+    buildChart(fra1,claim1,age1,health1,fra2,claim2,age2,health2,cola);
+    const cx2=$('ssChart').getContext('2d');cx2.scale(dpr,dpr);
+    const tx=xP(idx);
+    cx2.strokeStyle='rgba(92,26,46,.3)';cx2.lineWidth=1;cx2.setLineDash([3,3]);
+    cx2.beginPath();cx2.moveTo(tx,PAD.top);cx2.lineTo(tx,PAD.top+pH);cx2.stroke();cx2.setLineDash([]);
+    const bx=tx+10<W-150?tx+10:tx-160;const by=PAD.top+8;
+    cx2.fillStyle='rgba(26,14,18,.92)';cx2.beginPath();cx2.roundRect(bx,by,148,72,4);cx2.fill();
+    cx2.fillStyle='#F5EFE0';cx2.font='bold 11px Cinzel,serif';cx2.textAlign='left';
+    cx2.fillText('Age '+ages[idx],bx+8,by+16);
+    [['Both at 62: ','#9E3055',d1],['Both at 67: ','#B8943A',d2],['HE waits 70: ','#D4A85A',d3]].forEach(([l,c,d],i)=>{
+      cx2.fillStyle=c;cx2.font='10px EB Garamond,serif';
+      cx2.fillText(l+'$'+Math.round(d[idx]/1000)+'K',bx+8,by+30+i*14);
+    });
+  };
+  canvas.onmouseleave=()=>buildChart(fra1,claim1,age1,health1,fra2,claim2,age2,health2,cola);
+}
+
+window.addEventListener('load',()=>calculate());
+window.addEventListener('resize',()=>{if($('results').classList.contains('show'))calculate();});
+</script>
+</body>
+</html>

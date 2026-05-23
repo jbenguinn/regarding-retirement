@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Retirement Paycheck Builder | RegardingRetirement.com</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Raleway:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+:root{
+  --navy:#0F1C3F;--navy-soft:#162246;--navy-mid:#1D2E5A;--navy-muted:#3A4E7A;
+  --navy-faint:#5A6E9A;--navy-ghost:#EEF1F8;
+  --warm:#FAFAF8;--warm-dark:#F2F0EC;--warm-mid:#E8E4DC;
+  --gold:#E8A830;--gold-dark:#C48820;--gold-pale:#FDF6E4;
+  --green:#0F5C3A;--green-pale:#E4F5EC;--green-mid:#16A862;
+  --red:#B81C1C;--red-pale:#FEF0F0;
+  --slate:#445068;--slate-light:#8A96B0;--slate-ghost:#F4F5F8;
+  --border:#D8D4CC;--border-light:#E8E4DC;
+  --font-display:'Lora',Georgia,serif;
+  --font-body:'Raleway',sans-serif;
+}
+body{font-family:var(--font-body);background:var(--warm);color:var(--navy);min-height:100vh;font-size:15px;line-height:1.65;}
+
+.site-header{background:var(--navy);padding:.9rem 2rem;display:flex;align-items:center;justify-content:space-between;}
+.logo{font-family:var(--font-display);font-size:1.05rem;font-weight:600;color:var(--warm);text-decoration:none;}
+.logo em{font-style:normal;color:var(--gold);}
+.htag{font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--navy-faint);}
+
+/* HERO */
+.hero{background:linear-gradient(135deg,var(--navy) 0%,var(--navy-mid) 100%);padding:3.5rem 2rem 3rem;position:relative;overflow:hidden;}
+.hero-lines{position:absolute;inset:0;background-image:repeating-linear-gradient(90deg,transparent,transparent 59px,rgba(255,255,255,.03) 59px,rgba(255,255,255,.03) 60px);pointer-events:none;}
+.hero-inner{max-width:700px;margin:0 auto;position:relative;}
+.hero-badge{display:inline-block;background:rgba(232,168,48,.15);border:1px solid rgba(232,168,48,.3);border-radius:3px;padding:4px 12px;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);margin-bottom:1.25rem;font-family:var(--font-body);font-weight:600;}
+.hero h1{font-family:var(--font-display);font-size:clamp(2rem,4.5vw,3.2rem);font-weight:700;color:var(--warm);line-height:1.15;margin-bottom:1rem;}
+.hero h1 em{font-style:italic;font-weight:400;color:var(--gold);}
+.hero-sub{font-size:1rem;color:rgba(250,250,248,.5);line-height:1.75;max-width:520px;font-weight:300;}
+
+/* OUTER */
+.outer{max-width:800px;margin:0 auto;padding:2.5rem 1.5rem 5rem;}
+
+/* PAYCHECK FRAME — the hero visual */
+.paycheck-frame{background:var(--warm);border:2px solid var(--border);border-radius:4px;box-shadow:0 4px 24px rgba(15,28,63,.12),0 0 0 8px rgba(15,28,63,.04);margin-bottom:2rem;overflow:hidden;position:relative;}
+.pf-header{background:var(--navy);padding:1rem 1.5rem;display:flex;align-items:center;justify-content:space-between;}
+.pf-logo{font-family:var(--font-display);font-size:.95rem;font-weight:600;color:var(--warm);font-style:italic;}
+.pf-title{font-family:var(--font-body);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--navy-faint);}
+.pf-body{padding:1.5rem;}
+.pf-period{font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--slate-light);margin-bottom:1rem;font-weight:600;}
+.pf-total-row{display:flex;align-items:baseline;gap:.75rem;margin-bottom:1.5rem;padding-bottom:1.25rem;border-bottom:2px solid var(--navy);position:relative;}
+.pf-total-label{font-size:.85rem;color:var(--slate);font-weight:600;text-transform:uppercase;letter-spacing:.06em;}
+.pf-total-amount{font-family:var(--font-display);font-size:3rem;font-weight:700;color:var(--navy);line-height:1;}
+.pf-total-period{font-size:.9rem;color:var(--slate-light);font-weight:400;}
+.pf-total-annual{font-size:.85rem;color:var(--slate-light);font-style:italic;margin-left:auto;}
+.pf-line-items{display:flex;flex-direction:column;gap:0;}
+.pli{display:flex;align-items:center;padding:.6rem 0;border-bottom:1px dashed var(--border-light);}
+.pli:last-child{border-bottom:none;}
+.pli-color{width:4px;height:28px;border-radius:2px;margin-right:.9rem;flex-shrink:0;}
+.pli-label{flex:1;font-size:.88rem;font-weight:500;color:var(--slate);}
+.pli-sublabel{font-size:.75rem;color:var(--slate-light);font-style:italic;display:block;}
+.pli-bar-wrap{width:120px;margin:0 1rem;flex-shrink:0;}
+.pli-bar-bg{height:6px;background:var(--warm-mid);border-radius:3px;overflow:hidden;}
+.pli-bar-fill{height:6px;border-radius:3px;transition:width .8s ease;}
+.pli-amount{font-family:var(--font-display);font-size:1rem;font-weight:700;color:var(--navy);text-align:right;white-space:nowrap;flex-shrink:0;}
+.pf-gap-row{margin-top:1rem;padding:.75rem 1rem;border-radius:4px;display:flex;justify-content:space-between;align-items:center;}
+.pgr-good{background:var(--green-pale);border:1px solid rgba(22,168,98,.2);}
+.pgr-warn{background:var(--red-pale);border:1px solid rgba(184,28,28,.2);}
+.pgr-label{font-size:.85rem;font-weight:600;}
+.pgr-good .pgr-label{color:var(--green);}
+.pgr-warn .pgr-label{color:var(--red);}
+.pgr-amount{font-family:var(--font-display);font-size:1.1rem;font-weight:700;}
+.pgr-good .pgr-amount{color:var(--green);}
+.pgr-warn .pgr-amount{color:var(--red);}
+
+/* Inputs */
+.section-head{display:flex;align-items:center;gap:.75rem;margin-bottom:1rem;}
+.sh-num{width:24px;height:24px;border-radius:50%;background:var(--navy);color:var(--gold);font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.sh-title{font-family:var(--font-display);font-size:1rem;font-weight:600;color:var(--navy);}
+
+.card{background:var(--warm);border:1px solid var(--border);border-radius:6px;padding:1.5rem;margin-bottom:1.25rem;}
+.income-rows{display:flex;flex-direction:column;gap:.75rem;margin-bottom:1.25rem;}
+.income-row{display:grid;grid-template-columns:200px 1fr 36px;gap:.75rem;align-items:center;}
+.ir-label{font-size:.85rem;font-weight:600;color:var(--slate);}
+.ir-label em{font-weight:400;font-style:italic;font-size:.78rem;color:var(--slate-light);display:block;}
+.irow{display:flex;align-items:stretch;border:1.5px solid var(--border);border-radius:4px;background:var(--warm-dark);overflow:hidden;transition:border-color .15s;}
+.irow:focus-within{border-color:var(--navy-muted);}
+.ipre{padding:8px 10px;font-size:12px;color:var(--slate-light);background:var(--warm-mid);border-right:1px solid var(--border);flex-shrink:0;display:flex;align-items:center;}
+.finput{flex:1;padding:8px 10px;border:none;outline:none;background:transparent;font-family:var(--font-display);font-size:1rem;font-weight:600;color:var(--navy);min-width:0;-moz-appearance:textfield;}
+.finput::-webkit-inner-spin-button,.finput::-webkit-outer-spin-button{-webkit-appearance:none;}
+.btn-rm{width:36px;height:36px;border:1px solid var(--border);border-radius:4px;background:transparent;color:var(--slate-light);cursor:pointer;font-size:1.1rem;display:flex;align-items:center;justify-content:center;transition:all .15s;}
+.btn-rm:hover{background:var(--red-pale);color:var(--red);}
+.btn-add{display:flex;align-items:center;gap:6px;background:none;border:1.5px dashed var(--border);border-radius:4px;padding:8px 14px;font-family:var(--font-body);font-size:12px;font-weight:600;color:var(--slate-light);cursor:pointer;letter-spacing:.04em;transition:all .15s;}
+.btn-add:hover{border-color:var(--navy-muted);color:var(--navy);}
+
+.expenses-grid{display:grid;grid-template-columns:1fr 1fr;gap:.75rem;}
+.exp-item{}
+.exp-label{font-size:11px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--slate-light);margin-bottom:5px;display:block;}
+.expense-hint{font-size:11px;color:var(--slate-light);font-style:italic;margin-bottom:5px;}
+
+.btn-build{width:100%;padding:14px;background:var(--navy);color:var(--warm);border:none;border-radius:5px;font-family:var(--font-display);font-size:1.1rem;font-weight:700;cursor:pointer;transition:all .2s;margin-top:.5rem;}
+.btn-build:hover{background:var(--navy-mid);transform:translateY(-1px);box-shadow:0 4px 12px rgba(15,28,63,.25);}
+
+/* Bucket strategy */
+.bucket-row{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin-bottom:1.25rem;}
+.bucket{border-radius:6px;padding:1.25rem;text-align:center;border:1.5px solid;}
+.b1{background:#EEF6FF;border-color:#93C5FD;}
+.b2{background:#FFFBEB;border-color:#FCD34D;}
+.b3{background:var(--green-pale);border-color:rgba(22,168,98,.3);}
+.b-icon{font-size:1.5rem;margin-bottom:.5rem;}
+.b-label{font-family:var(--font-body);font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;margin-bottom:.4rem;}
+.b1 .b-label{color:#1D4ED8;}
+.b2 .b-label{color:#92400E;}
+.b3 .b-label{color:var(--green);}
+.b-amount{font-family:var(--font-display);font-size:1.4rem;font-weight:700;line-height:1;margin-bottom:.3rem;}
+.b-desc{font-size:11px;font-style:italic;line-height:1.4;}
+.b1 .b-amount{color:#1D4ED8;}
+.b2 .b-amount{color:#92400E;}
+.b3 .b-amount{color:var(--green);}
+.b1 .b-desc{color:#3B82F6;}
+.b2 .b-desc{color:#B45309;}
+.b3 .b-desc{color:var(--green);}
+
+/* Runway */
+.runway-card{background:var(--navy);border-radius:6px;padding:1.5rem;margin-bottom:1.25rem;color:var(--warm);}
+.rw-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem;}
+.rw-label{font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--navy-faint);}
+.rw-years{font-family:var(--font-display);font-size:2.5rem;font-weight:700;color:var(--gold);}
+.rw-sublabel{font-size:.85rem;color:var(--navy-faint);font-style:italic;margin-top:3px;}
+.runway-bar-bg{height:10px;background:rgba(255,255,255,.1);border-radius:5px;overflow:hidden;}
+.runway-bar-fill{height:10px;border-radius:5px;transition:width 1s ease;}
+
+/* Insight */
+.insight{background:var(--navy-ghost);border-left:3px solid var(--gold);border-radius:0 6px 6px 0;padding:1.25rem 1.5rem;margin-bottom:1.25rem;}
+.i-label{font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--gold-dark);margin-bottom:.5rem;font-weight:700;}
+.i-text{font-family:var(--font-display);font-size:.95rem;font-style:italic;color:var(--navy);line-height:1.7;}
+.i-text strong{font-style:normal;font-weight:700;}
+
+/* CTA */
+.cta{background:var(--gold-pale);border:1px solid rgba(232,168,48,.25);border-radius:6px;padding:1.25rem 1.5rem;display:flex;align-items:center;justify-content:space-between;gap:1rem;flex-wrap:wrap;}
+.cta-t{font-family:var(--font-display);font-size:.95rem;font-weight:600;color:var(--navy);margin-bottom:3px;}
+.cta-s{font-size:.83rem;color:var(--slate);font-style:italic;}
+.btn-cta{padding:10px 20px;background:var(--navy);color:var(--warm);border:none;border-radius:4px;font-family:var(--font-display);font-size:.9rem;font-weight:600;cursor:pointer;white-space:nowrap;text-decoration:none;display:inline-block;flex-shrink:0;transition:all .2s;}
+.btn-cta:hover{background:var(--navy-mid);}
+
+.sources{margin-top:2.5rem;padding-top:1.5rem;border-top:1px solid var(--border);}
+.stitle{font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--slate-light);margin-bottom:.75rem;font-weight:700;}
+.sources p{font-size:12px;color:var(--slate-light);font-style:italic;line-height:1.7;margin-bottom:4px;}
+.sources a{color:var(--navy-muted);text-decoration:underline;text-underline-offset:2px;}
+
+.site-footer{background:var(--navy);padding:2rem;text-align:center;}
+.flogo{font-family:var(--font-display);font-size:1rem;color:var(--warm);margin-bottom:.5rem;}
+.flogo em{font-style:normal;color:var(--gold);}
+.frule{width:36px;height:1px;background:rgba(255,255,255,.12);margin:1rem auto;}
+.ftext{font-size:12px;color:rgba(250,250,248,.3);font-style:italic;line-height:1.7;max-width:460px;margin:0 auto;}
+
+@media(max-width:620px){
+  .income-row{grid-template-columns:1fr 36px;}
+  .ir-label{display:none;}
+  .expenses-grid{grid-template-columns:1fr;}
+  .bucket-row{grid-template-columns:1fr;}
+  .pf-total-row{flex-wrap:wrap;}
+  .pf-total-annual{margin-left:0;}
+  .pli-bar-wrap{width:60px;}
+  .cta{flex-direction:column;text-align:center;}
+  .outer{padding:2rem 1rem 3.5rem;}
+  .hero{padding:2.5rem 1.25rem 2.5rem;}
+}
+</style>
+</head>
+<body>
+<header class="site-header">
+  <a href="/" class="logo">Regarding<em>Retirement</em>.com</a>
+  <span class="htag">Paycheck Builder</span>
+</header>
+<section class="hero">
+  <div class="hero-lines"></div>
+  <div class="hero-inner">
+    <p class="hero-badge">Retirement Paycheck Builder</p>
+    <h1>Build your <em>actual</em><br>retirement paycheck</h1>
+    <p class="hero-sub">You spent 30 years earning a paycheck. This tool helps you build the one you'll live on in retirement — layering every income source to show your real monthly picture, your coverage gap, and how long your savings will last.</p>
+  </div>
+</section>
+
+<main class="outer">
+  <!-- LIVE PAYCHECK PREVIEW -->
+  <div class="paycheck-frame" id="paycheckFrame">
+    <div class="pf-header">
+      <span class="pf-logo">RegardingRetirement.com</span>
+      <span class="pf-title">Retirement Income Statement</span>
+    </div>
+    <div class="pf-body">
+      <p class="pf-period">Monthly Income Summary — Your Retirement Paycheck</p>
+      <div class="pf-total-row">
+        <span class="pf-total-label">Total Monthly</span>
+        <span class="pf-total-amount" id="pfTotal">$0</span>
+        <span class="pf-total-period">/month</span>
+        <span class="pf-total-annual" id="pfAnnual">$0/year</span>
+      </div>
+      <div class="pf-line-items" id="pfLineItems">
+        <div style="text-align:center;padding:1.5rem;color:var(--slate-light);font-style:italic;font-size:.9rem;">Enter your income sources below to build your paycheck →</div>
+      </div>
+      <div class="pf-gap-row pgr-warn" id="pfGapRow" style="display:none">
+        <span class="pgr-label" id="pfGapLabel">Monthly Gap</span>
+        <span class="pgr-amount" id="pfGapAmount">$0/mo</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- STEP 1: Income Sources -->
+  <div class="section-head"><div class="sh-num">1</div><span class="sh-title">Your Income Sources</span></div>
+  <div class="card">
+    <p style="font-size:.85rem;color:var(--slate);font-style:italic;margin-bottom:1.25rem;line-height:1.6;">Add every source of monthly retirement income. The paycheck above updates live as you type.</p>
+    <div class="income-rows" id="incomeRows"></div>
+    <button class="btn-add" onclick="addIncome()">+ Add Income Source</button>
+  </div>
+
+  <!-- STEP 2: Monthly Expenses -->
+  <div class="section-head"><div class="sh-num">2</div><span class="sh-title">Your Monthly Expenses</span></div>
+  <div class="card">
+    <p style="font-size:.85rem;color:var(--slate);font-style:italic;margin-bottom:1.25rem;line-height:1.6;">Enter your expected monthly spending in retirement. Fidelity suggests 70–80% of pre-retirement spending for most people.</p>
+    <div class="expenses-grid">
+      <div class="exp-item"><label class="exp-label">Housing (mortgage/rent/property tax)</label><div class="irow"><span class="ipre">$</span><input type="number" class="finput" id="eHousing" value="1400" oninput="update()"/></div></div>
+      <div class="exp-item"><label class="exp-label">Healthcare & Insurance</label><div class="irow"><span class="ipre">$</span><input type="number" class="finput" id="eHealth" value="600" oninput="update()"/></div></div>
+      <div class="exp-item"><label class="exp-label">Food & Groceries</label><div class="irow"><span class="ipre">$</span><input type="number" class="finput" id="eFood" value="500" oninput="update()"/></div></div>
+      <div class="exp-item"><label class="exp-label">Transportation</label><div class="irow"><span class="ipre">$</span><input type="number" class="finput" id="eTransport" value="350" oninput="update()"/></div></div>
+      <div class="exp-item"><label class="exp-label">Utilities & Phone</label><div class="irow"><span class="ipre">$</span><input type="number" class="finput" id="eUtilities" value="250" oninput="update()"/></div></div>
+      <div class="exp-item"><label class="exp-label">Travel & Entertainment</label><div class="irow"><span class="ipre">$</span><input type="number" class="finput" id="eTravel" value="400" oninput="update()"/></div></div>
+      <div class="exp-item"><label class="exp-label">Gifts & Family Support</label><div class="irow"><span class="ipre">$</span><input type="number" class="finput" id="eGifts" value="200" oninput="update()"/></div></div>
+      <div class="exp-item"><label class="exp-label">Other / Miscellaneous</label><div class="irow"><span class="ipre">$</span><input type="number" class="finput" id="eOther" value="300" oninput="update()"/></div></div>
+    </div>
+  </div>
+
+  <!-- STEP 3: Savings & Assumptions -->
+  <div class="section-head"><div class="sh-num">3</div><span class="sh-title">Your Savings & Assumptions</span></div>
+  <div class="card">
+    <div class="expenses-grid">
+      <div class="exp-item"><label class="exp-label">Total Retirement Savings</label><div class="irow"><span class="ipre">$</span><input type="number" class="finput" id="totalSavings" value="450000" oninput="update()"/></div></div>
+      <div class="exp-item"><label class="exp-label">Portfolio Annual Return in Retirement</label><div class="irow"><input type="number" class="finput" id="portReturn" value="5" min="0" max="12" step=".5" oninput="update()"/><span style="padding:8px 10px;font-size:12px;color:var(--slate-light);background:var(--warm-mid);border-left:1px solid var(--border);flex-shrink:0;display:flex;align-items:center;">%/yr</span></div></div>
+      <div class="exp-item"><label class="exp-label">Years in Retirement (life expectancy)</label><div class="irow"><input type="number" class="finput" id="retireYears" value="25" min="5" max="50" oninput="update()"/><span style="padding:8px 10px;font-size:12px;color:var(--slate-light);background:var(--warm-mid);border-left:1px solid var(--border);flex-shrink:0;display:flex;align-items:center;">yrs</span></div></div>
+      <div class="exp-item"><label class="exp-label">Withdrawal Rate from Savings</label><div class="irow"><input type="number" class="finput" id="withdrawRate" value="4" min="2" max="8" step=".5" oninput="update()"/><span style="padding:8px 10px;font-size:12px;color:var(--slate-light);background:var(--warm-mid);border-left:1px solid var(--border);flex-shrink:0;display:flex;align-items:center;">%/yr</span></div></div>
+    </div>
+  </div>
+
+  <button class="btn-build" onclick="buildPaycheck()">Build My Retirement Paycheck →</button>
+
+  <!-- RESULTS -->
+  <div class="results" id="results" style="margin-top:1.5rem;display:none;">
+
+    <!-- Bucket strategy -->
+    <div class="section-head" style="margin-top:.25rem;"><div class="sh-num" style="background:var(--gold);color:var(--navy);">★</div><span class="sh-title">Your Recommended Bucket Allocation</span></div>
+    <div class="bucket-row" id="bucketRow"></div>
+
+    <!-- Runway -->
+    <div class="runway-card">
+      <div class="rw-top">
+        <div><p class="rw-label">Estimated Savings Runway</p><p class="rw-sublabel">How many years your savings should last</p></div>
+        <div style="text-align:right;"><p class="rw-years" id="rwYears">—</p><p class="rw-sublabel" id="rwSub">—</p></div>
+      </div>
+      <div class="runway-bar-bg"><div class="runway-bar-fill" id="rwBar" style="width:0%"></div></div>
+    </div>
+
+    <!-- Insight -->
+    <div class="insight">
+      <p class="i-label">Your Plan in Plain English</p>
+      <p class="i-text" id="insightText">—</p>
+    </div>
+
+    <div class="cta">
+      <div><p class="cta-t">Watch: How to Create a Retirement Paycheck from Your Savings</p><p class="cta-s">The full video covers withdrawal sequencing, the bucket strategy, and sequence-of-returns risk.</p></div>
+      <a href="https://youtube.com/@RetirementClarity" class="btn-cta" target="_blank">▶ Watch Free</a>
+    </div>
+
+    <div class="sources">
+      <p class="stitle">Sources</p>
+      <p>JPMorgan Chase — 84% of retirees only withdraw their RMD minimum<br><a href="https://finance.yahoo.com/news/84-retirees-rmd-mistake-130022029.html" target="_blank">finance.yahoo.com — JPMorgan RMD Study</a></p>
+      <p>Fidelity — Retirement Income and the 4% Withdrawal Rule<br><a href="https://www.fidelity.com/viewpoints/retirement/retirement-guidelines" target="_blank">fidelity.com — Retirement Guidelines</a></p>
+      <p>William Bengen — Origin of the 4% safe withdrawal rate (updated 4.7% in 2026)<br><a href="https://www.fidelity.com/viewpoints/retirement/how-much-do-i-need-to-retire" target="_blank">fidelity.com — How Much Do I Need to Retire</a></p>
+    </div>
+  </div>
+</main>
+
+<footer class="site-footer">
+  <p class="flogo">Regarding<em>Retirement</em>.com</p>
+  <div class="frule"></div>
+  <p class="ftext">Free retirement education for Americans 55+. For educational purposes only. Not financial advice. Please consult a qualified, fee-only fiduciary advisor before making retirement income decisions.</p>
+</footer>
+
+<script>
+const $=id=>document.getElementById(id);
+const COLORS=['#1D4ED8','#059669','#E8A830','#7C3AED','#DC2626','#0F766E','#9A6220'];
+
+let incomes=[
+  {id:1,label:'Social Security',amount:2000},
+  {id:2,label:'Pension',amount:0},
+  {id:3,label:'Portfolio Withdrawal (4%)',amount:1500},
+];
+let nextId=4;
+
+function renderIncomes(){
+  const el=$('incomeRows');el.innerHTML='';
+  incomes.forEach((inc,i)=>{
+    const row=document.createElement('div');
+    row.className='income-row';
+    const color=COLORS[i%COLORS.length];
+    row.innerHTML=`
+      <div class="ir-label" style="display:flex;align-items:center;gap:8px;"><div style="width:10px;height:10px;border-radius:50%;background:${color};flex-shrink:0"></div>${inc.label}<em></em></div>
+      <div class="irow"><span class="ipre">$</span><input type="number" class="finput" value="${inc.amount}" min="0" placeholder="${inc.label}" oninput="incomes[${i}].amount=parseFloat(this.value)||0;update()"/></div>
+      <button class="btn-rm" onclick="removeIncome(${inc.id})">×</button>
+    `;
+    el.appendChild(row);
+  });
+}
+
+function addIncome(){
+  incomes.push({id:nextId++,label:'Other Income',amount:0});
+  renderIncomes();update();
+}
+function removeIncome(id){if(incomes.length<=1)return;incomes=incomes.filter(i=>i.id!==id);renderIncomes();update();}
+
+function getTotalIncome(){return incomes.reduce((s,i)=>s+(parseFloat(i.amount)||0),0);}
+function getTotalExpenses(){
+  return['eHousing','eHealth','eFood','eTransport','eUtilities','eTravel','eGifts','eOther'].reduce((s,id)=>s+(parseFloat($(id).value)||0),0);
+}
+function fmtD(n){
+  const a=Math.abs(n);
+  if(a>=1e6)return'$'+(a/1e6).toFixed(2).replace(/\.?0+$/,'')+'M';
+  if(a>=1e3)return'$'+Math.round(a/1e3).toLocaleString()+'K';
+  return'$'+Math.round(a).toLocaleString();
+}
+function fmt(n){return'$'+Math.round(Math.abs(n)).toLocaleString();}
+
+function update(){
+  const totalIncome=getTotalIncome();
+  const totalExpenses=getTotalExpenses();
+  const gap=totalIncome-totalExpenses;
+
+  $('pfTotal').textContent=fmt(totalIncome);
+  $('pfAnnual').textContent=fmt(totalIncome*12)+'/year';
+
+  // Line items
+  const el=$('pfLineItems');el.innerHTML='';
+  const maxInc=Math.max(...incomes.map(i=>i.amount),1);
+  incomes.forEach((inc,i)=>{
+    if(inc.amount<=0)return;
+    const color=COLORS[i%COLORS.length];
+    const pct=Math.min(100,(inc.amount/Math.max(totalIncome,1))*100);
+    const div=document.createElement('div');div.className='pli';
+    div.innerHTML=`<div class="pli-color" style="background:${color}"></div>
+      <div class="pli-label">${inc.label}</div>
+      <div class="pli-bar-wrap"><div class="pli-bar-bg"><div class="pli-bar-fill" style="width:${pct}%;background:${color}"></div></div></div>
+      <div class="pli-amount">${fmt(inc.amount)}<span style="font-size:.75rem;font-weight:400;color:var(--slate-light)">/mo</span></div>`;
+    el.appendChild(div);
+  });
+
+  // Gap row
+  const gapRow=$('pfGapRow');
+  if(totalExpenses>0){
+    gapRow.style.display='flex';
+    gapRow.className='pf-gap-row '+(gap>=0?'pgr-good':'pgr-warn');
+    $('pfGapLabel').textContent=gap>=0?'Monthly Surplus':'Monthly Shortfall';
+    $('pfGapAmount').textContent=fmt(Math.abs(gap))+'/mo';
+  } else {
+    gapRow.style.display='none';
+  }
+}
+
+function buildPaycheck(){
+  const totalIncome=getTotalIncome();
+  const totalExpenses=getTotalExpenses();
+  const savings=parseFloat($('totalSavings').value)||450000;
+  const retireYears=parseFloat($('retireYears').value)||25;
+  const portReturn=parseFloat($('portReturn').value)||5;
+  const withdrawRate=parseFloat($('withdrawRate').value)||4;
+  const monthlyFromSavings=(savings*withdrawRate/100)/12;
+  const gap=totalIncome-totalExpenses;
+
+  const resultsEl=$('results');
+  resultsEl.style.display='block';
+  resultsEl.classList.add('show');
+  setTimeout(()=>{resultsEl.scrollIntoView({behavior:'smooth',block:'start'});},100);
+
+  // Buckets
+  const b1Amount=Math.max(0,totalExpenses*18); // 18 months
+  const b2Amount=Math.max(0,savings*0.35);
+  const b3Amount=Math.max(0,savings-b1Amount-b2Amount);
+  const bucketEl=$('bucketRow');bucketEl.innerHTML='';
+  const buckets=[
+    {cls:'b1',icon:'🏦',label:'Bucket 1 — Cash',amount:b1Amount,desc:'18 months of expenses in cash or stable accounts. Bills get paid no matter what the market does.'},
+    {cls:'b2',icon:'📊',label:'Bucket 2 — Bonds',amount:b2Amount,desc:'Years 2–7 of income in moderate investments. Replenishes Bucket 1 over time.'},
+    {cls:'b3',icon:'📈',label:'Bucket 3 — Growth',amount:Math.max(0,b3Amount),desc:'Long-term growth investments. You won\'t touch this for 7+ years, so ride out volatility.'},
+  ];
+  buckets.forEach(b=>{
+    const div=document.createElement('div');
+    div.className='bucket '+b.cls;
+    div.innerHTML=`<div class="b-icon">${b.icon}</div><p class="b-label">${b.label}</p><p class="b-amount">${fmtD(b.amount)}</p><p class="b-desc">${b.desc}</p>`;
+    bucketEl.appendChild(div);
+  });
+
+  // Runway
+  const annualWithdrawal=Math.max(0,totalExpenses*12-totalIncome*12+monthlyFromSavings*12);
+  let runway=retireYears;
+  if(annualWithdrawal>0&&savings>0){
+    const r=Math.max(.001,portReturn/100);
+    const ratio=annualWithdrawal/savings;
+    if(ratio<=r)runway=50;
+    else runway=Math.round(-Math.log(1-r/ratio)/Math.log(1+r));
+  }
+  $('rwYears').textContent=Math.min(runway,50)+(runway>=50?'+':'')+' yrs';
+  $('rwSub').textContent=runway>=retireYears?'Covers your full retirement timeline':'May fall short of your '+retireYears+'-year target';
+  const barColor=runway>=retireYears?'#16A862':runway>=retireYears*.7?'#E8A830':'#DC2626';
+  $('rwBar').style.width=Math.min(100,(Math.min(runway,50)/50)*100)+'%';
+  $('rwBar').style.background=barColor;
+
+  // Insight
+  const savingsMonthly=Math.round((savings*withdrawRate/100)/12);
+  let text=`Your retirement paycheck totals <strong>${fmt(totalIncome)}/month</strong> against estimated expenses of <strong>${fmt(totalExpenses)}/month</strong>. `;
+  if(gap>=0) text+=`You have a monthly surplus of <strong>${fmt(gap)}</strong> — that buffer matters more than it might seem. Market downturns, unexpected healthcare costs, and inflation all draw from it. `;
+  else text+=`There is a monthly shortfall of <strong>${fmt(Math.abs(gap))}</strong>. Closing this gap requires either increasing income (delaying Social Security, part-time work) or reducing expenses before the gap compounds. `;
+  text+=`Your savings of <strong>${fmtD(savings)}</strong> at a ${withdrawRate}% withdrawal rate provide approximately <strong>${fmt(savingsMonthly)}/month</strong>. `;
+  if(runway>=retireYears) text+=`Your savings runway of <strong>${Math.min(runway,50)}+ years</strong> comfortably covers your ${retireYears}-year target.`;
+  else text+=`Your projected savings runway of <strong>${runway} years</strong> is shorter than your ${retireYears}-year target — reducing withdrawals in down-market years and considering additional income sources is worth prioritizing now.`;
+  $('insightText').innerHTML=text;
+}
+
+window.addEventListener('load',()=>{renderIncomes();update();});
+</script>
+</body>
+</html>

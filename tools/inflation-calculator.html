@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Inflation Impact Calculator | RegardingRetirement.com</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,600;0,9..144,700;1,9..144,300;1,9..144,400;1,9..144,600&family=Barlow:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+:root{
+  --sand:#F5EDD8;--sand-dark:#EDE0C4;--sand-mid:#E4D5B0;
+  --ochre:#C17F2A;--ochre-dark:#9A6220;--ochre-light:#D9993F;--ochre-pale:#FBF3E0;
+  --bark:#2C1F0E;--bark-soft:#4A3520;--bark-muted:#7A6248;--bark-faint:#B09878;
+  --moss:#2A5C3F;--moss-pale:#E0EEE6;
+  --rust:#B84A2A;--rust-pale:#FAE8E2;
+  --border:#D8C9A8;--white:#FFFDF8;
+  --font-display:'Fraunces',Georgia,serif;
+  --font-body:'Barlow',sans-serif;
+}
+body{font-family:var(--font-body);background:var(--sand);color:var(--bark);min-height:100vh;font-size:15px;line-height:1.65;}
+
+.site-header{background:var(--bark);padding:.9rem 2rem;display:flex;align-items:center;justify-content:space-between;}
+.logo{font-family:var(--font-display);font-size:1.1rem;font-weight:600;color:var(--sand);text-decoration:none;letter-spacing:.02em;}
+.logo em{font-style:normal;color:var(--ochre-light)}
+.htag{font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--bark-muted);font-family:var(--font-body);}
+
+/* HERO */
+.hero{background:var(--bark);padding:3.5rem 2rem 4rem;position:relative;overflow:hidden;}
+.hero-orb{position:absolute;width:500px;height:500px;border-radius:50%;background:radial-gradient(circle,rgba(193,127,42,.18) 0%,transparent 70%);top:-150px;right:-100px;pointer-events:none;}
+.hero-orb2{position:absolute;width:300px;height:300px;border-radius:50%;background:radial-gradient(circle,rgba(193,127,42,.08) 0%,transparent 70%);bottom:-100px;left:-50px;pointer-events:none;}
+.hero-inner{max-width:700px;margin:0 auto;position:relative;}
+.hero-kicker{font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--ochre-light);margin-bottom:1rem;font-family:var(--font-body);font-weight:500;}
+.hero h1{font-family:var(--font-display);font-size:clamp(2.2rem,5vw,3.6rem);font-weight:300;color:var(--sand);line-height:1.1;margin-bottom:1rem;font-style:italic;}
+.hero h1 strong{font-weight:600;font-style:normal;color:var(--ochre-light);}
+.hero-sub{font-size:1rem;color:rgba(245,237,216,.55);font-style:italic;line-height:1.75;max-width:500px;font-weight:300;}
+.hero-stat-row{display:flex;gap:1.5rem;margin-top:2rem;flex-wrap:wrap;}
+.hstat{border-left:2px solid rgba(193,127,42,.4);padding:.5rem 0 .5rem 1rem;}
+.hstat-num{font-family:var(--font-display);font-size:1.6rem;font-weight:600;color:var(--ochre-light);line-height:1;}
+.hstat-label{font-size:11px;color:rgba(245,237,216,.4);letter-spacing:.06em;text-transform:uppercase;margin-top:3px;}
+
+/* OUTER */
+.outer{max-width:760px;margin:0 auto;padding:2.5rem 1.5rem 5rem;}
+
+/* CARD */
+.card{background:var(--white);border:1px solid var(--border);border-radius:8px;padding:1.75rem;margin-bottom:1.25rem;}
+.card-eyebrow{font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--ochre);margin-bottom:.5rem;font-weight:600;}
+.card-title{font-family:var(--font-display);font-size:1.3rem;font-weight:400;font-style:italic;color:var(--bark);margin-bottom:.5rem;}
+.card-sub{font-size:.88rem;color:var(--bark-muted);line-height:1.6;margin-bottom:1.5rem;font-style:italic;}
+
+/* INPUTS */
+.input-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1rem;}
+.field{}
+.flabel{font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--bark-muted);margin-bottom:5px;display:block;}
+.fhint{font-size:11px;color:var(--bark-faint);font-style:italic;margin-bottom:6px;line-height:1.4;}
+.irow{display:flex;align-items:stretch;border:1.5px solid var(--border);border-radius:5px;background:var(--sand);overflow:hidden;transition:border-color .15s;}
+.irow:focus-within{border-color:var(--ochre);}
+.ipre,.isuf{padding:9px 11px;font-size:12px;color:var(--bark-faint);background:var(--sand-dark);border-right:1px solid var(--border);flex-shrink:0;user-select:none;display:flex;align-items:center;font-family:var(--font-body);}
+.isuf{border-right:none;border-left:1px solid var(--border);}
+.finput{flex:1;padding:9px 12px;border:none;outline:none;background:transparent;font-family:var(--font-display);font-size:1.05rem;font-weight:400;color:var(--bark);min-width:0;-moz-appearance:textfield;}
+.finput::-webkit-inner-spin-button,.finput::-webkit-outer-spin-button{-webkit-appearance:none;}
+
+/* Inflation rate buttons */
+.rate-pills{display:flex;gap:.5rem;flex-wrap:wrap;margin-top:.25rem;}
+.rate-pill{padding:5px 14px;border:1.5px solid var(--border);border-radius:20px;background:transparent;font-family:var(--font-body);font-size:12px;font-weight:500;color:var(--bark-muted);cursor:pointer;transition:all .15s;}
+.rate-pill:hover{border-color:var(--ochre);color:var(--ochre);}
+.rate-pill.active{background:var(--ochre);border-color:var(--ochre);color:white;}
+
+.btn-calc{width:100%;padding:13px;background:var(--bark);color:var(--sand);border:none;border-radius:5px;font-family:var(--font-display);font-size:1.1rem;font-weight:400;font-style:italic;cursor:pointer;transition:all .2s;margin-top:.5rem;}
+.btn-calc:hover{background:var(--ochre-dark);transform:translateY(-1px);}
+
+/* RESULTS */
+.results{display:none;}
+.results.show{display:block;animation:riseUp .45s ease;}
+@keyframes riseUp{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
+
+/* Year cards */
+.year-row{display:grid;grid-template-columns:repeat(4,1fr);gap:.75rem;margin-bottom:1.25rem;}
+.ycard{background:var(--white);border:1px solid var(--border);border-radius:6px;padding:1.1rem;text-align:center;position:relative;overflow:hidden;}
+.ycard::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;}
+.ycard-10::before{background:var(--ochre-light);}
+.ycard-15::before{background:var(--ochre);}
+.ycard-20::before{background:var(--ochre-dark);}
+.ycard-30::before{background:var(--rust);}
+.ycard-label{font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--bark-faint);margin-bottom:6px;font-weight:600;}
+.ycard-value{font-family:var(--font-display);font-size:1.5rem;font-weight:600;color:var(--bark);line-height:1;margin-bottom:3px;}
+.ycard-loss{font-size:11px;color:var(--rust);font-weight:600;}
+.ycard-note{font-size:10px;color:var(--bark-faint);font-style:italic;margin-top:3px;}
+
+/* Chart */
+.chart-wrap{background:var(--white);border:1px solid var(--border);border-radius:8px;padding:1.5rem;margin-bottom:1.25rem;}
+.chart-title{font-family:var(--font-display);font-size:1.05rem;font-style:italic;color:var(--bark);margin-bottom:.25rem;}
+.chart-sub{font-size:12px;color:var(--bark-faint);font-style:italic;margin-bottom:1.25rem;}
+.chart-legend{display:flex;gap:1.25rem;flex-wrap:wrap;margin-bottom:1rem;}
+.leg{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--bark-muted);}
+.leg-sw{width:24px;height:3px;border-radius:2px;}
+canvas{width:100%!important;}
+
+/* Category breakdown */
+.cat-grid{display:grid;grid-template-columns:1fr 1fr;gap:.75rem;margin-bottom:1.25rem;}
+.cat-card{background:var(--white);border:1px solid var(--border);border-radius:6px;padding:1.1rem;}
+.cat-name{font-size:.85rem;font-weight:600;color:var(--bark);margin-bottom:.5rem;}
+.cat-rate{font-size:11px;color:var(--bark-faint);font-style:italic;margin-bottom:.6rem;}
+.cat-bar-bg{height:8px;background:var(--sand-mid);border-radius:4px;overflow:hidden;margin-bottom:.5rem;}
+.cat-bar-fill{height:8px;border-radius:4px;transition:width .8s ease;}
+.cat-vals{display:flex;justify-content:space-between;font-size:11px;}
+.cv-now{color:var(--bark-muted);}
+.cv-later{font-weight:600;}
+
+/* Strategies */
+.strategy-list{display:flex;flex-direction:column;gap:.75rem;margin-bottom:1.25rem;}
+.strat{background:var(--white);border:1px solid var(--border);border-radius:6px;padding:1.1rem 1.25rem;display:flex;gap:1rem;align-items:flex-start;}
+.strat-icon{font-size:1.25rem;flex-shrink:0;}
+.strat-title{font-size:.9rem;font-weight:600;color:var(--bark);margin-bottom:3px;}
+.strat-body{font-size:.83rem;color:var(--bark-muted);font-style:italic;line-height:1.5;}
+
+/* Insight */
+.insight{background:var(--bark);border-radius:8px;padding:1.5rem 1.75rem;margin-bottom:1.25rem;position:relative;overflow:hidden;}
+.insight::before{content:'"';font-family:var(--font-display);font-size:9rem;line-height:1;color:rgba(193,127,42,.1);position:absolute;top:-1.5rem;right:1.5rem;pointer-events:none;}
+.i-label{font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--ochre-light);margin-bottom:.5rem;font-weight:500;}
+.i-text{font-family:var(--font-display);font-style:italic;font-weight:300;font-size:1.05rem;color:var(--sand);line-height:1.7;position:relative;z-index:1;}
+.i-text strong{font-style:normal;font-weight:600;color:var(--ochre-light);}
+
+/* CTA */
+.cta{background:var(--ochre-pale);border:1px solid rgba(193,127,42,.25);border-radius:6px;padding:1.25rem 1.5rem;display:flex;align-items:center;justify-content:space-between;gap:1rem;flex-wrap:wrap;}
+.cta-t{font-family:var(--font-display);font-size:1rem;font-style:italic;color:var(--bark);margin-bottom:3px;}
+.cta-s{font-size:.83rem;color:var(--bark-muted);font-style:italic;}
+.btn-cta{padding:10px 22px;background:var(--bark);color:var(--sand);border:none;border-radius:4px;font-family:var(--font-display);font-size:.95rem;font-style:italic;cursor:pointer;text-decoration:none;display:inline-block;flex-shrink:0;transition:all .2s;}
+.btn-cta:hover{background:var(--ochre-dark);}
+
+.sources{margin-top:2.5rem;padding-top:1.5rem;border-top:1px solid var(--border);}
+.stitle{font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--bark-faint);margin-bottom:.75rem;font-weight:600;}
+.sources p{font-size:12px;color:var(--bark-faint);font-style:italic;line-height:1.7;margin-bottom:4px;}
+.sources a{color:var(--ochre-dark);text-decoration:underline;text-underline-offset:2px;}
+
+.site-footer{background:var(--bark);padding:2rem;text-align:center;}
+.flogo{font-family:var(--font-display);font-size:1rem;color:var(--sand);margin-bottom:.5rem;font-style:italic;}
+.flogo em{font-style:normal;color:var(--ochre-light);}
+.frule{width:36px;height:1px;background:rgba(255,255,255,.12);margin:1rem auto;}
+.ftext{font-size:12px;color:rgba(245,237,216,.35);font-style:italic;line-height:1.7;max-width:460px;margin:0 auto;}
+
+@media(max-width:600px){
+  .input-grid{grid-template-columns:1fr;}
+  .year-row{grid-template-columns:1fr 1fr;}
+  .cat-grid{grid-template-columns:1fr;}
+  .cta{flex-direction:column;text-align:center;}
+  .hero{padding:2.5rem 1.25rem 3rem;}
+  .outer{padding:2rem 1rem 3.5rem;}
+}
+</style>
+</head>
+<body>
+<header class="site-header">
+  <a href="/" class="logo">Regarding<em>Retirement</em>.com</a>
+  <span class="htag">Inflation Calculator</span>
+</header>
+<section class="hero">
+  <div class="hero-orb"></div><div class="hero-orb2"></div>
+  <div class="hero-inner">
+    <p class="hero-kicker">Inflation Impact on Retirement Savings</p>
+    <h1>What is your money <strong>actually worth</strong> in 20 years?</h1>
+    <p class="hero-sub">Inflation doesn't announce itself. It shows up quietly at the grocery store, the pharmacy, the gas station — and over a 30-year retirement, it compounds into something that can fundamentally change what your savings actually buy.</p>
+    <div class="hero-stat-row">
+      <div class="hstat"><p class="hstat-num">20%</p><p class="hstat-label">SS buying power lost 2010–2024</p></div>
+      <div class="hstat"><p class="hstat-num">3%</p><p class="hstat-label">Conservative long-run inflation rate</p></div>
+      <div class="hstat"><p class="hstat-num">$1M</p><p class="hstat-label">Worth only $742K in 10 years at 3%</p></div>
+    </div>
+  </div>
+</section>
+
+<main class="outer">
+  <div class="card">
+    <p class="card-eyebrow">Your Retirement Picture</p>
+    <p class="card-title">Enter your savings and income to see inflation's real impact</p>
+    <p class="card-sub">We'll show you what each dollar is worth across 10, 15, 20, and 30 years — and how different inflation rates change the picture dramatically.</p>
+
+    <div class="input-grid">
+      <div class="field">
+        <label class="flabel">Current Retirement Savings</label>
+        <div class="irow"><span class="ipre">$</span><input type="number" class="finput" id="savings" value="500000" min="0" oninput="live()"/></div>
+      </div>
+      <div class="field">
+        <label class="flabel">Expected Monthly Retirement Income</label>
+        <p class="fhint">Total from all sources: Social Security, pension, withdrawals</p>
+        <div class="irow"><span class="ipre">$</span><input type="number" class="finput" id="monthlyIncome" value="4500" min="0" oninput="live()"/></div>
+      </div>
+      <div class="field">
+        <label class="flabel">Years Until / Into Retirement</label>
+        <p class="fhint">Years until you retire, or years you've been retired</p>
+        <div class="irow"><input type="number" class="finput" id="years" value="0" min="0" max="40" oninput="live()"/><span class="isuf">yrs</span></div>
+      </div>
+      <div class="field">
+        <label class="flabel">Social Security Monthly Benefit</label>
+        <p class="fhint">Current or expected benefit (receives annual COLA adjustment)</p>
+        <div class="irow"><span class="ipre">$</span><input type="number" class="finput" id="ssBenefit" value="2000" min="0" oninput="live()"/></div>
+      </div>
+    </div>
+
+    <div class="field">
+      <label class="flabel">Inflation Rate Scenario</label>
+      <p class="fhint">Select a rate or enter your own. Historical average is 3.1%. Recent peak was 8% (2022).</p>
+      <div class="rate-pills">
+        <button class="rate-pill" onclick="setRate(2)">2% (Fed Target)</button>
+        <button class="rate-pill active" id="pill3" onclick="setRate(3)">3% (Conservative)</button>
+        <button class="rate-pill" onclick="setRate(4)">4% (Elevated)</button>
+        <button class="rate-pill" onclick="setRate(6)">6% (High)</button>
+      </div>
+      <div class="irow" style="margin-top:.5rem;max-width:180px;">
+        <input type="number" class="finput" id="inflRate" value="3" min="1" max="12" step=".5" oninput="clearPills();live()"/>
+        <span class="isuf">% / yr</span>
+      </div>
+    </div>
+
+    <button class="btn-calc" onclick="calculate()">Show Me Inflation's Real Impact →</button>
+  </div>
+
+  <div class="results" id="results">
+    <!-- Year snapshot cards -->
+    <p style="font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--ochre);margin-bottom:.75rem;font-weight:600;">Purchasing Power of Your Savings Over Time</p>
+    <div class="year-row" id="yearCards"></div>
+
+    <!-- Chart -->
+    <div class="chart-wrap">
+      <p class="chart-title">The Erosion Curve — Purchasing Power vs. Nominal Value</p>
+      <p class="chart-sub">The gap between what your savings say and what they buy</p>
+      <div class="chart-legend">
+        <div class="leg"><div class="leg-sw" style="background:var(--bark-muted)"></div>Nominal savings (no inflation adjustment)</div>
+        <div class="leg"><div class="leg-sw" style="background:var(--ochre)"></div>Real purchasing power (inflation adjusted)</div>
+        <div class="leg"><div class="leg-sw" style="background:var(--rust);opacity:.6"></div>Purchasing power gap</div>
+      </div>
+      <div style="position:relative;width:100%;height:260px;">
+        <canvas id="inflChart"></canvas>
+      </div>
+      <p style="font-size:11px;color:var(--bark-faint);font-style:italic;text-align:center;margin-top:.5rem;">Hover for exact values at any year</p>
+    </div>
+
+    <!-- Category breakdown -->
+    <p style="font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--ochre);margin-bottom:.75rem;font-weight:600;">How Inflation Hits Different Retirement Expenses</p>
+    <div class="cat-grid" id="catGrid"></div>
+
+    <!-- Strategies -->
+    <p style="font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--ochre);margin-bottom:.75rem;font-weight:600;">Four Strategies That Actually Help</p>
+    <div class="strategy-list">
+      <div class="strat"><span class="strat-icon">📈</span><div><p class="strat-title">Stay invested in growth assets</p><p class="strat-body">The S&P 500 has returned ~9.5% annually (real, inflation-adjusted) over the past decade. A 100% cash or bond portfolio virtually guarantees falling behind inflation over 20–30 years.</p></div></div>
+      <div class="strat"><span class="strat-icon">🏛️</span><div><p class="strat-title">Treasury Inflation-Protected Securities (TIPS)</p><p class="strat-body">U.S. government bonds whose principal adjusts with the CPI. Low return but guaranteed inflation protection. Ideal as part of a fixed-income allocation for conservative retirees.</p></div></div>
+      <div class="strat"><span class="strat-icon">⏳</span><div><p class="strat-title">Delay Social Security to lock in a higher COLA base</p><p class="strat-body">Every year you delay past 62 increases your benefit by up to 8%. Because Social Security COLAs are applied to your monthly amount, a higher base means more inflation protection for life.</p></div></div>
+      <div class="strat"><span class="strat-icon">🔄</span><div><p class="strat-title">Annual withdrawal rate review</p><p class="strat-body">Don't set your withdrawal rate and forget it. Revisit annually — spending less in bad market years and adjusting for real inflation maintains portfolio longevity far better than a fixed rate.</p></div></div>
+    </div>
+
+    <!-- Insight -->
+    <div class="insight">
+      <p class="i-label">The Honest Picture</p>
+      <p class="i-text" id="insightText">—</p>
+    </div>
+
+    <div class="cta">
+      <div><p class="cta-t">Watch: How Inflation Is Quietly Destroying Retirement Savings</p><p class="cta-s">The full video covers COLA shortfalls, TIPS, and the four inflation strategies that actually work.</p></div>
+      <a href="https://youtube.com/@RetirementClarity" class="btn-cta" target="_blank">▶ Watch Free</a>
+    </div>
+
+    <div class="sources">
+      <p class="stitle">Sources</p>
+      <p>Kiplinger / Senior Citizens League — Social Security benefits lost 20% of buying power 2010–2024<br><a href="https://www.kiplinger.com/retirement/social-security/how-inflation-is-impacting-retirees" target="_blank">kiplinger.com — Inflation Impacting Retirees</a></p>
+      <p>BLBB Advisors — $1M loses 26% of purchasing power in 10 years at 3% inflation<br><a href="https://blbb.com/retirement-in-a-high-inflation-era-and-the-impact-on-social-security/" target="_blank">blbb.com — Retirement in a High-Inflation Era</a></p>
+      <p>SoFi — How Does Inflation Affect Retirement Savings<br><a href="https://www.sofi.com/learn/content/inflation-and-your-retirement-savings/" target="_blank">sofi.com — Inflation and Retirement Savings</a></p>
+      <p>U.S. Department of Labor — Impact of Inflation on Retirement Savings (December 2024)<br><a href="https://www.dol.gov/sites/dolgov/files/ebsa/laws-and-regulations/laws/secure-2.0/report-to-congress-2024-impact-of-inflation-on-retirement-savings.pdf" target="_blank">dol.gov — Inflation Report 2024</a></p>
+    </div>
+  </div>
+</main>
+
+<footer class="site-footer">
+  <p class="flogo">Regarding<em>Retirement</em>.com</p>
+  <div class="frule"></div>
+  <p class="ftext">Free retirement education for Americans 55+. For educational purposes only. Not financial advice. Please consult a qualified, fee-only fiduciary advisor before making investment decisions.</p>
+</footer>
+
+<script>
+const $=id=>document.getElementById(id);
+let currentRate=3;
+
+function setRate(r){
+  currentRate=r;
+  $('inflRate').value=r;
+  document.querySelectorAll('.rate-pill').forEach(p=>p.classList.remove('active'));
+  const map={2:'pill2',3:'pill3',4:'pill4',6:'pill6'};
+  // just mark active by text match
+  document.querySelectorAll('.rate-pill').forEach(p=>{
+    if(parseFloat(p.textContent)===r) p.classList.add('active');
+  });
+  live();
+}
+
+function clearPills(){document.querySelectorAll('.rate-pill').forEach(p=>p.classList.remove('active'));}
+function live(){if($('results').classList.contains('show'))calculate();}
+
+function pv(nominal,rate,years){return nominal/Math.pow(1+rate/100,years);}
+function fmtD(n){
+  const a=Math.abs(n);
+  if(a>=1e6)return'$'+(a/1e6).toFixed(2).replace(/\.?0+$/,'')+'M';
+  if(a>=1e3)return'$'+Math.round(a/1e3)+'K';
+  return'$'+Math.round(a);
+}
+
+function calculate(){
+  const savings=parseFloat($('savings').value)||500000;
+  const monthly=parseFloat($('monthlyIncome').value)||4500;
+  const ss=parseFloat($('ssBenefit').value)||2000;
+  const rate=parseFloat($('inflRate').value)||3;
+  const yearsIn=parseFloat($('years').value)||0;
+
+  $('results').classList.add('show');
+
+  // Year snapshots
+  const yearData=[{y:10,cls:'ycard-10'},{y:15,cls:'ycard-15'},{y:20,cls:'ycard-20'},{y:30,cls:'ycard-30'}];
+  const ycEl=$('yearCards');ycEl.innerHTML='';
+  yearData.forEach(d=>{
+    const totalYears=yearsIn+d.y;
+    const realSavings=pv(savings,rate,totalYears);
+    const pctLost=((savings-realSavings)/savings*100).toFixed(1);
+    const div=document.createElement('div');
+    div.className='ycard '+d.cls;
+    div.innerHTML=`<p class="ycard-label">In ${d.y} Years</p>
+      <p class="ycard-value">${fmtD(realSavings)}</p>
+      <p class="ycard-loss">-${pctLost}% buying power</p>
+      <p class="ycard-note">from ${fmtD(savings)} today</p>`;
+    ycEl.appendChild(div);
+  });
+
+  // Chart
+  buildChart(savings,rate,yearsIn);
+
+  // Category breakdown
+  const cats=[
+    {name:'General Living',rate:rate,icon:'🛒'},
+    {name:'Healthcare & Prescriptions',rate:rate+2.5,icon:'💊'},
+    {name:'Housing & Utilities',rate:rate+0.5,icon:'🏠'},
+    {name:'Food & Groceries',rate:rate+1,icon:'🥦'},
+  ];
+  const catEl=$('catGrid');catEl.innerHTML='';
+  cats.forEach(c=>{
+    const future20=pv(1000,c.rate,20);
+    const pctLeft=(future20/10).toFixed(0);
+    const div=document.createElement('div');
+    div.className='cat-card';
+    div.innerHTML=`<p class="cat-name">${c.icon} ${c.name}</p>
+      <p class="cat-rate">Inflation rate: ~${c.rate.toFixed(1)}%/yr • 20-year purchasing power</p>
+      <div class="cat-bar-bg"><div class="cat-bar-fill" style="width:0%;background:${c.rate>rate+1?'var(--rust)':'var(--ochre)'}" data-w="${pctLeft}%"></div></div>
+      <div class="cat-vals"><span class="cv-now">$1,000 today</span><span class="cv-later" style="color:${c.rate>rate+1?'var(--rust)':'var(--ochre-dark)'}">${fmtD(future20)} in 20 yrs</span></div>`;
+    catEl.appendChild(div);
+  });
+  setTimeout(()=>{catEl.querySelectorAll('.cat-bar-fill').forEach(b=>b.style.width=b.dataset.w);},300);
+
+  // Insight
+  const real20=pv(savings,rate,20+yearsIn);
+  const monthlyReal20=pv(monthly,rate,20+yearsIn);
+  const ssReal20=pv(ss*(1+0.025*20),rate,20); // SS gets COLA
+  $('insightText').innerHTML=`At <strong>${rate}%</strong> inflation, your savings of <strong>${fmtD(savings)}</strong> will have the purchasing power of <strong>${fmtD(real20)}</strong> in 20 years — a real loss of <strong>${fmtD(savings-real20)}</strong>. Your planned monthly income of <strong>${fmtD(monthly)}</strong> today will buy what <strong>${fmtD(monthlyReal20)}</strong> buys today. The good news: Social Security with COLA adjustments helps partially offset this — your benefit of <strong>${fmtD(ss)}/mo</strong> grows to an estimated <strong>${fmtD(ss*Math.pow(1.025,20))}/mo</strong> nominally in 20 years. The gap between nominal and real is the risk your investment strategy needs to close.`;
+
+  setTimeout(()=>$('results').scrollIntoView({behavior:'smooth',block:'start'}),100);
+}
+
+function buildChart(savings,rate,yearsIn){
+  const canvas=$('inflChart');
+  const ctx=canvas.getContext('2d');
+  const dpr=window.devicePixelRatio||1;
+  const W=canvas.parentElement.clientWidth,H=260;
+  canvas.width=W*dpr;canvas.height=H*dpr;
+  canvas.style.width=W+'px';canvas.style.height=H+'px';
+  ctx.scale(dpr,dpr);
+  const PAD={top:16,right:20,bottom:36,left:64};
+  const pW=W-PAD.left-PAD.right,pH=H-PAD.top-PAD.bottom;
+  const years=Array.from({length:31},(_,i)=>i);
+  const nominal=years.map(()=>savings);
+  const real=years.map(y=>pv(savings,rate,y+yearsIn));
+  const maxV=savings*1.05;
+
+  function xP(i){return PAD.left+(i/30)*pW;}
+  function yP(v){return PAD.top+pH*(1-v/maxV);}
+
+  // Grid
+  for(let i=0;i<=4;i++){
+    const v=maxV*i/4,y=yP(v);
+    ctx.strokeStyle='#EDE0C4';ctx.lineWidth=1;
+    ctx.beginPath();ctx.moveTo(PAD.left,y);ctx.lineTo(PAD.left+pW,y);ctx.stroke();
+    ctx.fillStyle='#B09878';ctx.font='10px Barlow,sans-serif';ctx.textAlign='right';
+    ctx.fillText(v>=1e6?(v/1e6).toFixed(1)+'M':Math.round(v/1e3)+'K',PAD.left-6,y+4);
+  }
+  years.filter(y=>y%5===0).forEach(y=>{
+    const x=xP(y);
+    ctx.strokeStyle='#EDE0C4';ctx.lineWidth=1;
+    ctx.beginPath();ctx.moveTo(x,PAD.top);ctx.lineTo(x,PAD.top+pH);ctx.stroke();
+    ctx.fillStyle='#B09878';ctx.font='10px Barlow,sans-serif';ctx.textAlign='center';
+    ctx.fillText('Yr '+y,x,PAD.top+pH+16);
+  });
+
+  // Fill between
+  ctx.beginPath();
+  years.forEach((y,i)=>{const x=xP(i),yv=yP(real[i]);i===0?ctx.moveTo(x,yv):ctx.lineTo(x,yv);});
+  ctx.lineTo(xP(30),yP(nominal[30]));
+  ctx.lineTo(xP(0),yP(nominal[0]));
+  ctx.closePath();
+  ctx.fillStyle='rgba(184,74,42,.08)';ctx.fill();
+
+  // Nominal line
+  ctx.beginPath();ctx.strokeStyle='rgba(74,53,32,.35)';ctx.lineWidth=1.5;ctx.setLineDash([4,3]);
+  years.forEach((y,i)=>{const x=xP(i),yv=yP(nominal[i]);i===0?ctx.moveTo(x,yv):ctx.lineTo(x,yv);});
+  ctx.stroke();ctx.setLineDash([]);
+
+  // Real line
+  ctx.beginPath();ctx.strokeStyle='#C17F2A';ctx.lineWidth=2.5;ctx.lineJoin='round';
+  years.forEach((y,i)=>{const x=xP(i),yv=yP(real[i]);i===0?ctx.moveTo(x,yv):ctx.lineTo(x,yv);});
+  ctx.stroke();
+
+  // Axes
+  ctx.strokeStyle='#D8C9A8';ctx.lineWidth=1;
+  ctx.beginPath();ctx.moveTo(PAD.left,PAD.top);ctx.lineTo(PAD.left,PAD.top+pH);ctx.lineTo(PAD.left+pW,PAD.top+pH);ctx.stroke();
+
+  // Hover
+  canvas.onmousemove=function(e){
+    const rect=canvas.getBoundingClientRect();
+    const mx=(e.clientX-rect.left)*(W/rect.width);
+    const idx=Math.min(30,Math.max(0,Math.round(((mx-PAD.left)/pW)*30)));
+    buildChart(savings,rate,yearsIn);
+    const cx2=$('inflChart').getContext('2d');cx2.scale(dpr,dpr);
+    const tx=xP(idx);
+    cx2.strokeStyle='rgba(193,127,42,.4)';cx2.lineWidth=1;cx2.setLineDash([3,3]);
+    cx2.beginPath();cx2.moveTo(tx,PAD.top);cx2.lineTo(tx,PAD.top+pH);cx2.stroke();cx2.setLineDash([]);
+    const bx=tx+10<W-120?tx+10:tx-140;const by=PAD.top+8;
+    cx2.fillStyle='rgba(44,31,14,.92)';cx2.beginPath();cx2.roundRect(bx,by,130,58,4);cx2.fill();
+    cx2.fillStyle='#F5EDD8';cx2.font='bold 11px Barlow,sans-serif';cx2.textAlign='left';
+    cx2.fillText('Year '+idx,bx+8,by+16);
+    cx2.fillStyle='#B09878';cx2.font='10px Barlow,sans-serif';
+    cx2.fillText('Nominal: $'+Math.round(nominal[idx]).toLocaleString(),bx+8,by+30);
+    cx2.fillStyle='#C17F2A';
+    cx2.fillText('Real: $'+Math.round(real[idx]).toLocaleString(),bx+8,by+44);
+  };
+  canvas.onmouseleave=()=>buildChart(savings,rate,yearsIn);
+}
+
+window.addEventListener('load',()=>calculate());
+window.addEventListener('resize',()=>{if($('results').classList.contains('show'))calculate();});
+</script>
+</body>
+</html>

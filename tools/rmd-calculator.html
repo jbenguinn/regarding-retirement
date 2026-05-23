@@ -1,0 +1,1143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>RMD Calculator — Required Minimum Distributions | RegardingRetirement.com</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Serif+Text:ital@0;1&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+
+:root{
+  --slate:#1C2333;
+  --slate-mid:#252D40;
+  --slate-soft:#2E3850;
+  --slate-muted:#4A5568;
+  --slate-faint:#6B7A96;
+  --gold:#C9943A;
+  --gold-light:#E8B45C;
+  --gold-pale:#FBF3E4;
+  --gold-dark:#A07528;
+  --parchment:#F9F6F0;
+  --parchment-dark:#F0EBE0;
+  --parchment-mid:#E8E0D0;
+  --white:#FFFFFF;
+  --red:#C0392B;
+  --red-pale:#FDECEA;
+  --green:#1A6B3C;
+  --green-pale:#E4F5EC;
+  --border:#D4C8B0;
+  --border-dark:#C0B090;
+  --mono:'DM Mono',monospace;
+  --serif:'DM Serif Text',Georgia,serif;
+  --display:'DM Serif Display',Georgia,serif;
+}
+
+body{
+  font-family:var(--serif);
+  background:var(--parchment);
+  color:var(--slate);
+  min-height:100vh;
+  font-size:15px;
+  line-height:1.6;
+}
+
+/* ── HEADER ── */
+.site-header{
+  background:var(--slate);
+  padding:1rem 2rem;
+  display:flex;align-items:center;justify-content:space-between;
+}
+.logo{
+  font-family:var(--display);
+  font-size:1.1rem;color:var(--parchment);
+  text-decoration:none;letter-spacing:0.02em;
+}
+.logo em{font-style:normal;color:var(--gold-light)}
+.header-badge{
+  font-family:var(--mono);
+  font-size:10px;letter-spacing:0.1em;
+  color:var(--slate-faint);text-transform:uppercase;
+}
+
+/* ── HERO ── */
+.hero{
+  background:var(--slate);
+  padding:3.5rem 2rem 3rem;
+  position:relative;overflow:hidden;
+}
+.hero-grid{
+  position:absolute;inset:0;
+  background-image:
+    linear-gradient(rgba(201,148,58,0.04) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(201,148,58,0.04) 1px,transparent 1px);
+  background-size:40px 40px;
+  pointer-events:none;
+}
+.hero-inner{
+  max-width:700px;margin:0 auto;
+  display:grid;grid-template-columns:1fr auto;
+  gap:2rem;align-items:center;
+  position:relative;
+}
+.hero-text{}
+.hero-tag{
+  font-family:var(--mono);
+  font-size:10px;letter-spacing:0.14em;text-transform:uppercase;
+  color:var(--gold);margin-bottom:1rem;display:flex;
+  align-items:center;gap:8px;
+}
+.hero-tag::before{
+  content:'';width:20px;height:1px;background:var(--gold);opacity:0.6;
+}
+.hero h1{
+  font-family:var(--display);
+  font-size:clamp(2rem,4.5vw,3rem);
+  color:var(--parchment);
+  line-height:1.1;margin-bottom:0.9rem;
+}
+.hero h1 em{font-style:italic;color:var(--gold-light)}
+.hero-sub{
+  font-family:var(--serif);
+  font-size:0.95rem;color:var(--slate-faint);
+  font-style:italic;line-height:1.7;max-width:440px;
+}
+.hero-stat{
+  background:rgba(201,148,58,0.1);
+  border:1px solid rgba(201,148,58,0.2);
+  border-radius:6px;
+  padding:1.25rem 1.5rem;
+  text-align:center;
+  flex-shrink:0;
+  min-width:160px;
+}
+.hs-number{
+  font-family:var(--display);
+  font-size:2.4rem;color:var(--gold-light);
+  line-height:1;margin-bottom:4px;
+}
+.hs-label{
+  font-family:var(--mono);
+  font-size:10px;letter-spacing:0.1em;text-transform:uppercase;
+  color:var(--slate-faint);line-height:1.4;
+}
+
+/* ── WARNING BANNER ── */
+.warning-banner{
+  background:var(--red);
+  padding:0.6rem 2rem;
+  text-align:center;
+}
+.warning-banner p{
+  font-family:var(--mono);
+  font-size:11px;letter-spacing:0.06em;
+  color:white;text-transform:uppercase;
+}
+
+/* ── LAYOUT ── */
+.outer{max-width:780px;margin:0 auto;padding:2.5rem 1.5rem 5rem}
+
+/* ── INPUT BLOCK ── */
+.input-block{
+  background:var(--white);
+  border:1px solid var(--border);
+  border-radius:6px;
+  overflow:hidden;
+  margin-bottom:1.5rem;
+}
+.ib-header{
+  background:var(--slate-mid);
+  padding:1rem 1.5rem;
+  display:flex;align-items:center;gap:0.75rem;
+}
+.ib-header-dot{
+  width:8px;height:8px;border-radius:50%;
+  background:var(--gold);
+}
+.ib-header-title{
+  font-family:var(--mono);
+  font-size:11px;letter-spacing:0.12em;text-transform:uppercase;
+  color:var(--parchment-dark);
+}
+.ib-body{padding:1.5rem}
+
+.field-grid{
+  display:grid;grid-template-columns:1fr 1fr;gap:1.25rem;
+  margin-bottom:1.25rem;
+}
+.field{}
+.field-label{
+  font-family:var(--mono);
+  font-size:10px;letter-spacing:0.1em;text-transform:uppercase;
+  color:var(--slate-faint);margin-bottom:6px;display:block;
+}
+.field-note{
+  font-size:12px;color:var(--slate-faint);
+  font-style:italic;margin-bottom:6px;line-height:1.4;
+}
+.input-wrap{
+  display:flex;align-items:stretch;
+  border:1px solid var(--border);border-radius:4px;
+  background:var(--parchment);overflow:hidden;
+  transition:border-color 0.15s;
+}
+.input-wrap:focus-within{border-color:var(--gold)}
+.input-pre,.input-suf{
+  padding:10px 12px;
+  font-family:var(--mono);font-size:12px;
+  color:var(--slate-faint);
+  background:var(--parchment-dark);
+  border-right:1px solid var(--border);
+  flex-shrink:0;user-select:none;
+  display:flex;align-items:center;
+}
+.input-suf{border-right:none;border-left:1px solid var(--border)}
+.field-input{
+  flex:1;padding:10px 12px;
+  border:none;outline:none;background:transparent;
+  font-family:var(--mono);font-size:1rem;font-weight:500;
+  color:var(--slate);min-width:0;
+  -moz-appearance:textfield;
+}
+.field-input::-webkit-inner-spin-button,
+.field-input::-webkit-outer-spin-button{-webkit-appearance:none}
+
+/* Multi-account toggle */
+.multi-toggle{
+  display:flex;gap:0.5rem;margin-bottom:1.25rem;flex-wrap:wrap;
+}
+.toggle-btn{
+  padding:7px 14px;
+  border:1px solid var(--border);
+  border-radius:3px;
+  background:var(--parchment-dark);
+  font-family:var(--mono);font-size:11px;
+  letter-spacing:0.06em;text-transform:uppercase;
+  color:var(--slate-faint);cursor:pointer;
+  transition:all 0.15s;
+}
+.toggle-btn.active{
+  background:var(--slate);color:var(--gold-light);
+  border-color:var(--slate);
+}
+
+/* Account rows */
+.account-rows{display:flex;flex-direction:column;gap:0.75rem;margin-bottom:1.25rem}
+.account-row{
+  display:grid;grid-template-columns:1fr 140px 36px;
+  gap:0.5rem;align-items:center;
+}
+.acct-name{
+  padding:9px 12px;
+  border:1px solid var(--border);border-radius:4px;
+  background:var(--parchment);
+  font-family:var(--serif);font-size:0.9rem;color:var(--slate);
+  outline:none;
+}
+.acct-name:focus{border-color:var(--gold)}
+.btn-remove-acct{
+  width:36px;height:36px;
+  border:1px solid var(--border);border-radius:4px;
+  background:transparent;color:var(--slate-faint);
+  font-size:1.1rem;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;
+  transition:all 0.15s;
+}
+.btn-remove-acct:hover{background:var(--red-pale);color:var(--red);border-color:var(--red)}
+.btn-add-acct{
+  display:flex;align-items:center;gap:6px;
+  background:none;border:1px dashed var(--border);
+  border-radius:4px;padding:8px 14px;
+  font-family:var(--mono);font-size:11px;
+  color:var(--slate-faint);cursor:pointer;letter-spacing:0.06em;
+  transition:all 0.15s;margin-bottom:0.5rem;
+}
+.btn-add-acct:hover{border-color:var(--gold);color:var(--gold)}
+
+.btn-calculate{
+  width:100%;padding:13px;
+  background:var(--gold);color:var(--slate);
+  border:none;border-radius:4px;
+  font-family:var(--mono);font-size:13px;
+  letter-spacing:0.08em;text-transform:uppercase;
+  font-weight:500;cursor:pointer;
+  transition:all 0.2s ease;
+}
+.btn-calculate:hover{background:var(--gold-light);transform:translateY(-1px)}
+
+/* ── RESULTS ── */
+.results{display:none}
+.results.show{display:block;animation:slideUp 0.4s ease}
+@keyframes slideUp{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+
+/* This year card */
+.this-year{
+  background:var(--slate);
+  border-radius:6px;
+  padding:2rem;
+  margin-bottom:1.5rem;
+  display:grid;
+  grid-template-columns:1fr 1fr 1fr;
+  gap:1.5rem;
+  position:relative;overflow:hidden;
+}
+.this-year::before{
+  content:'';
+  position:absolute;inset:0;
+  background:
+    radial-gradient(ellipse at 0% 0%,rgba(201,148,58,0.12) 0%,transparent 50%),
+    radial-gradient(ellipse at 100% 100%,rgba(201,148,58,0.06) 0%,transparent 40%);
+  pointer-events:none;
+}
+.ty-item{position:relative}
+.ty-label{
+  font-family:var(--mono);font-size:10px;
+  letter-spacing:0.12em;text-transform:uppercase;
+  color:var(--slate-faint);margin-bottom:6px;
+}
+.ty-value{
+  font-family:var(--display);
+  font-size:clamp(1.6rem,3.5vw,2.2rem);
+  color:var(--gold-light);
+  line-height:1;margin-bottom:4px;
+}
+.ty-sub{
+  font-size:12px;color:var(--slate-faint);
+  font-style:italic;line-height:1.4;
+}
+.ty-divider{
+  width:1px;background:rgba(255,255,255,0.06);
+  position:absolute;right:-12px;top:0;bottom:0;
+}
+
+/* Penalty box */
+.penalty-box{
+  background:var(--red-pale);
+  border:1px solid rgba(192,57,43,0.2);
+  border-left:3px solid var(--red);
+  border-radius:0 4px 4px 0;
+  padding:1rem 1.25rem;
+  margin-bottom:1.5rem;
+  display:flex;gap:1rem;align-items:flex-start;
+}
+.pb-icon{font-size:1.25rem;flex-shrink:0;margin-top:1px}
+.pb-text{}
+.pb-title{
+  font-family:var(--mono);font-size:11px;
+  letter-spacing:0.08em;text-transform:uppercase;
+  color:var(--red);margin-bottom:4px;font-weight:500;
+}
+.pb-body{font-size:0.88rem;color:#7A2020;font-style:italic;line-height:1.55}
+.pb-body strong{font-style:normal;color:var(--red)}
+
+/* ── PROJECTION TABLE ── */
+.table-block{
+  background:var(--white);
+  border:1px solid var(--border);
+  border-radius:6px;
+  overflow:hidden;
+  margin-bottom:1.5rem;
+}
+.table-header{
+  background:var(--slate-mid);
+  padding:1rem 1.5rem;
+  display:flex;align-items:center;justify-content:space-between;
+  gap:1rem;
+}
+.th-title{
+  font-family:var(--mono);font-size:11px;
+  letter-spacing:0.12em;text-transform:uppercase;
+  color:var(--parchment-dark);
+}
+.th-sub{
+  font-size:12px;color:var(--slate-faint);font-style:italic;
+}
+.table-scroll{overflow-x:auto}
+table{
+  width:100%;border-collapse:collapse;
+  font-family:var(--mono);
+}
+thead th{
+  padding:0.7rem 1rem;
+  text-align:left;
+  font-size:10px;letter-spacing:0.1em;text-transform:uppercase;
+  color:var(--slate-faint);
+  background:var(--parchment-dark);
+  border-bottom:1px solid var(--border);
+  font-weight:500;white-space:nowrap;
+}
+thead th:not(:first-child){text-align:right}
+tbody tr{
+  border-bottom:1px solid var(--parchment-mid);
+  transition:background 0.1s;
+}
+tbody tr:hover{background:var(--gold-pale)}
+tbody tr.highlight-row{
+  background:rgba(201,148,58,0.08);
+}
+tbody tr.highlight-row td:first-child{
+  border-left:3px solid var(--gold);
+}
+tbody td{
+  padding:0.65rem 1rem;
+  font-size:13px;color:var(--slate);
+  white-space:nowrap;
+}
+tbody td:not(:first-child){text-align:right}
+.td-age{font-weight:500;color:var(--slate)}
+.td-balance{color:var(--slate-soft)}
+.td-factor{color:var(--slate-faint);font-size:12px}
+.td-rmd{font-weight:500;color:var(--gold-dark)}
+.td-rmd-large{color:var(--red);font-weight:500}
+.td-pct{color:var(--slate-faint);font-size:12px}
+.td-today{
+  font-size:10px;letter-spacing:0.06em;text-transform:uppercase;
+  background:var(--gold);color:var(--slate);
+  padding:2px 7px;border-radius:10px;vertical-align:middle;
+  margin-left:6px;
+}
+
+/* Chart */
+.chart-block{
+  background:var(--white);
+  border:1px solid var(--border);
+  border-radius:6px;
+  overflow:hidden;
+  margin-bottom:1.5rem;
+}
+.chart-header{
+  background:var(--parchment-dark);
+  padding:1rem 1.5rem;
+  border-bottom:1px solid var(--border);
+  display:flex;align-items:center;justify-content:space-between;
+  flex-wrap:wrap;gap:0.5rem;
+}
+.ch-title{
+  font-family:var(--display);
+  font-size:1rem;color:var(--slate);
+}
+.ch-legend{display:flex;gap:1.25rem;flex-wrap:wrap}
+.legend-item{display:flex;align-items:center;gap:6px;font-size:11px;color:var(--slate-faint)}
+.legend-swatch{width:12px;height:12px;border-radius:2px;flex-shrink:0}
+.chart-body{padding:1.25rem 1.25rem 0.5rem}
+.chart-container{width:100%;height:240px;position:relative}
+
+/* QCD box */
+.qcd-box{
+  background:var(--green-pale);
+  border:1px solid rgba(26,107,60,0.2);
+  border-left:3px solid var(--green);
+  border-radius:0 4px 4px 0;
+  padding:1.1rem 1.25rem;
+  margin-bottom:1.5rem;
+  display:flex;gap:1rem;align-items:flex-start;
+}
+.qcd-icon{font-size:1.2rem;flex-shrink:0;margin-top:1px}
+.qcd-title{
+  font-family:var(--mono);font-size:11px;
+  letter-spacing:0.08em;text-transform:uppercase;
+  color:var(--green);margin-bottom:4px;font-weight:500;
+}
+.qcd-body{font-size:0.88rem;color:#1A4A2A;font-style:italic;line-height:1.55}
+.qcd-body strong{font-style:normal}
+
+/* Insight */
+.insight-strip{
+  background:var(--slate-mid);
+  border-radius:6px;
+  padding:1.5rem 1.75rem;
+  margin-bottom:1.5rem;
+  position:relative;overflow:hidden;
+}
+.insight-strip::after{
+  content:'"';
+  font-family:var(--display);
+  font-size:8rem;line-height:1;
+  color:rgba(201,148,58,0.08);
+  position:absolute;top:-1rem;right:1.5rem;
+  pointer-events:none;
+}
+.is-label{
+  font-family:var(--mono);font-size:10px;
+  letter-spacing:0.14em;text-transform:uppercase;
+  color:var(--gold);margin-bottom:0.5rem;
+}
+.is-text{
+  font-family:var(--display);
+  font-style:italic;font-size:1.05rem;
+  color:var(--parchment);line-height:1.7;
+  position:relative;z-index:1;
+}
+.is-text strong{font-style:normal;color:var(--gold-light)}
+
+/* CTA */
+.cta-bar{
+  background:var(--gold-pale);
+  border:1px solid rgba(201,148,58,0.25);
+  border-radius:6px;
+  padding:1.25rem 1.75rem;
+  display:flex;align-items:center;justify-content:space-between;
+  gap:1rem;flex-wrap:wrap;
+}
+.cta-copy{}
+.cta-title{
+  font-family:var(--display);
+  font-size:1rem;color:var(--slate);margin-bottom:2px;
+}
+.cta-sub{font-size:0.83rem;color:var(--slate-faint);font-style:italic}
+.btn-cta{
+  padding:10px 22px;
+  background:var(--slate);color:var(--parchment);
+  border:none;border-radius:4px;
+  font-family:var(--mono);font-size:11px;
+  letter-spacing:0.08em;text-transform:uppercase;
+  cursor:pointer;white-space:nowrap;
+  text-decoration:none;display:inline-block;
+  flex-shrink:0;transition:all 0.2s;
+}
+.btn-cta:hover{background:var(--gold-dark)}
+
+/* Sources */
+.sources{
+  margin-top:2.5rem;padding-top:1.5rem;
+  border-top:1px solid var(--border);
+}
+.sources-title{
+  font-family:var(--mono);font-size:10px;
+  letter-spacing:0.12em;text-transform:uppercase;
+  color:var(--slate-faint);margin-bottom:0.75rem;
+}
+.sources p{
+  font-size:12px;color:var(--slate-faint);
+  font-style:italic;line-height:1.7;margin-bottom:4px;
+}
+.sources a{color:var(--gold-dark);text-decoration:underline;text-underline-offset:2px}
+
+/* Footer */
+.site-footer{
+  background:var(--slate);padding:2rem;text-align:center;
+}
+.footer-logo{
+  font-family:var(--display);font-size:1.05rem;
+  color:var(--parchment);margin-bottom:0.5rem;
+}
+.footer-logo em{font-style:normal;color:var(--gold-light)}
+.footer-rule{width:36px;height:1px;background:var(--slate-muted);margin:1rem auto}
+.footer-text{
+  font-size:12px;color:var(--slate-faint);
+  font-style:italic;line-height:1.7;
+  max-width:460px;margin:0 auto;
+}
+
+/* Responsive */
+@media(max-width:600px){
+  .hero-inner{grid-template-columns:1fr}
+  .hero-stat{display:none}
+  .field-grid{grid-template-columns:1fr}
+  .this-year{grid-template-columns:1fr;gap:1.25rem}
+  .ty-divider{display:none}
+  .outer{padding:2rem 1rem 3.5rem}
+  .chart-container{height:200px}
+  .cta-bar{flex-direction:column;text-align:center}
+  .account-row{grid-template-columns:1fr 120px 36px}
+}
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <a href="/" class="logo">Regarding<em>Retirement</em>.com</a>
+  <span class="header-badge">RMD Calculator</span>
+</header>
+
+<div class="warning-banner">
+  <p>⚠ Missing an RMD triggers a 25% IRS penalty on the amount you should have withdrawn — this calculator helps you avoid it</p>
+</div>
+
+<section class="hero">
+  <div class="hero-grid"></div>
+  <div class="hero-inner">
+    <div class="hero-text">
+      <p class="hero-tag">Required Minimum Distribution Calculator</p>
+      <h1>Know exactly what<br>the IRS <em>requires</em><br>you to withdraw</h1>
+      <p class="hero-sub">At age 73, the government requires you to start withdrawing from your tax-deferred accounts each year — whether you need the money or not. This calculator shows you exactly how much, for the next 20 years.</p>
+    </div>
+    <div class="hero-stat">
+      <p class="hs-number">25%</p>
+      <p class="hs-label">IRS penalty for<br>missing an RMD</p>
+    </div>
+  </div>
+</section>
+
+<main class="outer">
+
+  <!-- INPUT -->
+  <div class="input-block">
+    <div class="ib-header">
+      <div class="ib-header-dot"></div>
+      <span class="ib-header-title">Your Account Information</span>
+    </div>
+    <div class="ib-body">
+
+      <div class="field-grid">
+        <div class="field">
+          <label class="field-label">Your Current Age</label>
+          <p class="field-note">RMDs begin at age 73. Enter any age to see projections.</p>
+          <div class="input-wrap">
+            <input type="number" class="field-input" id="currentAge" value="70" min="60" max="95" oninput="liveCalc()"/>
+            <span class="input-suf">yrs</span>
+          </div>
+        </div>
+        <div class="field">
+          <label class="field-label">Expected Annual Return in Retirement</label>
+          <p class="field-note">Used to project account balance forward. 5–6% is conservative.</p>
+          <div class="input-wrap">
+            <input type="number" class="field-input" id="returnRate" value="5" min="0" max="12" step="0.5" oninput="liveCalc()"/>
+            <span class="input-suf">% / yr</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Account mode toggle -->
+      <div class="field">
+        <label class="field-label">How many accounts do you have?</label>
+        <div class="multi-toggle">
+          <button class="toggle-btn active" id="mode1" onclick="setMode(1)">Single Account</button>
+          <button class="toggle-btn" id="mode2" onclick="setMode(2)">Multiple Accounts</button>
+        </div>
+      </div>
+
+      <!-- SINGLE MODE -->
+      <div id="singleMode">
+        <div class="field-grid">
+          <div class="field">
+            <label class="field-label">Account Balance (Dec 31 of prior year)</label>
+            <p class="field-note">Use your account balance from December 31st of last year — that's what the IRS uses.</p>
+            <div class="input-wrap">
+              <span class="input-pre">$</span>
+              <input type="number" class="field-input" id="singleBalance" value="450000" min="0" oninput="liveCalc()"/>
+            </div>
+          </div>
+          <div class="field">
+            <label class="field-label">Account Type</label>
+            <p class="field-note">Traditional IRA and 401(k) are subject to RMDs. Roth IRAs are not (Roth 401(k)s now exempt too).</p>
+            <div class="input-wrap" style="padding:0">
+              <select class="field-input" id="acctType" style="cursor:pointer;font-size:0.9rem;padding:11px 12px" onchange="liveCalc()">
+                <option value="trad">Traditional IRA</option>
+                <option value="401k">401(k) / 403(b)</option>
+                <option value="sep">SEP IRA</option>
+                <option value="simple">SIMPLE IRA</option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- MULTI MODE -->
+      <div id="multiMode" style="display:none">
+        <label class="field-label">Your Accounts</label>
+        <p class="field-note" style="margin-bottom:0.75rem">Enter each tax-deferred account separately. RMDs for multiple IRAs can be combined and taken from any one IRA.</p>
+        <div class="account-rows" id="accountRows"></div>
+        <button class="btn-add-acct" onclick="addAccount()">+ Add Another Account</button>
+      </div>
+
+      <button class="btn-calculate" id="calcBtn" onclick="calculate()">Calculate My RMDs →</button>
+    </div>
+  </div>
+
+  <!-- RESULTS -->
+  <div class="results" id="results">
+
+    <!-- THIS YEAR -->
+    <div class="this-year" id="thisYear">
+      <div class="ty-item">
+        <p class="ty-label">This Year's RMD</p>
+        <p class="ty-value" id="tyRMD">—</p>
+        <p class="ty-sub" id="tyRMDsub">required withdrawal</p>
+        <div class="ty-divider"></div>
+      </div>
+      <div class="ty-item">
+        <p class="ty-label">Monthly Equivalent</p>
+        <p class="ty-value" id="tyMonthly">—</p>
+        <p class="ty-sub">per month if spread evenly</p>
+        <div class="ty-divider"></div>
+      </div>
+      <div class="ty-item">
+        <p class="ty-label">% of Account Withdrawn</p>
+        <p class="ty-value" id="tyPct">—</p>
+        <p class="ty-sub" id="tyFactor">IRS life expectancy factor: —</p>
+      </div>
+    </div>
+
+    <!-- PENALTY BOX -->
+    <div class="penalty-box" id="penaltyBox" style="display:none">
+      <span class="pb-icon">⚠️</span>
+      <div class="pb-text">
+        <p class="pb-title">You Are Not Yet Subject to RMDs</p>
+        <p class="pb-body" id="penaltyText">—</p>
+      </div>
+    </div>
+
+    <!-- QCD TIP -->
+    <div class="qcd-box" id="qcdBox" style="display:none">
+      <span class="qcd-icon">💡</span>
+      <div>
+        <p class="qcd-title">Qualified Charitable Distribution (QCD) Tip</p>
+        <p class="qcd-body" id="qcdText">—</p>
+      </div>
+    </div>
+
+    <!-- CHART -->
+    <div class="chart-block">
+      <div class="chart-header">
+        <span class="ch-title">Your RMD & Account Balance — 20-Year Projection</span>
+        <div class="ch-legend">
+          <div class="legend-item"><div class="legend-swatch" style="background:var(--gold)"></div>Annual RMD</div>
+          <div class="legend-item"><div class="legend-swatch" style="background:var(--slate-soft)"></div>Account Balance</div>
+        </div>
+      </div>
+      <div class="chart-body">
+        <div class="chart-container">
+          <canvas id="rmdChart"></canvas>
+        </div>
+        <p style="font-size:11px;color:var(--slate-faint);font-style:italic;text-align:center;margin-top:0.5rem">
+          Balance projections assume <span id="chartReturnLabel">5%</span> annual return. Hover for exact values.
+        </p>
+      </div>
+    </div>
+
+    <!-- TABLE -->
+    <div class="table-block">
+      <div class="table-header">
+        <div>
+          <p class="th-title">20-Year RMD Schedule</p>
+        </div>
+        <p class="th-sub">IRS Uniform Lifetime Table — Publication 590-B</p>
+      </div>
+      <div class="table-scroll">
+        <table>
+          <thead>
+            <tr>
+              <th>Age</th>
+              <th>Account Balance</th>
+              <th>IRS Factor</th>
+              <th>Annual RMD</th>
+              <th>Monthly</th>
+              <th>% Withdrawn</th>
+            </tr>
+          </thead>
+          <tbody id="rmdTableBody"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- INSIGHT -->
+    <div class="insight-strip">
+      <p class="is-label">Plain-English Summary</p>
+      <p class="is-text" id="insightText">—</p>
+    </div>
+
+    <!-- CTA -->
+    <div class="cta-bar">
+      <div class="cta-copy">
+        <p class="cta-title">Watch: What Happens to Your 401(k) When You Retire?</p>
+        <p class="cta-sub">The full video covers RMD rules, the 25% penalty, the QCD strategy, and how to build a withdrawal plan around your required distributions.</p>
+      </div>
+      <a href="https://youtube.com/@RetirementClarity" class="btn-cta" target="_blank">▶ Watch Free</a>
+    </div>
+
+    <!-- Sources -->
+    <div class="sources">
+      <p class="sources-title">Sources & Methodology</p>
+      <p>IRS — Required Minimum Distributions FAQs and Uniform Lifetime Table (Publication 590-B)<br>
+        <a href="https://www.irs.gov/retirement-plans/retirement-plan-and-ira-required-minimum-distributions-faqs" target="_blank">irs.gov — RMD FAQs</a></p>
+      <p>The Motley Fool — RMD Penalties Cost Retirees $1.7 Billion Annually (Vanguard Research)<br>
+        <a href="https://www.fool.com/retirement/2026/04/26/the-rmd-mistake-costing-retirees-more-than-they-re/" target="_blank">fool.com — RMD Mistake Article</a></p>
+      <p>CNBC — Biggest Required Minimum Distribution Mistakes<br>
+        <a href="https://www.cnbc.com/2025/11/24/biggest-required-minimum-distribution-mistakes-.html" target="_blank">cnbc.com — RMD Mistakes</a></p>
+      <p>IRS — Qualified Charitable Distributions (QCD) Rules for 2026<br>
+        <a href="https://www.irs.gov/retirement-plans/retirement-plans-faqs-regarding-iras-distributions-withdrawals" target="_blank">irs.gov — IRA Distribution FAQs</a></p>
+    </div>
+
+  </div>
+
+</main>
+
+<footer class="site-footer">
+  <p class="footer-logo">Regarding<em>Retirement</em>.com</p>
+  <div class="footer-rule"></div>
+  <p class="footer-text">Free retirement education for Americans 55+. No financial advice. No sales pitch. Just clarity.<br><br>
+  This calculator uses the IRS Uniform Lifetime Table and is for educational purposes only. It does not constitute financial or tax advice. RMD rules can change. Please consult a qualified tax advisor or fee-only fiduciary before making distribution decisions.</p>
+</footer>
+
+<script>
+// ─────────────────────────────────────────────
+// IRS UNIFORM LIFETIME TABLE (Publication 590-B, 2022+)
+// ─────────────────────────────────────────────
+const IRS_TABLE = {
+  72:27.4, 73:26.5, 74:25.5, 75:24.6, 76:23.7, 77:22.9,
+  78:22.0, 79:21.1, 80:20.2, 81:19.4, 82:18.5, 83:17.7,
+  84:16.8, 85:16.0, 86:15.2, 87:14.4, 88:13.7, 89:12.9,
+  90:12.2, 91:11.5, 92:10.8, 93:10.1, 94:9.5, 95:8.9,
+  96:8.4, 97:7.8, 98:7.3, 99:6.8, 100:6.4
+};
+
+const $ = id => document.getElementById(id);
+
+// Multi-account state
+let accounts = [
+  {id:1, name:'Traditional IRA', balance:450000},
+  {id:2, name:'401(k)', balance:0}
+];
+let nextId = 3;
+let mode = 1; // 1=single, 2=multi
+
+function setMode(m){
+  mode = m;
+  $('mode1').classList.toggle('active', m===1);
+  $('mode2').classList.toggle('active', m===2);
+  $('singleMode').style.display = m===1 ? 'block' : 'none';
+  $('multiMode').style.display = m===2 ? 'block' : 'none';
+  if(m===2) renderAccountRows();
+  liveCalc();
+}
+
+function renderAccountRows(){
+  const el = $('accountRows');
+  el.innerHTML = '';
+  accounts.forEach(a => {
+    if(a.balance === 0 && a.id !== 1) return; // skip empties except first
+    const row = document.createElement('div');
+    row.className = 'account-row';
+    row.innerHTML = `
+      <input type="text" class="acct-name" value="${a.name}" placeholder="Account name"
+        onchange="updateAcct(${a.id},'name',this.value)"/>
+      <div class="input-wrap">
+        <span class="input-pre" style="padding:9px 8px;font-size:11px">$</span>
+        <input type="number" class="field-input" value="${a.balance}" min="0"
+          style="font-size:0.9rem"
+          oninput="updateAcct(${a.id},'balance',this.value);liveCalc()"/>
+      </div>
+      <button class="btn-remove-acct" onclick="removeAcct(${a.id})">×</button>
+    `;
+    el.appendChild(row);
+  });
+}
+
+function addAccount(){
+  accounts.push({id:nextId++, name:'Account '+nextId, balance:0});
+  renderAccountRows();
+}
+
+function removeAcct(id){
+  if(accounts.length <= 1) return;
+  accounts = accounts.filter(a => a.id !== id);
+  renderAccountRows();
+  liveCalc();
+}
+
+function updateAcct(id, field, val){
+  const a = accounts.find(x => x.id === id);
+  if(a) a[field] = field === 'balance' ? (parseFloat(val)||0) : val;
+}
+
+function getTotalBalance(){
+  if(mode === 1) return parseFloat($('singleBalance').value)||0;
+  return accounts.reduce((s,a) => s + (parseFloat(a.balance)||0), 0);
+}
+
+function liveCalc(){
+  if($('results').classList.contains('show')) calculate();
+}
+
+// ─────────────────────────────────────────────
+// MAIN CALCULATE
+// ─────────────────────────────────────────────
+function calculate(){
+  const curAge = parseInt($('currentAge').value)||70;
+  const returnR = (parseFloat($('returnRate').value)||5)/100;
+  const totalBalance = getTotalBalance();
+
+  $('chartReturnLabel').textContent = $('returnRate').value + '%';
+
+  const resultsEl = $('results');
+  resultsEl.classList.add('show');
+
+  const isSubject = curAge >= 73;
+
+  // ── CURRENT YEAR RMD ──
+  if(isSubject){
+    $('penaltyBox').style.display = 'none';
+    const factor = IRS_TABLE[Math.min(curAge,100)] || IRS_TABLE[100];
+    const rmd = totalBalance / factor;
+    const pct = (rmd / totalBalance * 100).toFixed(2);
+
+    $('tyRMD').textContent = fmt(rmd);
+    $('tyMonthly').textContent = fmt(rmd/12);
+    $('tyPct').textContent = pct + '%';
+    $('tyFactor').textContent = 'IRS life expectancy factor: ' + factor;
+    $('tyRMDsub').textContent = 'from ' + fmt(totalBalance) + ' balance';
+
+    // QCD
+    $('qcdBox').style.display = 'flex';
+    $('qcdText').innerHTML = `If you're charitably inclined, you can donate up to <strong>$108,000</strong> directly from your IRA to a qualified nonprofit in 2026 as a Qualified Charitable Distribution. The donation satisfies your RMD requirement but is <strong>not included in your taxable income</strong> — one of the most tax-efficient strategies available to retirees. This is significantly underused according to CNBC.`;
+
+  } else {
+    $('penaltyBox').style.display = 'flex';
+    const yearsUntil = 73 - curAge;
+    $('penaltyText').innerHTML = `You are <strong>${yearsUntil} year${yearsUntil!==1?'s':''}</strong> away from your first required minimum distribution at age 73. Your projections below show what your RMDs will look like when they begin. Use this window to consider <strong>Roth conversions</strong> — converting portions of your traditional IRA now, while your tax bracket may be lower, reduces future taxable RMD amounts.`;
+    $('qcdBox').style.display = 'none';
+
+    $('tyRMD').textContent = '—';
+    $('tyMonthly').textContent = '—';
+    $('tyPct').textContent = '—';
+    $('tyFactor').textContent = 'RMDs begin at age 73';
+    $('tyRMDsub').textContent = 'not yet required';
+  }
+
+  // ── BUILD 20-YEAR PROJECTION ──
+  const rows = [];
+  const startAge = Math.max(curAge, 68);
+  let balance = totalBalance;
+
+  // Project balance to startAge
+  const yearsToStart = startAge - curAge;
+  let projBalance = totalBalance * Math.pow(1 + returnR, yearsToStart);
+
+  for(let age = startAge; age <= startAge + 19; age++){
+    const factor = IRS_TABLE[Math.min(age,100)] || IRS_TABLE[100];
+    const rmd = age >= 73 ? projBalance / factor : 0;
+    const pct = age >= 73 ? (rmd / projBalance * 100) : 0;
+    rows.push({
+      age,
+      balance: projBalance,
+      factor: age >= 73 ? factor : '—',
+      rmd,
+      pct,
+      isCurrent: age === curAge
+    });
+    // Next year balance: (balance - rmd) * (1 + return)
+    projBalance = (projBalance - rmd) * (1 + returnR);
+    if(projBalance < 0) projBalance = 0;
+  }
+
+  // ── TABLE ──
+  buildTable(rows, curAge);
+
+  // ── CHART ──
+  buildChart(rows);
+
+  // ── INSIGHT ──
+  buildInsight(curAge, totalBalance, rows, returnR, isSubject);
+
+  setTimeout(() => {
+    resultsEl.scrollIntoView({behavior:'smooth', block:'start'});
+  }, 100);
+}
+
+function fmt(n){
+  return '$' + Math.round(Math.abs(n)).toLocaleString();
+}
+
+// ─────────────────────────────────────────────
+// TABLE
+// ─────────────────────────────────────────────
+function buildTable(rows, curAge){
+  const tbody = $('rmdTableBody');
+  tbody.innerHTML = '';
+  rows.forEach(r => {
+    const tr = document.createElement('tr');
+    if(r.isCurrent) tr.classList.add('highlight-row');
+    const rmdColor = r.rmd > 0 && (r.balance * 0.06) < r.rmd ? 'td-rmd-large' : 'td-rmd';
+    tr.innerHTML = `
+      <td class="td-age">
+        ${r.age}${r.isCurrent ? '<span class="td-today">You</span>' : ''}
+        ${r.age === 73 ? '<span class="td-today" style="background:var(--red)">First RMD</span>' : ''}
+      </td>
+      <td class="td-balance">${fmt(r.balance)}</td>
+      <td class="td-factor">${r.factor}</td>
+      <td class="${rmdColor}">${r.rmd > 0 ? fmt(r.rmd) : '—'}</td>
+      <td class="td-balance">${r.rmd > 0 ? fmt(r.rmd/12)+'/mo' : '—'}</td>
+      <td class="td-pct">${r.pct > 0 ? r.pct.toFixed(2)+'%' : '—'}</td>
+    `;
+    tbody.appendChild(tr);
+  });
+}
+
+// ─────────────────────────────────────────────
+// CHART — dual axis (balance bars + RMD line)
+// ─────────────────────────────────────────────
+function buildChart(rows){
+  const canvas = $('rmdChart');
+  const ctx = canvas.getContext('2d');
+  const container = canvas.parentElement;
+  const dpr = window.devicePixelRatio||1;
+  const W = container.clientWidth;
+  const H = 240;
+  canvas.width = W*dpr; canvas.height = H*dpr;
+  canvas.style.width=W+'px'; canvas.style.height=H+'px';
+  ctx.scale(dpr,dpr);
+
+  const PAD = {top:16, right:20, bottom:36, left:68};
+  const plotW = W - PAD.left - PAD.right;
+  const plotH = H - PAD.top - PAD.bottom;
+
+  const balances = rows.map(r=>r.balance);
+  const rmds = rows.map(r=>r.rmd);
+  const maxBal = Math.max(...balances)*1.08;
+  const maxRMD = Math.max(...rmds, 1)*1.2;
+
+  function xPos(i){ return PAD.left + (i/(rows.length-1)) * plotW; }
+  function yBalPos(v){ return PAD.top + plotH*(1 - v/maxBal); }
+  function yRMDPos(v){ return PAD.top + plotH*(1 - v/maxRMD); }
+  const barW = Math.max(4, plotW/rows.length - 3);
+
+  // Grid
+  ctx.strokeStyle='#F0EBE0'; ctx.lineWidth=1;
+  for(let i=0;i<=4;i++){
+    const y = PAD.top + (plotH/4)*i;
+    ctx.beginPath(); ctx.moveTo(PAD.left,y); ctx.lineTo(PAD.left+plotW,y); ctx.stroke();
+    const v = maxBal*(1-i/4);
+    ctx.fillStyle='#A09080'; ctx.font=`10px var(--mono)`;
+    ctx.textAlign='right';
+    ctx.fillText(v>=1e6?(v/1e6).toFixed(1)+'M':Math.round(v/1000)+'K', PAD.left-6, y+4);
+  }
+
+  // Balance bars
+  rows.forEach((r,i)=>{
+    const x = xPos(i);
+    const barH = plotH * (r.balance/maxBal);
+    const barY = PAD.top + plotH - barH;
+    ctx.fillStyle = r.age >= 73 ? 'rgba(74,85,104,0.6)' : 'rgba(74,85,104,0.25)';
+    ctx.fillRect(x - barW/2, barY, barW, barH);
+  });
+
+  // RMD line
+  ctx.beginPath();
+  ctx.strokeStyle='#C9943A'; ctx.lineWidth=2.5;
+  ctx.lineJoin='round';
+  let started=false;
+  rows.forEach((r,i)=>{
+    if(r.rmd===0){started=false;return;}
+    const x=xPos(i), y=yRMDPos(r.rmd);
+    if(!started){ctx.moveTo(x,y);started=true;}
+    else ctx.lineTo(x,y);
+  });
+  ctx.stroke();
+
+  // RMD dots
+  rows.forEach((r,i)=>{
+    if(r.rmd===0) return;
+    const x=xPos(i), y=yRMDPos(r.rmd);
+    ctx.beginPath(); ctx.arc(x,y,3.5,0,Math.PI*2);
+    ctx.fillStyle='#C9943A'; ctx.fill();
+    ctx.strokeStyle='white'; ctx.lineWidth=1.5; ctx.stroke();
+  });
+
+  // X labels — every other age
+  ctx.fillStyle='#A09080'; ctx.font=`10px var(--mono)`;
+  ctx.textAlign='center';
+  rows.forEach((r,i)=>{
+    if(i%2===0 || r.age===73){
+      ctx.fillStyle = r.age===73 ? '#C9943A' : '#A09080';
+      ctx.fillText(r.age, xPos(i), PAD.top+plotH+16);
+    }
+  });
+
+  // Right Y axis label for RMD
+  ctx.save();
+  ctx.translate(W-8, PAD.top+plotH/2);
+  ctx.rotate(Math.PI/2);
+  ctx.fillStyle='#C9943A';
+  ctx.font=`9px var(--mono)`;
+  ctx.textAlign='center';
+  ctx.fillText('RMD AMOUNT →', 0, 0);
+  ctx.restore();
+
+  // Hover
+  canvas.onmousemove = function(e){
+    const rect = canvas.getBoundingClientRect();
+    const mx = (e.clientX - rect.left) * (W/rect.width);
+    const relX = mx - PAD.left;
+    if(relX < 0 || relX > plotW) return;
+    const idx = Math.min(rows.length-1, Math.max(0, Math.round((relX/plotW)*(rows.length-1))));
+    const r = rows[idx];
+    buildChart(rows);
+    const cx2 = $('rmdChart').getContext('2d');
+    cx2.scale(dpr,dpr);
+    const tx=xPos(idx);
+    cx2.strokeStyle='rgba(201,148,58,0.3)'; cx2.lineWidth=1; cx2.setLineDash([3,3]);
+    cx2.beginPath(); cx2.moveTo(tx,PAD.top); cx2.lineTo(tx,PAD.top+plotH); cx2.stroke();
+    cx2.setLineDash([]);
+
+    const bx = tx+10 < W-120 ? tx+10 : tx-130;
+    const by = PAD.top+8;
+    cx2.fillStyle='rgba(28,35,51,0.92)';
+    cx2.beginPath(); cx2.roundRect(bx,by,120,r.rmd>0?62:46,4); cx2.fill();
+    cx2.fillStyle='#E8B45C'; cx2.font=`bold 11px var(--mono)`;
+    cx2.textAlign='left';
+    cx2.fillText('Age '+r.age, bx+8, by+16);
+    cx2.fillStyle='#A0AABB'; cx2.font=`10px var(--mono)`;
+    cx2.fillText('Balance: $'+Math.round(r.balance).toLocaleString(), bx+8, by+30);
+    if(r.rmd>0){
+      cx2.fillStyle='#C9943A';
+      cx2.fillText('RMD: $'+Math.round(r.rmd).toLocaleString(), bx+8, by+44);
+      cx2.fillStyle='#6B7A96'; cx2.font=`9px var(--mono)`;
+      cx2.fillText('('+r.pct.toFixed(1)+'% of balance)', bx+8, by+56);
+    } else {
+      cx2.fillStyle='#6B7A96';
+      cx2.fillText('No RMD yet', bx+8, by+44);
+    }
+  };
+  canvas.onmouseleave = ()=>buildChart(rows);
+}
+
+// ─────────────────────────────────────────────
+// INSIGHT
+// ─────────────────────────────────────────────
+function buildInsight(curAge, totalBalance, rows, returnR, isSubject){
+  const el = $('insightText');
+  const firstRMDRow = rows.find(r=>r.age===73);
+  const rmdAt80 = rows.find(r=>r.age===80);
+  const rmdAt85 = rows.find(r=>r.age===85);
+
+  let text = '';
+
+  if(!isSubject){
+    const yearsUntil = 73 - curAge;
+    const projAtFirst = firstRMDRow ? firstRMDRow.balance : totalBalance;
+    const firstRMD = firstRMDRow ? firstRMDRow.rmd : 0;
+    text = `You have <strong>${yearsUntil} year${yearsUntil!==1?'s':''} before RMDs begin</strong>. Based on a ${(returnR*100).toFixed(1)}% annual return, your account is projected to reach approximately <strong>${fmt(projAtFirst)}</strong> by age 73 — generating a first RMD of roughly <strong>${fmt(firstRMD)}</strong>. This window is the ideal time to consider Roth conversions: converting portions of your traditional IRA now at potentially lower tax rates reduces the taxable RMD burden after 73. A fee-only tax advisor can model the optimal conversion amount for your bracket.`;
+  } else {
+    const curFactor = IRS_TABLE[Math.min(curAge,100)] || IRS_TABLE[100];
+    const curRMD = totalBalance / curFactor;
+    text = `At age <strong>${curAge}</strong> with a balance of <strong>${fmt(totalBalance)}</strong>, your required minimum distribution this year is <strong>${fmt(curRMD)}</strong> — approximately ${fmt(curRMD/12)} per month. `;
+    if(rmdAt80) text += `By age 80, your projected annual RMD grows to <strong>${fmt(rmdAt80.rmd)}</strong> as the IRS factor decreases. `;
+    if(rmdAt85) text += `At 85, it reaches <strong>${fmt(rmdAt85.rmd)}</strong>. `;
+    text += `Remember: if you have multiple IRAs, you must calculate each separately — but you can satisfy the combined requirement by withdrawing the total from just one. The <strong>December 31st deadline</strong> is hard. Missing it triggers a 25% penalty on the amount you should have taken.`;
+  }
+
+  el.innerHTML = text;
+}
+
+// ─────────────────────────────────────────────
+// INIT
+// ─────────────────────────────────────────────
+window.addEventListener('load', ()=>{
+  renderAccountRows();
+  calculate();
+});
+
+window.addEventListener('resize', ()=>{
+  if($('results').classList.contains('show')){
+    const rows = [];
+    // Rebuild chart on resize
+    calculate();
+  }
+});
+</script>
+</body>
+</html>
