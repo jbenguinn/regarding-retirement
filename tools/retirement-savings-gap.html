@@ -25,12 +25,12 @@ html{scroll-behavior:smooth}
   --accent-pale:#EBF0FA;
   --good:#1F5C35;
   --good-pale:#D4EBDC;
-  --warn:#8B6800;
+  --warn:#4A72B8;
   --warn-pale:#FBF0CC;
   --danger:#8B1A1A;
   --danger-pale:#F5D8D8;
-  --border:#D8CEBC;
-  --border-dark:#C0B09C;
+  --border:#E2E5EE;
+  --border-dark:#C4C9D6;
 
   --font-display:'Cormorant Garamond',Georgia,serif;
   --font-body:'DM Sans',Georgia,serif;
@@ -57,10 +57,10 @@ body{
   color:var(--paper);letter-spacing:0.03em;
   text-decoration:none;
 }
-.logo em{font-style:normal;color:#C8845A}
+.logo em{font-style:normal;color:#4A72B8}
 .nav-tag{
   font-size:10px;letter-spacing:0.14em;text-transform:uppercase;
-  color:#6B5F52;font-family:var(--font-body);
+  color:#6B7390;font-family:var(--font-body);
 }
 
 /* ── HERO ── */
@@ -86,7 +86,7 @@ body{
   position:absolute;
   width:600px;height:400px;
   border-radius:50%;
-  background:radial-gradient(circle,rgba(155,58,26,0.12) 0%,transparent 70%);
+  background:radial-gradient(circle,rgba(74,114,184,0.12) 0%,transparent 70%);
   top:-100px;right:-100px;
   pointer-events:none;
 }
@@ -99,9 +99,9 @@ body{
 .hero-kicker{
   display:inline-flex;align-items:center;gap:8px;
   font-size:11px;letter-spacing:0.14em;text-transform:uppercase;
-  color:#C8845A;margin-bottom:1.25rem;font-weight:400;
+  color:#4A72B8;margin-bottom:1.25rem;font-weight:400;
 }
-.kicker-rule{width:28px;height:1px;background:#C8845A;opacity:0.6}
+.kicker-rule{width:28px;height:1px;background:#4A72B8;opacity:0.6}
 .hero h1{
   font-family:var(--font-display);
   font-size:clamp(2.4rem,5vw,3.8rem);
@@ -114,7 +114,7 @@ body{
 .hero h1 em{
   font-style:italic;
   font-weight:400;
-  color:#C8845A;
+  color:#4A72B8;
 }
 .hero-body{
   font-size:1rem;
@@ -171,7 +171,7 @@ body{
   margin-bottom:1.5rem;
   font-family:var(--font-display);font-size:1rem;
 }
-.card-dark .card-sub{color:#8A7A6C}
+.card-dark .card-sub{color:#6B7390}
 
 /* ── FORM FIELDS ── */
 .field{margin-bottom:1.25rem}
@@ -433,7 +433,7 @@ canvas.gauge{width:220px!important;height:120px!important}
 .catchup-inner{position:relative}
 .catchup-eyebrow{
   font-size:10px;letter-spacing:0.14em;text-transform:uppercase;
-  color:#C8845A;margin-bottom:0.6rem;font-family:var(--font-body);
+  color:#4A72B8;margin-bottom:0.6rem;font-family:var(--font-body);
 }
 .catchup-title{
   font-family:var(--font-display);
@@ -455,19 +455,19 @@ canvas.gauge{width:220px!important;height:120px!important}
 }
 .co-years{
   font-size:10px;letter-spacing:0.1em;text-transform:uppercase;
-  color:#9A8A7A;margin-bottom:6px;font-family:var(--font-body);
+  color:#9AA0B4;margin-bottom:6px;font-family:var(--font-body);
 }
 .co-amount{
   font-family:var(--font-display);
   font-size:1.5rem;font-weight:700;
-  color:#C8845A;line-height:1;margin-bottom:4px;
+  color:#4A72B8;line-height:1;margin-bottom:4px;
 }
 .co-label{
-  font-size:11px;color:#7A6A5A;font-style:italic;
+  font-size:11px;color:#9AA0B4;font-style:italic;
   font-family:var(--font-display);font-size:0.85rem;
 }
 .catchup-note{
-  font-size:0.82rem;color:#7A6A5A;
+  font-size:0.82rem;color:#9AA0B4;
   font-style:italic;margin-top:1rem;
   font-family:var(--font-display);font-size:0.9rem;
   line-height:1.6;
@@ -548,7 +548,7 @@ canvas.gauge{width:220px!important;height:120px!important}
 /* ── CTA ── */
 .cta{
   background:var(--accent-pale);
-  border:1px solid rgba(155,58,26,0.2);
+  border:1px solid rgba(74,114,184,0.2);
   border-radius:6px;
   padding:1.5rem 1.75rem;
   display:flex;align-items:center;
@@ -606,7 +606,7 @@ canvas.gauge{width:220px!important;height:120px!important}
   font-family:var(--font-display);
   font-size:1.1rem;color:var(--paper);margin-bottom:0.5rem;
 }
-.footer-logo em{font-style:normal;color:#C8845A}
+.footer-logo em{font-style:normal;color:#4A72B8}
 .footer-rule{width:40px;height:1px;background:var(--border);margin:1rem auto}
 .footer-text{
   font-size:12px;color:var(--ink-soft);
@@ -885,6 +885,7 @@ canvas.gauge{width:220px!important;height:120px!important}
 </footer>
 
 <script>
+let _ready=false;
 // ── HELPERS ──
 const $ = id => document.getElementById(id);
 const fmt = n => '$' + Math.round(Math.abs(n)).toLocaleString();
@@ -1031,7 +1032,7 @@ function calculate(){
   // ── Insight ──
   buildInsight(gap, savingsTarget, projectedAtRetirement, yearsToRetire, runway, lifeExp, retireAge, ssMonthly, gap <= 0);
 
-  setTimeout(() => {
+  if(_ready)setTimeout(() => {
     resultsEl.scrollIntoView({behavior:'smooth', block:'start'});
   }, 150);
 }
@@ -1066,7 +1067,7 @@ function drawGauge(ratio){
   // Background arc
   ctx.beginPath();
   ctx.arc(cx, cy, r, startAngle, endAngle);
-  ctx.strokeStyle = '#E6DDCC';
+  ctx.strokeStyle = '#DDE0E8';
   ctx.lineWidth = lineW;
   ctx.lineCap = 'round';
   ctx.stroke();
@@ -1155,9 +1156,9 @@ function buildWaterfall(need, ss, other, fromSavings, savingsProvides, inflR, ye
   // Colors
   const colors = {
     need: '#5A82C8',
-    ss: '#1E4A6E',
+    ss: '#243660',
     other: '#2D5A3D',
-    savings: '#8B6800',
+    savings: '#4A72B8',
   };
 
   row('Monthly income needed', monthlyNeed, colors.need, true);
@@ -1231,7 +1232,7 @@ function buildCatchup(gap, years, returnR, currentMonthly, onTrack){
     div.innerHTML = `
       <p class="co-years">Over ${m} Year${m > 1 ? 's' : ''}</p>
       <p class="co-amount">${fmt(needed)}</p>
-      <p class="co-label">per month total<br><span style="color:#9A8A7A;font-size:10px">(+${fmt(additional)} more than now)</span></p>
+      <p class="co-label">per month total<br><span style="color:#9AA0B4;font-size:10px">(+${fmt(additional)} more than now)</span></p>
     `;
     optEl.appendChild(div);
   });
@@ -1260,7 +1261,7 @@ function buildBenchmark(curAge, income, savings){
     const div = document.createElement('div');
     div.className = 'bm-row';
 
-    let barColor = '#C8BCAC';
+    let barColor = '#C4C9D6';
     let fillW = 0;
 
     if(isCurrentAge){
@@ -1270,7 +1271,7 @@ function buildBenchmark(curAge, income, savings){
       else barColor = '#5A82C8';
     } else {
       fillW = 50; // placeholder
-      barColor = '#D8CEBC';
+      barColor = '#E2E5EE';
     }
 
     div.innerHTML = `
@@ -1321,6 +1322,8 @@ window.addEventListener('load', () => {
   updateRange('replaceRate','replaceVal','%');
   updateRange('withdrawRate','withdrawVal','%');
   calculate();
+
+  _ready=true;
 });
 </script>
 </body>
