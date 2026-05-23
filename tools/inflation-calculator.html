@@ -6,19 +6,19 @@
 <title>Inflation Impact Calculator | RegardingRetirement.com</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,600;0,9..144,700;1,9..144,300;1,9..144,400;1,9..144,600&family=Barlow:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth}
 :root{
-  --sand:#F5EDD8;--sand-dark:#EDE0C4;--sand-mid:#E4D5B0;
-  --ochre:#C17F2A;--ochre-dark:#9A6220;--ochre-light:#D9993F;--ochre-pale:#FBF3E0;
-  --bark:#2C1F0E;--bark-soft:#4A3520;--bark-muted:#7A6248;--bark-faint:#B09878;
+  --sand:#F6F7F9;--sand-dark:#EDEEF2;--sand-mid:#DDE0E8;
+  --ochre:#4A72B8;--ochre-dark:#3A62A8;--ochre-light:#5A82C8;--ochre-pale:#EBF0FA;
+  --bark:#1B2B4B;--bark-soft:#243660;--bark-muted:#6B7390;--bark-faint:#9AA0B4;
   --moss:#2A5C3F;--moss-pale:#E0EEE6;
   --rust:#B84A2A;--rust-pale:#FAE8E2;
-  --border:#D8C9A8;--white:#FFFDF8;
-  --font-display:'Fraunces',Georgia,serif;
-  --font-body:'Barlow',sans-serif;
+  --border:#E2E5EE;--white:#FFFDF8;
+  --font-display:'Cormorant Garamond',Georgia,serif;
+  --font-body:'DM Sans',sans-serif;
 }
 body{font-family:var(--font-body);background:var(--sand);color:var(--bark);min-height:100vh;font-size:15px;line-height:1.65;}
 
@@ -384,14 +384,14 @@ function buildChart(savings,rate,yearsIn){
     const v=maxV*i/4,y=yP(v);
     ctx.strokeStyle='#EDE0C4';ctx.lineWidth=1;
     ctx.beginPath();ctx.moveTo(PAD.left,y);ctx.lineTo(PAD.left+pW,y);ctx.stroke();
-    ctx.fillStyle='#B09878';ctx.font='10px Barlow,sans-serif';ctx.textAlign='right';
+    ctx.fillStyle='#B09878';ctx.font='10px DM Sans,sans-serif';ctx.textAlign='right';
     ctx.fillText(v>=1e6?(v/1e6).toFixed(1)+'M':Math.round(v/1e3)+'K',PAD.left-6,y+4);
   }
   years.filter(y=>y%5===0).forEach(y=>{
     const x=xP(y);
     ctx.strokeStyle='#EDE0C4';ctx.lineWidth=1;
     ctx.beginPath();ctx.moveTo(x,PAD.top);ctx.lineTo(x,PAD.top+pH);ctx.stroke();
-    ctx.fillStyle='#B09878';ctx.font='10px Barlow,sans-serif';ctx.textAlign='center';
+    ctx.fillStyle='#B09878';ctx.font='10px DM Sans,sans-serif';ctx.textAlign='center';
     ctx.fillText('Yr '+y,x,PAD.top+pH+16);
   });
 
@@ -409,7 +409,7 @@ function buildChart(savings,rate,yearsIn){
   ctx.stroke();ctx.setLineDash([]);
 
   // Real line
-  ctx.beginPath();ctx.strokeStyle='#C17F2A';ctx.lineWidth=2.5;ctx.lineJoin='round';
+  ctx.beginPath();ctx.strokeStyle='#4A72B8';ctx.lineWidth=2.5;ctx.lineJoin='round';
   years.forEach((y,i)=>{const x=xP(i),yv=yP(real[i]);i===0?ctx.moveTo(x,yv):ctx.lineTo(x,yv);});
   ctx.stroke();
 
@@ -429,11 +429,11 @@ function buildChart(savings,rate,yearsIn){
     cx2.beginPath();cx2.moveTo(tx,PAD.top);cx2.lineTo(tx,PAD.top+pH);cx2.stroke();cx2.setLineDash([]);
     const bx=tx+10<W-120?tx+10:tx-140;const by=PAD.top+8;
     cx2.fillStyle='rgba(44,31,14,.92)';cx2.beginPath();cx2.roundRect(bx,by,130,58,4);cx2.fill();
-    cx2.fillStyle='#F5EDD8';cx2.font='bold 11px Barlow,sans-serif';cx2.textAlign='left';
+    cx2.fillStyle='#F5EDD8';cx2.font='bold 11px DM Sans,sans-serif';cx2.textAlign='left';
     cx2.fillText('Year '+idx,bx+8,by+16);
-    cx2.fillStyle='#B09878';cx2.font='10px Barlow,sans-serif';
+    cx2.fillStyle='#B09878';cx2.font='10px DM Sans,sans-serif';
     cx2.fillText('Nominal: $'+Math.round(nominal[idx]).toLocaleString(),bx+8,by+30);
-    cx2.fillStyle='#C17F2A';
+    cx2.fillStyle='#4A72B8';
     cx2.fillText('Real: $'+Math.round(real[idx]).toLocaleString(),bx+8,by+44);
   };
   canvas.onmouseleave=()=>buildChart(savings,rate,yearsIn);

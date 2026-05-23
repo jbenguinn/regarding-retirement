@@ -6,21 +6,21 @@
 <title>Retirement Paycheck Builder | RegardingRetirement.com</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Raleway:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth}
 :root{
-  --navy:#0F1C3F;--navy-soft:#162246;--navy-mid:#1D2E5A;--navy-muted:#3A4E7A;
-  --navy-faint:#5A6E9A;--navy-ghost:#EEF1F8;
-  --warm:#FAFAF8;--warm-dark:#F2F0EC;--warm-mid:#E8E4DC;
-  --gold:#E8A830;--gold-dark:#C48820;--gold-pale:#FDF6E4;
+  --navy:#1B2B4B;--navy-soft:#1B2B4B;--navy-mid:#243660;--navy-muted:#4A5A80;
+  --navy-faint:#6B7390;--navy-ghost:#EBF0FA;
+  --warm:#F6F7F9;--warm-dark:#EDEEF2;--warm-mid:#DDE0E8;
+  --gold:#4A72B8;--gold-dark:#3A62A8;--gold-pale:#EBF0FA;
   --green:#0F5C3A;--green-pale:#E4F5EC;--green-mid:#16A862;
   --red:#B81C1C;--red-pale:#FEF0F0;
-  --slate:#445068;--slate-light:#8A96B0;--slate-ghost:#F4F5F8;
-  --border:#D8D4CC;--border-light:#E8E4DC;
-  --font-display:'Lora',Georgia,serif;
-  --font-body:'Raleway',sans-serif;
+  --slate:#4A5270;--slate-light:#9AA0B4;--slate-ghost:#F6F7F9;
+  --border:#E2E5EE;--border-light:#EDEEF2;
+  --font-display:'Cormorant Garamond',Georgia,serif;
+  --font-body:'DM Sans',sans-serif;
 }
 body{font-family:var(--font-body);background:var(--warm);color:var(--navy);min-height:100vh;font-size:15px;line-height:1.65;}
 
@@ -288,7 +288,7 @@ body{font-family:var(--font-body);background:var(--warm);color:var(--navy);min-h
 
 <script>
 const $=id=>document.getElementById(id);
-const COLORS=['#1D4ED8','#059669','#E8A830','#7C3AED','#DC2626','#0F766E','#9A6220'];
+const COLORS=['#1D4ED8','#059669','#4A72B8','#7C3AED','#DC2626','#0F766E','#9A6220'];
 
 let incomes=[
   {id:1,label:'Social Security',amount:2000},
@@ -408,7 +408,7 @@ function buildPaycheck(){
   }
   $('rwYears').textContent=Math.min(runway,50)+(runway>=50?'+':'')+' yrs';
   $('rwSub').textContent=runway>=retireYears?'Covers your full retirement timeline':'May fall short of your '+retireYears+'-year target';
-  const barColor=runway>=retireYears?'#16A862':runway>=retireYears*.7?'#E8A830':'#DC2626';
+  const barColor=runway>=retireYears?'#16A862':runway>=retireYears*.7?'#4A72B8':'#DC2626';
   $('rwBar').style.width=Math.min(100,(Math.min(runway,50)/50)*100)+'%';
   $('rwBar').style.background=barColor;
 

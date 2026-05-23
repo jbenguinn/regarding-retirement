@@ -6,34 +6,34 @@
 <title>RMD Calculator — Required Minimum Distributions | RegardingRetirement.com</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Serif+Text:ital@0;1&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth}
 
 :root{
-  --slate:#1C2333;
-  --slate-mid:#252D40;
-  --slate-soft:#2E3850;
-  --slate-muted:#4A5568;
-  --slate-faint:#6B7A96;
-  --gold:#C9943A;
-  --gold-light:#E8B45C;
-  --gold-pale:#FBF3E4;
-  --gold-dark:#A07528;
-  --parchment:#F9F6F0;
-  --parchment-dark:#F0EBE0;
-  --parchment-mid:#E8E0D0;
+  --slate:#1B2B4B;
+  --slate-mid:#243660;
+  --slate-soft:#2E437A;
+  --slate-muted:#4A5A80;
+  --slate-faint:#6B7390;
+  --gold:#4A72B8;
+  --gold-light:#5A82C8;
+  --gold-pale:#EBF0FA;
+  --gold-dark:#3A62A8;
+  --parchment:#F6F7F9;
+  --parchment-dark:#EDEEF2;
+  --parchment-mid:#DDE0E8;
   --white:#FFFFFF;
   --red:#C0392B;
   --red-pale:#FDECEA;
   --green:#1A6B3C;
   --green-pale:#E4F5EC;
-  --border:#D4C8B0;
-  --border-dark:#C0B090;
-  --mono:'DM Mono',monospace;
-  --serif:'DM Serif Text',Georgia,serif;
-  --display:'DM Serif Display',Georgia,serif;
+  --border:#E2E5EE;
+  --border-dark:#C4C9D6;
+  --mono:'DM Sans',monospace;
+  --serif:'Cormorant Garamond',Georgia,serif;
+  --display:'Cormorant Garamond',Georgia,serif;
 }
 
 body{
@@ -1017,7 +1017,7 @@ function buildChart(rows){
 
   // RMD line
   ctx.beginPath();
-  ctx.strokeStyle='#C9943A'; ctx.lineWidth=2.5;
+  ctx.strokeStyle='#4A72B8'; ctx.lineWidth=2.5;
   ctx.lineJoin='round';
   let started=false;
   rows.forEach((r,i)=>{
@@ -1033,7 +1033,7 @@ function buildChart(rows){
     if(r.rmd===0) return;
     const x=xPos(i), y=yRMDPos(r.rmd);
     ctx.beginPath(); ctx.arc(x,y,3.5,0,Math.PI*2);
-    ctx.fillStyle='#C9943A'; ctx.fill();
+    ctx.fillStyle='#4A72B8'; ctx.fill();
     ctx.strokeStyle='white'; ctx.lineWidth=1.5; ctx.stroke();
   });
 
@@ -1042,7 +1042,7 @@ function buildChart(rows){
   ctx.textAlign='center';
   rows.forEach((r,i)=>{
     if(i%2===0 || r.age===73){
-      ctx.fillStyle = r.age===73 ? '#C9943A' : '#A09080';
+      ctx.fillStyle = r.age===73 ? '#4A72B8' : '#A09080';
       ctx.fillText(r.age, xPos(i), PAD.top+plotH+16);
     }
   });
@@ -1051,7 +1051,7 @@ function buildChart(rows){
   ctx.save();
   ctx.translate(W-8, PAD.top+plotH/2);
   ctx.rotate(Math.PI/2);
-  ctx.fillStyle='#C9943A';
+  ctx.fillStyle='#4A72B8';
   ctx.font=`9px var(--mono)`;
   ctx.textAlign='center';
   ctx.fillText('RMD AMOUNT →', 0, 0);
@@ -1077,13 +1077,13 @@ function buildChart(rows){
     const by = PAD.top+8;
     cx2.fillStyle='rgba(28,35,51,0.92)';
     cx2.beginPath(); cx2.roundRect(bx,by,120,r.rmd>0?62:46,4); cx2.fill();
-    cx2.fillStyle='#E8B45C'; cx2.font=`bold 11px var(--mono)`;
+    cx2.fillStyle='#5A82C8'; cx2.font=`bold 11px var(--mono)`;
     cx2.textAlign='left';
     cx2.fillText('Age '+r.age, bx+8, by+16);
     cx2.fillStyle='#A0AABB'; cx2.font=`10px var(--mono)`;
     cx2.fillText('Balance: $'+Math.round(r.balance).toLocaleString(), bx+8, by+30);
     if(r.rmd>0){
-      cx2.fillStyle='#C9943A';
+      cx2.fillStyle='#4A72B8';
       cx2.fillText('RMD: $'+Math.round(r.rmd).toLocaleString(), bx+8, by+44);
       cx2.fillStyle='#6B7A96'; cx2.font=`9px var(--mono)`;
       cx2.fillText('('+r.pct.toFixed(1)+'% of balance)', bx+8, by+56);

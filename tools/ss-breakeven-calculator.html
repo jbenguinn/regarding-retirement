@@ -6,39 +6,39 @@
 <title>Social Security Break-Even Calculator | RegardingRetirement.com</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;0,8..60,600;1,8..60,300;1,8..60,400&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth}
 
 :root{
-  --cream:#F5F0E8;
-  --cream-dark:#EDE6D6;
-  --cream-mid:#E8DFD0;
-  --ink:#1A1612;
-  --ink-light:#3D342A;
-  --ink-muted:#7A6E62;
-  --ink-faint:#B8A898;
-  --rust:#B85C2C;
-  --rust-light:#D4763E;
-  --rust-pale:#F2E4D8;
+  --cream:#F6F7F9;
+  --cream-dark:#EDEEF2;
+  --cream-mid:#DDE0E8;
+  --ink:#1B2B4B;
+  --ink-light:#243660;
+  --ink-muted:#6B7390;
+  --ink-faint:#9AA0B4;
+  --rust:#4A72B8;
+  --rust-light:#5A82C8;
+  --rust-pale:#EBF0FA;
   --green:#2D5A3D;
   --green-light:#4A8C60;
   --green-pale:#D8EBE0;
   --blue:#1E4A6E;
   --blue-light:#2E6EA0;
   --blue-pale:#D4E8F5;
-  --border:#D4C8B8;
+  --border:#E2E5EE;
   --shadow:rgba(26,22,18,0.08);
 
   /* Chart line colors */
-  --c62:#B85C2C;
+  --c62:#4A72B8;
   --c67:#1E4A6E;
   --c70:#2D5A3D;
 }
 
 body{
-  font-family:'Source Serif 4',Georgia,serif;
+  font-family:'DM Sans',Georgia,serif;
   background:var(--cream);
   color:var(--ink);
   min-height:100vh;
@@ -54,14 +54,14 @@ body{
   justify-content:space-between;
 }
 .logo{
-  font-family:'Playfair Display',Georgia,serif;
+  font-family:'Cormorant Garamond',Georgia,serif;
   font-size:1.1rem;
   font-weight:600;
   color:var(--cream);
   letter-spacing:0.02em;
   text-decoration:none;
 }
-.logo span{color:var(--rust-light)}
+.logo em{font-style:normal;color:var(--rust-light)}
 .header-tag{font-size:11px;color:var(--ink-muted);letter-spacing:0.1em;text-transform:uppercase}
 
 /* ── HERO ── */
@@ -87,7 +87,7 @@ body{
   font-weight:300;
 }
 .hero h1{
-  font-family:'Playfair Display',Georgia,serif;
+  font-family:'Cormorant Garamond',Georgia,serif;
   font-size:clamp(2rem,4.5vw,3.2rem);
   font-weight:700;color:var(--cream);
   line-height:1.15;margin-bottom:1rem;
@@ -109,7 +109,7 @@ body{
   color:var(--rust);font-weight:300;margin-bottom:0.6rem;
 }
 .section-title{
-  font-family:'Playfair Display',serif;
+  font-family:'Cormorant Garamond',serif;
   font-size:1.2rem;font-weight:600;
   color:var(--ink);margin-bottom:1.25rem;
 }
@@ -171,14 +171,14 @@ body{
 .dollar-sign{
   position:absolute;left:12px;top:50%;transform:translateY(-50%);
   font-size:0.95rem;color:var(--ink-muted);
-  font-family:'Source Serif 4',serif;
+  font-family:'DM Sans',serif;
   pointer-events:none;
 }
 .dollar-input{
   width:100%;padding:10px 12px 10px 24px;
   border:1px solid var(--border);border-radius:5px;
   background:var(--cream);color:var(--ink);
-  font-family:'Source Serif 4',serif;font-size:1rem;
+  font-family:'DM Sans',serif;font-size:1rem;
   font-weight:600;transition:border-color 0.15s;
   -moz-appearance:textfield;
 }
@@ -199,7 +199,7 @@ body{
   width:100%;padding:10px 12px;
   border:1px solid var(--border);border-radius:5px;
   background:var(--cream);color:var(--ink);
-  font-family:'Source Serif 4',serif;font-size:1rem;
+  font-family:'DM Sans',serif;font-size:1rem;
   font-weight:600;transition:border-color 0.15s;
   -moz-appearance:textfield;
 }
@@ -212,7 +212,7 @@ body{
   width:100%;padding:13px;
   background:var(--ink);color:var(--cream);
   border:none;border-radius:5px;
-  font-family:'Source Serif 4',serif;
+  font-family:'DM Sans',serif;
   font-size:1rem;font-weight:600;
   cursor:pointer;letter-spacing:0.02em;
   transition:all 0.2s ease;
@@ -270,7 +270,7 @@ body{
 .c-62{color:var(--c62)}.c-67{color:var(--c67)}.c-70{color:var(--c70)}
 
 .card-monthly{
-  font-family:'Playfair Display',serif;
+  font-family:'Cormorant Garamond',serif;
   font-size:1.6rem;font-weight:700;
   line-height:1;margin-bottom:3px;
 }
@@ -286,7 +286,7 @@ body{
 }
 .card-lifetime strong{
   display:block;
-  font-family:'Playfair Display',serif;
+  font-family:'Cormorant Garamond',serif;
   font-size:1rem;font-style:normal;
   color:var(--ink);margin-bottom:2px;
 }
@@ -308,7 +308,7 @@ body{
   flex-wrap:wrap;
 }
 .chart-title{
-  font-family:'Playfair Display',serif;
+  font-family:'Cormorant Garamond',serif;
   font-size:1.1rem;font-weight:600;
   line-height:1.3;
 }
@@ -361,7 +361,7 @@ canvas{width:100%!important}
   color:var(--ink-muted);font-weight:600;margin-bottom:0.6rem;
 }
 .be-age{
-  font-family:'Playfair Display',serif;
+  font-family:'Cormorant Garamond',serif;
   font-size:2rem;font-weight:700;
   color:var(--ink);line-height:1;margin-bottom:4px;
 }
@@ -393,7 +393,7 @@ canvas{width:100%!important}
   color:var(--rust-light);margin-bottom:0.6rem;font-weight:300;
 }
 .insight-text{
-  font-family:'Playfair Display',serif;
+  font-family:'Cormorant Garamond',serif;
   font-size:1.1rem;font-weight:400;font-style:italic;
   color:var(--cream);line-height:1.65;
 }
@@ -413,7 +413,7 @@ canvas{width:100%!important}
 }
 .cta-text{}
 .cta-title{
-  font-family:'Playfair Display',serif;
+  font-family:'Cormorant Garamond',serif;
   font-size:1.05rem;font-weight:600;
   color:var(--ink);margin-bottom:3px;
 }
@@ -422,7 +422,7 @@ canvas{width:100%!important}
   padding:11px 24px;
   background:var(--ink);color:var(--cream);
   border:none;border-radius:4px;
-  font-family:'Source Serif 4',serif;
+  font-family:'DM Sans',serif;
   font-size:0.9rem;font-weight:600;
   cursor:pointer;white-space:nowrap;
   text-decoration:none;display:inline-block;
@@ -453,10 +453,10 @@ canvas{width:100%!important}
   padding:2rem;text-align:center;
 }
 .footer-logo{
-  font-family:'Playfair Display',serif;
+  font-family:'Cormorant Garamond',serif;
   font-size:1rem;color:var(--cream);margin-bottom:0.5rem;
 }
-.footer-logo span{color:var(--rust-light)}
+.footer-logo em{font-style:normal;color:var(--rust-light)}
 .footer-divider{width:40px;height:1px;background:var(--border);margin:1rem auto}
 .footer-text{
   font-size:12px;color:var(--ink-muted);
@@ -481,7 +481,7 @@ canvas{width:100%!important}
 
 <!-- HEADER -->
 <header class="site-header">
-  <a href="/" class="logo">Regarding<span>Retirement</span>.com</a>
+  <a href="/" class="logo">Regarding<em>Retirement</em>.com</a>
   <span class="header-tag">Free Calculator</span>
 </header>
 
@@ -696,7 +696,7 @@ canvas{width:100%!important}
 
 <!-- FOOTER -->
 <footer class="site-footer">
-  <p class="footer-logo">Regarding<span>Retirement</span>.com</p>
+  <p class="footer-logo">Regarding<em>Retirement</em>.com</p>
   <div class="footer-divider"></div>
   <p class="footer-text">Free retirement education for Americans 55+. No financial advice. No sales pitch. Just clarity.<br><br>
   This calculator is for educational purposes only and does not constitute financial advice. Results are estimates based on inputs provided. Please consult a qualified, fee-only fiduciary advisor before making Social Security claiming decisions.</p>
@@ -888,7 +888,7 @@ function buildChart(b62, b67, b70, curAge, lifeExp){
 
     // Y labels
     ctx.fillStyle = '#9A8E80';
-    ctx.font = '11px "Source Serif 4", serif';
+    ctx.font = '11px "DM Sans", serif';
     ctx.textAlign = 'right';
     ctx.fillText('$' + (v >= 1000000 ? (v/1000000).toFixed(1)+'M' : v >= 1000 ? Math.round(v/1000)+'K' : Math.round(v)), PAD.left - 8, y + 4);
   }
@@ -904,14 +904,14 @@ function buildChart(b62, b67, b70, curAge, lifeExp){
       ctx.lineTo(x, PAD.top + plotH);
       ctx.stroke();
       ctx.fillStyle = '#9A8E80';
-      ctx.font = '11px "Source Serif 4", serif';
+      ctx.font = '11px "DM Sans", serif';
       ctx.fillText(age, x, PAD.top + plotH + 16);
     }
   });
 
   // X axis label
   ctx.fillStyle = '#9A8E80';
-  ctx.font = '11px "Source Serif 4", serif';
+  ctx.font = '11px "DM Sans", serif';
   ctx.textAlign = 'center';
   ctx.fillText('Age', PAD.left + plotW / 2, PAD.top + plotH + 32);
 
@@ -931,7 +931,7 @@ function buildChart(b62, b67, b70, curAge, lifeExp){
     ctx.setLineDash([]);
   }
 
-  drawLine(data62, '#B85C2C', false);
+  drawLine(data62, '#4A72B8', false);
   drawLine(data67, '#1E4A6E', false);
   drawLine(data70, '#2D5A3D', true);
 
@@ -954,7 +954,7 @@ function buildChart(b62, b67, b70, curAge, lifeExp){
     ctx.stroke();
 
     ctx.fillStyle = '#3D342A';
-    ctx.font = 'bold 10px "Source Serif 4", serif';
+    ctx.font = 'bold 10px "DM Sans", serif';
     ctx.textAlign = 'center';
     ctx.fillText('age ' + Math.round(be), x, y - 12);
   }
@@ -1024,18 +1024,18 @@ function buildChart(b62, b67, b70, curAge, lifeExp){
     cx.fill();
 
     cx.fillStyle = '#F5F0E8';
-    cx.font = 'bold 11px "Source Serif 4", serif';
+    cx.font = 'bold 11px "DM Sans", serif';
     cx.textAlign = 'left';
     cx.fillText('Age ' + age, adjX + 10, boxY + 16);
 
     const rows = [
-      { label:'Age 62:', val:v62, color:'#D4763E' },
+      { label:'Age 62:', val:v62, color:'#5A82C8' },
       { label:'Age 67:', val:v67, color:'#2E6EA0' },
       { label:'Age 70:', val:v70, color:'#4A8C60' },
     ];
     rows.forEach((r, i) => {
       cx.fillStyle = r.color;
-      cx.font = '10px "Source Serif 4", serif';
+      cx.font = '10px "DM Sans", serif';
       cx.fillText(r.label, adjX + 10, boxY + 32 + i*16);
       cx.fillStyle = '#F5F0E8';
       cx.fillText('$' + Math.round(r.val).toLocaleString(), adjX + 52, boxY + 32 + i*16);

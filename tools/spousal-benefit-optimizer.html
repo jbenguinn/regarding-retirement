@@ -6,19 +6,19 @@
 <title>Social Security Spousal Benefit Optimizer | RegardingRetirement.com</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth}
 :root{
-  --burg:#5C1A2E;--burg-mid:#7A2240;--burg-light:#9E3055;--burg-pale:#F9EEF1;
-  --ivory:#FDFAF4;--ivory-dark:#F5EFE0;--ivory-mid:#EDE4CC;
-  --gold:#B8943A;--gold-light:#D4AC52;--gold-dark:#8A6E22;--gold-pale:#FBF6E4;
-  --ink:#1A0E12;--ink-soft:#3A2030;--ink-muted:#6A5058;--ink-faint:#A09098;
+  --burg:#1B2B4B;--burg-mid:#243660;--burg-light:#4A72B8;--burg-pale:#EBF0FA;
+  --ivory:#F6F7F9;--ivory-dark:#EDEEF2;--ivory-mid:#DDE0E8;
+  --gold:#4A72B8;--gold-light:#5A82C8;--gold-dark:#3A62A8;--gold-pale:#EBF0FA;
+  --ink:#1B2B4B;--ink-soft:#243660;--ink-muted:#6B7390;--ink-faint:#9AA0B4;
   --green:#1A5C38;--green-pale:#E4F5EC;
-  --border:#D8CDB8;
-  --font-display:'Cinzel',serif;
-  --font-body:'EB Garamond',Georgia,serif;
+  --border:#E2E5EE;
+  --font-display:'Cormorant Garamond',serif;
+  --font-body:'Cormorant Garamond',Georgia,serif;
 }
 body{font-family:var(--font-body);background:var(--ivory);color:var(--ink);min-height:100vh;font-size:16px;line-height:1.7;}
 
@@ -521,18 +521,18 @@ function buildChart(fra1,claim1,age1,health1,fra2,claim2,age2,health2,cola){
     const v=maxV*i/4,y=yP(v);
     ctx.strokeStyle='#EDE4CC';ctx.lineWidth=1;
     ctx.beginPath();ctx.moveTo(PAD.left,y);ctx.lineTo(PAD.left+pW,y);ctx.stroke();
-    ctx.fillStyle='#A09098';ctx.font='10px EB Garamond,serif';ctx.textAlign='right';
+    ctx.fillStyle='#A09098';ctx.font='10px Cormorant Garamond,serif';ctx.textAlign='right';
     ctx.fillText(v>=1e6?(v/1e6).toFixed(1)+'M':Math.round(v/1e3)+'K',PAD.left-5,y+4);
   }
   ages.filter(a=>a%5===0).forEach((a,_,arr)=>{
     const i=ages.indexOf(a);
     const x=xP(i);
     ctx.strokeStyle='#EDE4CC';ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(x,PAD.top);ctx.lineTo(x,PAD.top+pH);ctx.stroke();
-    ctx.fillStyle='#A09098';ctx.font='10px EB Garamond,serif';ctx.textAlign='center';ctx.fillText(a,x,PAD.top+pH+16);
+    ctx.fillStyle='#A09098';ctx.font='10px Cormorant Garamond,serif';ctx.textAlign='center';ctx.fillText(a,x,PAD.top+pH+16);
   });
 
   // Lines
-  const LINES=[{d:d1,color:'#9E3055',dash:false},{d:d2,color:'#B8943A',dash:true},{d:d3,color:'#5C1A2E',dash:false}];
+  const LINES=[{d:d1,color:'#4A72B8',dash:false},{d:d2,color:'#4A72B8',dash:true},{d:d3,color:'#1B2B4B',dash:false}];
   LINES.forEach(({d,color,dash})=>{
     ctx.beginPath();ctx.strokeStyle=color;ctx.lineWidth=2.5;ctx.lineJoin='round';
     if(dash)ctx.setLineDash([5,3]);else ctx.setLineDash([]);
@@ -542,7 +542,7 @@ function buildChart(fra1,claim1,age1,health1,fra2,claim2,age2,health2,cola){
 
   // Legend
   const legEl=$('chartLegend');legEl.innerHTML='';
-  [['Both at 62','#9E3055',false],['Both at 67','#B8943A',true],['Higher waits to 70','#5C1A2E',false]].forEach(([l,c,d])=>{
+  [['Both at 62','#4A72B8',false],['Both at 67','#4A72B8',true],['Higher waits to 70','#1B2B4B',false]].forEach(([l,c,d])=>{
     const div=document.createElement('div');div.className='cl';
     div.innerHTML=`<div class="cl-sw" style="background:${c};${d?'border-top:2px dashed '+c+';background:transparent':''}"></div><span>${l}</span>`;
     legEl.appendChild(div);
@@ -564,10 +564,10 @@ function buildChart(fra1,claim1,age1,health1,fra2,claim2,age2,health2,cola){
     cx2.beginPath();cx2.moveTo(tx,PAD.top);cx2.lineTo(tx,PAD.top+pH);cx2.stroke();cx2.setLineDash([]);
     const bx=tx+10<W-150?tx+10:tx-160;const by=PAD.top+8;
     cx2.fillStyle='rgba(26,14,18,.92)';cx2.beginPath();cx2.roundRect(bx,by,148,72,4);cx2.fill();
-    cx2.fillStyle='#F5EFE0';cx2.font='bold 11px Cinzel,serif';cx2.textAlign='left';
+    cx2.fillStyle='#F5EFE0';cx2.font='bold 11px Cormorant Garamond,serif';cx2.textAlign='left';
     cx2.fillText('Age '+ages[idx],bx+8,by+16);
-    [['Both at 62: ','#9E3055',d1],['Both at 67: ','#B8943A',d2],['HE waits 70: ','#D4A85A',d3]].forEach(([l,c,d],i)=>{
-      cx2.fillStyle=c;cx2.font='10px EB Garamond,serif';
+    [['Both at 62: ','#4A72B8',d1],['Both at 67: ','#4A72B8',d2],['HE waits 70: ','#D4A85A',d3]].forEach(([l,c,d],i)=>{
+      cx2.fillStyle=c;cx2.font='10px Cormorant Garamond,serif';
       cx2.fillText(l+'$'+Math.round(d[idx]/1000)+'K',bx+8,by+30+i*14);
     });
   };
