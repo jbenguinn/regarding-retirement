@@ -91,6 +91,28 @@ td strong{color:var(--navy)}
 .footer-logo em{font-style:normal;color:var(--sky)}
 .footer-text{font-size:.72rem;color:rgba(255,255,255,.2);font-weight:300;line-height:1.7;max-width:500px;margin:0 auto}
 @media(max-width:560px){.nav{display:none}.tool-cta{flex-direction:column;align-items:flex-start}}
+
+/* INLINE RELATED LINE */
+.related-inline{font-size:.92rem;color:var(--gray-500);font-weight:300;line-height:1.7;margin:0 0 1.75rem;padding:.8rem 1.1rem;background:var(--gray-50);border-left:2px solid var(--gray-200);border-radius:0 4px 4px 0}
+.related-inline strong{font-weight:500;color:var(--navy);margin-right:.3rem}
+.related-inline a{color:var(--sky);text-decoration:none;border-bottom:1px solid var(--sky-pale);font-weight:400}
+.related-inline a:hover{border-color:var(--sky)}
+.related-inline .sep{color:var(--gray-300);margin:0 .35rem}
+
+/* KEEP READING BLOCK */
+.keep-reading{margin-top:3rem;padding-top:2.5rem;border-top:1px solid var(--border)}
+.keep-reading h2{font-family:var(--font-display);font-size:1.45rem;font-weight:400;color:var(--navy);margin-bottom:1.25rem}
+.kr-grid{display:grid;grid-template-columns:1fr;gap:.6rem}
+.kr-card{display:grid;grid-template-columns:auto 1fr auto;gap:1rem;align-items:center;background:var(--white);border:1px solid var(--border);border-radius:8px;padding:1.1rem 1.25rem;text-decoration:none;transition:all .2s var(--ease)}
+.kr-card:hover{border-color:var(--sky);transform:translateY(-1px)}
+.kr-card:hover .kr-arrow{color:var(--sky);transform:translateX(3px)}
+.kr-icon{width:38px;height:38px;border-radius:8px;background:var(--sky-pale);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.kr-icon svg{width:18px;height:18px}
+.kr-body{min-width:0}
+.kr-kind{font-size:.6rem;font-weight:500;letter-spacing:.12em;text-transform:uppercase;color:var(--sky);margin-bottom:.2rem}
+.kr-title{font-family:var(--font-display);font-size:1.05rem;font-weight:500;color:var(--navy);line-height:1.25;margin-bottom:.2rem}
+.kr-desc{font-size:.8rem;color:var(--gray-500);font-weight:300;line-height:1.5}
+.kr-arrow{font-size:1rem;color:var(--gray-300);transition:all .2s var(--ease);flex-shrink:0}
 </style>
 </head>
 <body>
@@ -125,6 +147,7 @@ td strong{color:var(--navy)}
   </div>
 
   <p class="lead-answer">This is one of the most consequential financial decisions of your life, and it is largely irreversible. The difference between the best and worst choice for your situation can exceed $100,000 over a retirement. The good news: once you understand the actual mechanics, the right answer for you becomes much clearer.</p>
+<p class="related-inline"><strong>Related reading:</strong> <a href="/resources/work-and-collect-social-security">Working while collecting</a> <span class="sep">·</span> <a href="/resources/full-retirement-age-2026">Full retirement age explained</a> </p>
 
   <p>Here is what each claiming age actually pays, the break-even math that determines when waiting pays off, and the four questions that decide it.</p>
 
@@ -210,7 +233,10 @@ td strong{color:var(--navy)}
     </div>
   </div>
 
-  <div class="sources">
+  <div class="keep-reading"><h2>Keep reading</h2><div class="kr-grid"><a href="/tools/ss-breakeven-calculator.html" class="kr-card"><div class="kr-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#4A72B8" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg></div><div class="kr-body"><p class="kr-kind">Tool</p><p class="kr-title">Social Security Break-Even Calculator</p><p class="kr-desc">See your personal break-even age across claiming at 62, 67, and 70.</p></div><span class="kr-arrow">→</span></a>
+<a href="/resources/how-much-before-social-security-taxed" class="kr-card"><div class="kr-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#4A72B8" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></div><div class="kr-body"><p class="kr-kind">Article</p><p class="kr-title">Will my Social Security be taxed?</p><p class="kr-desc">The combined-income thresholds that catch more retirees every year.</p></div><span class="kr-arrow">→</span></a>
+<a href="/resources/when-to-enroll-in-medicare" class="kr-card"><div class="kr-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#4A72B8" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></div><div class="kr-body"><p class="kr-kind">Article</p><p class="kr-title">When do I have to enroll in Medicare?</p><p class="kr-desc">Why the Social Security claim and Medicare clock are separate decisions.</p></div><span class="kr-arrow">→</span></a></div></div>
+<div class="sources">
     <h2>Sources</h2>
     <ol>
       <li id="src-1"><a href="https://www.ssa.gov/benefits/retirement/planner/agereduction.html" target="_blank" rel="noopener">Retirement Age and Benefit Reduction</a> <span class="src-pub">U.S. Social Security Administration. Full retirement age of 67 for those born in 1960 or later.</span></li>
@@ -222,7 +248,8 @@ td strong{color:var(--navy)}
     </ol>
   </div>
 
-  <div class="disclaimer">
+  
+<div class="disclaimer">
     This article is for educational purposes only and does not constitute financial, tax, or legal advice. Social Security figures are current as of 2026 and subject to change. Individual benefit amounts depend on your earnings history. Please consult a qualified, fee-only fiduciary advisor or the Social Security Administration before making claiming decisions specific to your situation.
   </div>
 </article>
