@@ -147,6 +147,49 @@ body{font-family:var(--font-ui);background:var(--gray-50);color:var(--ink);line-
   .topics{grid-template-columns:1fr 1fr}
   .email-form{flex-direction:column}
 }
+
+/* FEATURED PAIR (article + video equal cards) */
+.featured-pair{background:var(--white);border-top:1px solid var(--border);border-bottom:1px solid var(--border);padding:3.5rem 1.5rem}
+.fp-inner{max-width:var(--max);margin:0 auto}
+.fp-eyebrow{font-size:.65rem;font-weight:500;letter-spacing:.16em;text-transform:uppercase;color:var(--sky);margin-bottom:1.5rem;display:flex;align-items:center;gap:.5rem}
+.fp-eyebrow::before{content:'';width:16px;height:1px;background:var(--sky)}
+.fp-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem}
+.fp-card{background:var(--gray-50);border:1px solid var(--border);border-radius:8px;overflow:hidden;text-decoration:none;display:flex;flex-direction:column;transition:all .2s var(--ease)}
+.fp-card:hover{transform:translateY(-2px);border-color:var(--sky)}
+.fp-visual{aspect-ratio:16/9;position:relative;overflow:hidden}
+.fp-visual-article{background:linear-gradient(135deg,#EBF0FA 0%,#DDE0E8 100%);display:flex;align-items:center;justify-content:center}
+.fp-visual-article svg{width:64px;height:64px;color:var(--sky);opacity:.4}
+.fp-visual-video{background:linear-gradient(135deg,var(--navy-mid) 0%,var(--navy) 60%,#0D1929 100%);display:flex;align-items:center;justify-content:center}
+.fp-play{width:56px;height:56px;border-radius:50%;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);display:flex;align-items:center;justify-content:center;font-size:1.2rem;color:white;transition:all .25s}
+.fp-card:hover .fp-play{background:var(--sky);border-color:var(--sky);transform:scale(1.08)}
+.fp-badge{position:absolute;top:1rem;left:1rem;font-size:.6rem;font-weight:500;letter-spacing:.12em;text-transform:uppercase;padding:.25rem .7rem;border-radius:2px}
+.fp-badge-article{background:var(--white);color:var(--navy);border:1px solid var(--border)}
+.fp-badge-video{background:rgba(255,255,255,.12);color:rgba(255,255,255,.85)}
+.fp-body{padding:1.5rem 1.6rem 1.75rem;flex:1;display:flex;flex-direction:column}
+.fp-kicker{font-size:.66rem;font-weight:500;letter-spacing:.14em;text-transform:uppercase;color:var(--sky);margin-bottom:.55rem}
+.fp-title{font-family:var(--font-display);font-size:1.35rem;font-weight:400;color:var(--navy);line-height:1.25;margin-bottom:.6rem}
+.fp-desc{font-size:.88rem;color:var(--gray-500);font-weight:300;line-height:1.6;flex:1}
+.fp-cta{margin-top:1rem;font-size:.75rem;font-weight:500;letter-spacing:.04em;color:var(--sky);text-transform:uppercase}
+.fp-cta::after{content:' →'}
+
+/* ARTICLES GRID (3-col card layout) */
+.articles-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem}
+.agcard{background:var(--white);border:1px solid var(--border);border-radius:8px;padding:1.4rem 1.4rem 1.5rem;text-decoration:none;display:flex;flex-direction:column;transition:all .2s var(--ease);min-height:200px}
+.agcard:hover{border-color:var(--sky);transform:translateY(-2px)}
+.ag-icon{width:36px;height:36px;border-radius:6px;background:var(--sky-pale);display:flex;align-items:center;justify-content:center;margin-bottom:.85rem}
+.ag-icon svg{width:18px;height:18px}
+.ag-topic{font-size:.6rem;font-weight:500;letter-spacing:.12em;text-transform:uppercase;color:var(--sky);margin-bottom:.4rem}
+.ag-title{font-family:var(--font-display);font-size:1.1rem;font-weight:500;color:var(--navy);line-height:1.25;margin-bottom:.5rem;flex:1}
+.ag-desc{font-size:.78rem;color:var(--gray-500);font-weight:300;line-height:1.55}
+
+@media(max-width:820px){
+  .fp-grid{grid-template-columns:1fr}
+  .articles-grid{grid-template-columns:1fr 1fr}
+}
+@media(max-width:560px){
+  .articles-grid{grid-template-columns:1fr}
+}
+
 </style>
 </head>
 <body>
@@ -169,19 +212,113 @@ body{font-family:var(--font-ui);background:var(--gray-50);color:var(--ink);line-
   <p class="lede">Everything you need to understand Social Security timing, Medicare enrollment, required distributions, and retirement income — explained without jargon, without a sales pitch.</p>
 </div>
 
-<section class="featured">
-  <div class="featured-inner">
-    <a href="https://youtube.com/@RetirementClarity" class="fv-thumb" target="_blank" rel="noopener" aria-label="Watch: When Should You Take Social Security">
-      <div class="fv-thumb-bg"></div>
-      <span class="fv-badge">Most Watched</span>
-      <div class="fv-play">▶</div>
-      <span class="fv-topic">Social Security</span>
-    </a>
-    <div>
-      <p class="fv-ep">Episode 01 · 7 min</p>
-      <p class="fv-title">When Should You Take Social Security — 62, 67, or 70?</p>
-      <p class="fv-desc">96% of Americans claim at the wrong time — costing the average household $111,000. This video walks through the four questions that make the right claiming age clear for your situation, with the real 2026 numbers.</p>
-      <a href="https://youtube.com/@RetirementClarity" class="btn-primary" target="_blank" rel="noopener">▶ Watch on YouTube</a>
+<section class="featured-pair">
+  <div class="fp-inner">
+    <p class="fp-eyebrow">Start here</p>
+    <div class="fp-grid">
+
+      <a href="/resources/social-security-62-67-or-70" class="fp-card">
+        <div class="fp-visual fp-visual-article">
+          <span class="fp-badge fp-badge-article">Most Read</span>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12h4l3-9 4 18 3-9h4"/></svg>
+        </div>
+        <div class="fp-body">
+          <p class="fp-kicker">Article · 9 min read</p>
+          <p class="fp-title">Should I Take Social Security at 62, 67, or 70?</p>
+          <p class="fp-desc">96% of Americans claim at the wrong time, costing the average household $111,000. The four questions that make the right answer clear, with real 2026 numbers and break-even math.</p>
+          <span class="fp-cta">Read the Guide</span>
+        </div>
+      </a>
+
+      <a href="https://youtube.com/@RetirementClarity" class="fp-card" target="_blank" rel="noopener">
+        <div class="fp-visual fp-visual-video">
+          <span class="fp-badge fp-badge-video">Most Watched</span>
+          <div class="fp-play">▶</div>
+        </div>
+        <div class="fp-body">
+          <p class="fp-kicker">Video · Episode 01 · 8 min</p>
+          <p class="fp-title">When Should You Take Social Security?</p>
+          <p class="fp-desc">The video companion to the article. Watch the full breakdown of claiming at 62 versus 67 versus 70, the break-even calculation, and how to decide for your situation.</p>
+          <span class="fp-cta">Watch on YouTube</span>
+        </div>
+      </a>
+
+    </div>
+  </div>
+</section>
+
+<section class="section" style="padding:4rem 1.5rem">
+  <div class="section-inner">
+    <div class="section-head">
+      <p class="eyebrow">Articles</p>
+      <h2 class="section-title">Plain-English <em>guides</em> with the 2026 numbers</h2>
+      <p class="section-sub">Every claim sourced to the SSA, IRS, CMS, and other primary sources. Each guide pairs with a free calculator.</p>
+    </div>
+    <div class="articles-grid">
+
+      <a href="/resources/social-security-62-67-or-70" class="agcard">
+        <div class="ag-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#4A72B8" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12h4l3-9 4 18 3-9h4"/></svg></div>
+        <p class="ag-topic">Social Security · Claiming</p>
+        <p class="ag-title">Should I Take Social Security at 62, 67, or 70?</p>
+        <p class="ag-desc">Break-even math and the four questions that decide it.</p>
+      </a>
+
+      <a href="/resources/work-and-collect-social-security" class="agcard">
+        <div class="ag-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#4A72B8" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/></svg></div>
+        <p class="ag-topic">Social Security · Earning</p>
+        <p class="ag-title">Can I Work and Still Collect Social Security in 2026?</p>
+        <p class="ag-desc">The $24,480 earnings limit and why withheld benefits come back.</p>
+      </a>
+
+      <a href="/resources/full-retirement-age-2026" class="agcard">
+        <div class="ag-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#4A72B8" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg></div>
+        <p class="ag-topic">Social Security · Eligibility</p>
+        <p class="ag-title">What Is the Full Retirement Age in 2026?</p>
+        <p class="ag-desc">Why FRA is 67 for most, and the three rules that depend on it.</p>
+      </a>
+
+      <a href="/resources/how-much-before-social-security-taxed" class="agcard">
+        <div class="ag-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#4A72B8" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></div>
+        <p class="ag-topic">Social Security · Taxes</p>
+        <p class="ag-title">How Much Can I Earn Before My Social Security Is Taxed?</p>
+        <p class="ag-desc">The combined-income formula and the frozen thresholds.</p>
+      </a>
+
+      <a href="/resources/when-to-enroll-in-medicare" class="agcard">
+        <div class="ag-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#4A72B8" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg></div>
+        <p class="ag-topic">Medicare · Enrollment</p>
+        <p class="ag-title">When Do I Have to Enroll in Medicare to Avoid a Penalty?</p>
+        <p class="ag-desc">The 7-month window, the permanent 10% penalty, and the safe way to delay.</p>
+      </a>
+
+      <a href="/resources/what-medicare-covers" class="agcard">
+        <div class="ag-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#4A72B8" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7z"/></svg></div>
+        <p class="ag-topic">Medicare · Coverage</p>
+        <p class="ag-title">What Does Medicare Actually Cover (and Not Cover)?</p>
+        <p class="ag-desc">The four parts, the gaps, and how to cover them.</p>
+      </a>
+
+      <a href="/resources/when-do-rmds-start" class="agcard">
+        <div class="ag-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#4A72B8" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg></div>
+        <p class="ag-topic">401(k) &amp; IRAs · RMDs</p>
+        <p class="ag-title">At What Age Do RMDs Start, and What If You Miss One?</p>
+        <p class="ag-desc">Age 73, the 25% penalty, and the Roth exception.</p>
+      </a>
+
+      <a href="/resources/how-much-do-i-need-to-retire" class="agcard">
+        <div class="ag-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#4A72B8" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 3v18"/></svg></div>
+        <p class="ag-topic">Retirement Planning · Savings</p>
+        <p class="ag-title">How Much Money Do I Need to Retire?</p>
+        <p class="ag-desc">Why the 10x benchmark is only a starting point.</p>
+      </a>
+
+      <a href="/resources/is-the-4-percent-rule-still-accurate" class="agcard">
+        <div class="ag-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#4A72B8" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg></div>
+        <p class="ag-topic">Retirement Planning · Withdrawals</p>
+        <p class="ag-title">Is the 4% Rule Still Accurate in 2026?</p>
+        <p class="ag-desc">What the rule says, why its creator now uses 4.7%, and when it breaks.</p>
+      </a>
+
     </div>
   </div>
 </section>
@@ -273,43 +410,9 @@ body{font-family:var(--font-ui);background:var(--gray-50);color:var(--ink);line-
   </div>
 </section>
 
-<section class="articles-section">
-  <div class="section" style="border:none">
-    <div class="section-head">
-      <p class="eyebrow">In-Depth Guides</p>
-      <h2 class="section-title">Read the <em>full breakdowns</em></h2>
-      <p class="section-sub">Plain-English articles with the real 2026 numbers, every fact sourced to the SSA and other primary sources. Each one pairs with a free calculator.</p>
-    </div>
 
-    <div class="article-list">
 
-      <a href="/resources/social-security-62-67-or-70" class="acard">
-        <div class="acard-icon">
-          <svg viewBox="0 0 24 24" fill="none" stroke="#4A72B8" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12h4l3-9 4 18 3-9h4"/></svg>
-        </div>
-        <div class="acard-body">
-          <p class="acard-topic">Social Security · Claiming Strategy</p>
-          <p class="acard-title">Should I Take Social Security at 62, 67, or 70?</p>
-          <p class="acard-desc">What each claiming age pays in 2026, the break-even math, and the four questions that decide it.</p>
-        </div>
-        <span class="acard-arrow">→</span>
-      </a>
 
-      <a href="/resources/work-and-collect-social-security" class="acard">
-        <div class="acard-icon">
-          <svg viewBox="0 0 24 24" fill="none" stroke="#4A72B8" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/></svg>
-        </div>
-        <div class="acard-body">
-          <p class="acard-topic">Social Security · Earning in Retirement</p>
-          <p class="acard-title">Can I Work and Still Collect Social Security in 2026?</p>
-          <p class="acard-desc">The $24,480 earnings limit, what gets withheld, and why the withheld money comes back.</p>
-        </div>
-        <span class="acard-arrow">→</span>
-      </a>
-
-    </div>
-  </div>
-</section>
 
 <section class="faq-section">
   <div class="faq-inner">
@@ -353,7 +456,7 @@ body{font-family:var(--font-ui);background:var(--gray-50);color:var(--ink);line-
     <div class="faq-item">
       <button class="faq-q">Can I appeal my Medicare IRMAA surcharge after I retire?</button>
       <div class="faq-a"><div class="faq-a-inner">
-        <p>Yes. IRMAA — the income-related surcharge on Part B and Part D — is based on your income from <strong>two years ago</strong>. If your income has dropped because of a life-changing event like retirement, the loss of a spouse, or divorce, you can appeal using <strong>Form SSA-44</strong> to have it recalculated on your current, lower income. The 2026 IRMAA thresholds start at $106,000 for individuals and $212,000 for married couples filing jointly.</p>
+        <p>Yes. IRMAA — the income-related surcharge on Part B and Part D — is based on your income from <strong>two years ago</strong>. If your income has dropped because of a life-changing event like retirement, the loss of a spouse, or divorce, you can appeal using <strong>Form SSA-44</strong> to have it recalculated on your current, lower income. The 2026 IRMAA thresholds start at $109,000 for individuals and $218,000 for married couples filing jointly.</p>
         <a href="/tools/medicare-penalty-calculator.html" class="faq-tool-link">Estimate your Medicare premiums and IRMAA</a>
       </div></div>
     </div>
@@ -440,7 +543,7 @@ body{font-family:var(--font-ui);background:var(--gray-50);color:var(--ink);line-
     {"@type":"Question","name":"Should I take Social Security at 62, 67, or 70?","acceptedAnswer":{"@type":"Answer","text":"It depends on your health and longevity, whether you need income now, your marital status, and whether you are still working. The break-even point where waiting to 70 overtakes claiming at 62 is around age 80 to 81 for most people."}},
     {"@type":"Question","name":"How much can I earn while collecting Social Security in 2026?","acceptedAnswer":{"@type":"Answer","text":"Under full retirement age all year, the 2026 earnings limit is $24,480, with $1 withheld for every $2 over. In the year you reach FRA the limit is $65,160. After reaching full retirement age there is no earnings limit."}},
     {"@type":"Question","name":"When do I have to enroll in Medicare to avoid a penalty?","acceptedAnswer":{"@type":"Answer","text":"Your Initial Enrollment Period is a 7-month window around your 65th birthday. Missing it without qualifying employer coverage adds a permanent 10% to your Part B premium for every year delayed. The 2026 standard Part B premium is $202.90 per month."}},
-    {"@type":"Question","name":"Can I appeal my Medicare IRMAA surcharge after I retire?","acceptedAnswer":{"@type":"Answer","text":"Yes. IRMAA is based on income from two years prior. If your income dropped due to retirement, loss of a spouse, or divorce, you can appeal using Form SSA-44 to have it recalculated on current income. 2026 thresholds start at $106,000 single and $212,000 married filing jointly."}},
+    {"@type":"Question","name":"Can I appeal my Medicare IRMAA surcharge after I retire?","acceptedAnswer":{"@type":"Answer","text":"Yes. IRMAA is based on income from two years prior. If your income dropped due to retirement, loss of a spouse, or divorce, you can appeal using Form SSA-44 to have it recalculated on current income. 2026 thresholds start at $109,000 single and $218,000 married filing jointly."}},
     {"@type":"Question","name":"At what age do required minimum distributions start?","acceptedAnswer":{"@type":"Answer","text":"RMDs from traditional IRAs and 401(k)s begin at age 73. The first must be taken by April 1 of the following year; subsequent ones by December 31. Missing an RMD triggers a 25% penalty. Roth IRAs are exempt during the owner's lifetime."}},
     {"@type":"Question","name":"How much do I need saved to retire comfortably?","acceptedAnswer":{"@type":"Answer","text":"Fidelity suggests 10 times your annual salary by age 67. A more personal method: subtract expected Social Security and pension from your annual retirement spending, then divide the gap by 0.04 using the 4% withdrawal rule."}},
     {"@type":"Question","name":"Does Social Security keep up with inflation?","acceptedAnswer":{"@type":"Answer","text":"Partially. Social Security applies an annual COLA of 2.8% for 2026, but because COLAs lag prior-year inflation, benefits lost roughly 20% of buying power between 2010 and 2024."}}
